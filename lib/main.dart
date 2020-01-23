@@ -14,6 +14,6 @@ void main() {
       primaryColor: Colors.purpleAccent,
     ),
     home: ProfilePage(), 
-    home: HomePage(),
+//     home: HomePage(),
   ));
 }
