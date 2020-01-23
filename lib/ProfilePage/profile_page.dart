@@ -87,10 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       new Text(
                         'Geolocation',
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white
-                        ),
+                        style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 15),

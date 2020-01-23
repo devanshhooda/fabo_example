@@ -11,7 +11,10 @@ Widget app_Bar(BuildContext context) {
           child: new AppBar(
         elevation: 10,
         backgroundColor: Colors.deepPurpleAccent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40))),
         title: new Container(
           padding: EdgeInsets.all(25),
           child: Text(

@@ -13,6 +13,7 @@ void main() {
       primarySwatch: Colors.purple,
       primaryColor: Colors.purpleAccent,
     ),
-    home: ProfilePage(),
+    // home: ProfilePage(),
+    home: HomePage(),
   ));
 }
