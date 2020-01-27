@@ -14,7 +14,6 @@ class _HomePageState extends State<HomePage> {
   void onChangeIndex(int i) {
     setState(() {
       index = i;
-      // await pageController = pageController.animateToPage(index, duration: Duration(seconds: 2.0));
     });
   }
 
@@ -85,47 +84,57 @@ class _HomePageState extends State<HomePage> {
 
 Widget _content(String title, String subtitle) {
   return new Container(
-    padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+    padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
     child: new Column(
       children: <Widget>[
         SizedBox(
           height: 10,
         ),
         new Container(
-          // margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black38,
+                  blurRadius: 40.0,
+                  spreadRadius: 5.0,
+                  offset: Offset(
+                    10.0,
+                    30.0,
+                  ),
+                )
+              ],
               borderRadius: BorderRadius.circular(20),
-              color: Color.fromARGB(150, 255, 255, 255),
+              color: Color.fromARGB(200, 255, 255, 255),
               gradient: LinearGradient(
-                  colors: [Colors.purple, Colors.black],
+                  colors: [Colors.purple, Colors.pinkAccent],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight)),
           child: Column(
             children: <Widget>[
-              new Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 30),
-                  ),
-                  new Text(
-                    title,
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17),
-                  ),
-                  // Padding(
-                  //   padding: EdgeInsets.only(left: 240),
-                  // ),
-                  new IconButton(
-                    // alignment: Alignment(50,0),
-                    onPressed: () => print('$title Page'),
-                    icon: Icon(
+              new FlatButton(
+                onPressed: () => print('$title page'),
+                child: new Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 20),
+                    ),
+                    new Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 200,),
+                    // ),
+                    new Icon(
                       Icons.chevron_right,
                       size: 25,
+                      color: Colors.white,
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
               new SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -149,25 +158,28 @@ Widget _content(String title, String subtitle) {
 
 Widget _elements(String subtitle) {
   return new Container(
-      padding: EdgeInsets.only(left: 10, bottom: 10, right: 10),
-      height: 140,
+      padding: EdgeInsets.only(left: 10, bottom: 10),
+      height: 150,
       width: 150,
       child: new GestureDetector(
         onTap: () => print('Details of Service'),
         child: new Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: new Column(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(top: 10),
               ),
               new FlutterLogo(
-                size: 70,
+                size: 80,
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10),
               ),
               new Text(
                 subtitle,
+                style: TextStyle(fontSize: 15),
               )
             ],
           ),

@@ -17,7 +17,7 @@ Widget notifs() {
   return new ListView(
     children: <Widget>[
       new ListTile(
-          leading: notifPhoto(1),
+          leading: notifPhoto(),
           title: new Container(
             padding: EdgeInsets.only(top: 10),
             child: Text('Notification title'),
@@ -32,9 +32,8 @@ Widget notifs() {
   );
 }
 
-Widget notifPhoto(int i) {
+Widget notifPhoto() {
   return new Container(
-    // padding: EdgeInsets.all(10),
     child: new CircleAvatar(
       radius: 30,
       backgroundColor: Colors.grey[300],

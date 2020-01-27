@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'notifications.dart';
 
 TextEditingController _srch = new TextEditingController();

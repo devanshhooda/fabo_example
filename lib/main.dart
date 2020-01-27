@@ -2,6 +2,7 @@ import 'package:fabo_example_app/ProfilePage/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './HomePage/HomePage.dart';
+import 'ChatPage/chatsPage.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -15,5 +16,6 @@ void main() {
     ),
     // home: ProfilePage(),
     home: HomePage(),
+    // home: ChatsPage(),
   ));
 }
