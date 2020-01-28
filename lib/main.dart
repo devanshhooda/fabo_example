@@ -1,8 +1,9 @@
-import 'package:fabo_example_app/ProfilePage/profile_page.dart';
+import 'package:fabo_example_app/Bookings%20Page/MyBookings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './HomePage/HomePage.dart';
-import 'ChatPage/chatsPage.dart';
+import 'Chat Page/chatsPage.dart';
+import 'Home Page/HomePage.dart';
+import 'Profile Page/profile_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -15,7 +16,8 @@ void main() {
       primaryColor: Colors.purpleAccent,
     ),
     // home: ProfilePage(),
-    home: HomePage(),
+    // home: HomePage(),
     // home: ChatsPage(),
+    home: Bookings(),
   ));
 }

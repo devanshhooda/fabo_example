@@ -71,18 +71,18 @@ class _HomePageState extends State<HomePage> {
         body: new Container(
           child: new ListView(
             children: <Widget>[
-              _content('Categories', 'Element'),
-              _content('Recommended for you', 'Element'),
-              _content('Special offers', 'Element'),
-              _content('Top offers', 'Element'),
-              _content('Favourites', 'Element'),
+              _categories('Categories', 'Element'),
+              _categories('Recommended for you', 'Element'),
+              _categories('Special offers', 'Element'),
+              _categories('Top offers', 'Element'),
+              _categories('Favourites', 'Element'),
             ],
           ),
         ));
   }
 }
 
-Widget _content(String title, String subtitle) {
+Widget _categories(String title, String subtitle) {
   return new Container(
     padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
     child: new Column(
@@ -140,11 +140,11 @@ Widget _content(String title, String subtitle) {
                 scrollDirection: Axis.horizontal,
                 child: new Row(
                   children: <Widget>[
-                    _elements(subtitle),
-                    _elements(subtitle),
-                    _elements(subtitle),
-                    _elements(subtitle),
-                    _elements(subtitle),
+                    _services(subtitle),
+                    _services(subtitle),
+                    _services(subtitle),
+                    _services(subtitle),
+                    _services(subtitle),
                   ],
                 ),
               )
@@ -156,7 +156,7 @@ Widget _content(String title, String subtitle) {
   );
 }
 
-Widget _elements(String subtitle) {
+Widget _services(String subtitle) {
   return new Container(
       padding: EdgeInsets.only(left: 10, bottom: 10),
       height: 150,
