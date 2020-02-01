@@ -39,10 +39,13 @@ Widget app_Bar(BuildContext context) {
                       end: Alignment.bottomRight)),
               child: new TextField(
                   controller: _srch,
+                  style: TextStyle(fontSize: 17, color: Colors.white70),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintStyle:
-                        new TextStyle(color: Colors.white60, fontSize: 17),
+                    hintStyle: new TextStyle(
+                        color: Colors.white60,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500),
                     hintText: 'Search',
                     icon: Container(
                         padding: EdgeInsets.only(left: 10),
@@ -55,19 +58,34 @@ Widget app_Bar(BuildContext context) {
             )),
         actions: <Widget>[
           new Container(
-            padding: EdgeInsets.only(right: 7),
-            child: IconButton(
-              onPressed: () {
-                Route route =
-                    MaterialPageRoute(builder: (context) => Notifications());
-                Navigator.push(context, route);
-              },
-              icon: Icon(
-                Icons.notifications_none,
-                size: 30,
-              ),
-            ),
-          )
+              padding: EdgeInsets.only(right: 7),
+              child: new Stack(
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      Route route = MaterialPageRoute(
+                          builder: (context) => Notifications());
+                      Navigator.push(context, route);
+                    },
+                    icon: Icon(
+                      Icons.notifications_none,
+                      size: 30,
+                    ),
+                  ),
+                  new Positioned(
+                    left: 25,
+                    top: 10,
+                    child: new CircleAvatar(
+                      radius: 8,
+                      backgroundColor: Colors.cyanAccent[200],
+                      child: Text(
+                        '1',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ),
+                  )
+                ],
+              ))
         ],
       )));
 }

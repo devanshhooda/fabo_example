@@ -14,32 +14,22 @@ class _ChatsPageState extends State<ChatsPage> {
         appBar: app_Bar(context),
         body: new Container(
           padding: EdgeInsets.only(top: 10),
-          child: new ListView(
-            children: <Widget>[
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-              chats(context),
-            ],
+          child: ListView.builder(
+            itemCount: 20,
+            itemBuilder: (context, int i) {
+              return chats(context, i);
+            },
           ),
         ));
   }
 }
 
-Widget chats(BuildContext context) {
+Widget chats(BuildContext context, int i) {
   return new Column(
     children: <Widget>[
       new ListTile(
         enabled: false,
-        leading: profilePhoto(context),
+        leading: profilePhoto(context, i),
         title: new Container(
           child: Text(
             'Name',
@@ -59,31 +49,37 @@ Widget chats(BuildContext context) {
   );
 }
 
-Widget profilePhoto(BuildContext context) {
+Widget profilePhoto(BuildContext context, int i) {
   return new Container(
     // padding: EdgeInsets.all(10),
     child: new GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return Details();
-        }));
-      },
-      child: new CircleAvatar(
-        radius: 40,
-        backgroundColor: Colors.grey[300],
-        child: FlutterLogo(
-          size: 45,
-        ),
-      ),
-    ),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return Details(i);
+          }));
+        },
+        child: new Hero(
+          tag: i,
+          child: new CircleAvatar(
+            radius: 40,
+            backgroundColor: Colors.grey[300],
+            child: FlutterLogo(
+              size: 45,
+            ),
+          ),
+        )),
   );
 }
 
 class Details extends StatelessWidget {
+  int index;
+  Details(int i) {
+    index = i;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black38,
+      backgroundColor: Colors.black,
       body: GestureDetector(
         onTap: () {
           Navigator.pop(context);
@@ -93,8 +89,11 @@ class Details extends StatelessWidget {
           height: 350,
           width: 350,
           color: Colors.white,
-          child: FlutterLogo(
-            size: 95,
+          child: Hero(
+            tag: index,
+            child: FlutterLogo(
+              size: 100,
+            ),
           ),
         )),
       ),

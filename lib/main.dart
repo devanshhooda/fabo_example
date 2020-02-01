@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Chat Page/chatsPage.dart';
 import 'Home Page/HomePage.dart';
+import 'Login - Sign up/options.dart';
 import 'Profile Page/profile_page.dart';
 
 void main() {
@@ -18,6 +19,7 @@ void main() {
     // home: ProfilePage(),
     // home: HomePage(),
     // home: ChatsPage(),
-    home: Bookings(),
+    // home: Bookings(),
+    home: OptionsPage(),
   ));
 }
