@@ -1,5 +1,6 @@
 import 'package:fabo_example_app/appBar.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 PageController pageController = new PageController();
 
@@ -69,6 +70,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: new Container(
+          // child: LiquidPullToRefresh(
+          //     height: 50,
+          //     borderWidth: 5.0,
+          //     showChildOpacityTransition: false,
           child: new ListView(
             children: <Widget>[
               _categories('Categories', 'Element'),
@@ -78,6 +83,9 @@ class _HomePageState extends State<HomePage> {
               _categories('Favourites', 'Element'),
             ],
           ),
+          // onRefresh: () {
+          //   print('Refreshed');
+          // })
         ));
   }
 }

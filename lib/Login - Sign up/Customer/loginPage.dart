@@ -179,17 +179,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            new Container(
-              width: 200,
-              child: MaterialButton(
-                onPressed: () => print('Forgot Passwod process'),
-                child: new Text(errorMsg,
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300)),
-              ),
-            ),
           ],
         ),
       )),

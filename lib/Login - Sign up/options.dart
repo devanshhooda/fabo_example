@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fabo_example_app/Login%20-%20Sign%20up/Customer/signUpPage.dart';
 import 'package:flutter/material.dart';
 
@@ -20,52 +21,57 @@ Widget _options(BuildContext context) {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft)),
       child: new Center(
-        child: new Column(
+        child: new ListView(
           children: <Widget>[
             new Container(
-              padding: EdgeInsets.only(top: 85, right: 160),
-              child: new Text('Fabo App',
-                  style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.w800,
-                      // color: Color(0xffF3B431)),
-                      color: Colors.white70)),
-            ),
-            new Expanded(
-              flex: 5,
-              child: new Container(
-                height: 600,
-                width: 410,
-                padding: EdgeInsets.only(
-                  top: 100,
-                  bottom: 170
+              padding: EdgeInsets.only(top: 85, left: 20),
+              child: RotateAnimatedTextKit(
+                transitionHeight: 100,
+                displayFullTextOnTap: true,
+                onTap: () {
+                  print('Animation Done');
+                },
+                text: ['Welcome to..', 'Fabo App'],
+                textStyle: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white70,
                 ),
-                child: new Card(
-                  color: Color.fromARGB(255, 255, 215, 255),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        padding: EdgeInsets.only(
-                          top: 30,
-                          right: 150,
-                        ),
-                        child: new Text(
-                          'Sign in as : ',
-                          style: TextStyle(
-                              fontSize: 35,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.italic),
-                        ),
+              ),
+              // child: new Text('Fabo App',
+              //     style: TextStyle(
+              //         fontSize: 50,
+              //         fontWeight: FontWeight.w800,
+              //         color: Colors.white70)),
+            ),
+            new Container(
+              height: 750,
+              width: 410,
+              padding: EdgeInsets.only(bottom: 170, left: 5, right: 5, top: 50),
+              child: new Card(
+                color: Color.fromARGB(255, 255, 215, 255),
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
+                child: new ListView(
+                  children: <Widget>[
+                    new Container(
+                      padding: EdgeInsets.only(top: 50, left: 30),
+                      child: new Text(
+                        'Sign in as : ',
+                        style: TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 50),
-                      ),
-                      new Container(
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 50),
+                    ),
+                    new Container(
+                      padding: EdgeInsets.only(left: 30, right: 30),
+                      child: new Container(
                         height: 75,
-                        width: 300,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(80),
                             gradient: LinearGradient(
@@ -85,10 +91,13 @@ Widget _options(BuildContext context) {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 50),
-                      ),
-                      new Container(
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 50),
+                    ),
+                    new Container(
+                      padding: EdgeInsets.only(left: 170),
+                      child: new Container(
                         child: new Text(
                           'OR',
                           style: TextStyle(
@@ -98,12 +107,14 @@ Widget _options(BuildContext context) {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 50),
-                      ),
-                      new Container(
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 50),
+                    ),
+                    new Container(
+                      padding: EdgeInsets.only(left: 30, right: 30),
+                      child: new Container(
                         height: 75,
-                        width: 300,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(80),
                             gradient: LinearGradient(
@@ -122,11 +133,11 @@ Widget _options(BuildContext context) {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ));

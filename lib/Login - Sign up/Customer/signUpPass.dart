@@ -176,7 +176,7 @@ class _PasswordState extends State<Password> {
                                 new Text('Terms & Conditions', style: _style)),
                         new Text('and'),
                         new FlatButton(
-                            onPressed: () => print('Terms & Conditions Page'),
+                            onPressed: () => print('Privacy policies Page'),
                             child: new Text(
                               'Privacy policies',
                               style: _style,
