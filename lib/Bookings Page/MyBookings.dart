@@ -106,7 +106,7 @@ Widget _details(String serviceName, String providerName, double price) {
             ),
             Padding(
               padding:
-                  EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 25),
+                  EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 20),
             ),
             new IconButton(
               onPressed: () => print('Location of service will be shown'),
