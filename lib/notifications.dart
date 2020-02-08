@@ -1,4 +1,4 @@
-import 'package:fabo_example_app/appBar.dart';
+import 'package:fabo_example_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 class Notifications extends StatefulWidget {
@@ -9,21 +9,40 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(appBar: app_Bar(context), body: notifs());
+    return new Scaffold(
+      appBar: new PreferredSize(
+          child: AppBar(
+            backgroundColor: Colors.deepPurpleAccent,
+            title: new Text('Notifications'),
+          ),
+          preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical * 7)),
+      body: Container(
+        height: SizeConfig.screenHeight,
+        width: SizeConfig.screenWidth,
+        child: new ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, int index) {
+              return notifs();
+            }),
+      ),
+    );
   }
 }
 
 Widget notifs() {
-  return new ListView(
+  return new Column(
     children: <Widget>[
       new ListTile(
           leading: notifPhoto(),
           title: new Container(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(
+              top: SizeConfig.safeBlockVertical * 1.5,
+            ),
             child: Text('Notification title'),
           ),
           subtitle: new Container(
-            // padding: EdgeInsets.all(10),
+            padding:
+                EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 1.5),
             child: new Text(
                 'Here the subtitle aur description may come or this may bhi removed...'),
           )),
@@ -35,10 +54,10 @@ Widget notifs() {
 Widget notifPhoto() {
   return new Container(
     child: new CircleAvatar(
-      radius: 30,
+      radius: SizeConfig.blockSizeVertical * 3,
       backgroundColor: Colors.grey[300],
       child: FlutterLogo(
-        size: 35,
+        size: SizeConfig.safeBlockVertical * 4,
       ),
     ),
   );

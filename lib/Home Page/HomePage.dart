@@ -1,8 +1,5 @@
-import 'package:fabo_example_app/appBar.dart';
+import 'package:fabo_example_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-
-PageController pageController = new PageController();
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,93 +7,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int index = 0;
-
-  void onChangeIndex(int i) {
-    setState(() {
-      index = i;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: app_Bar(context),
-        bottomNavigationBar: new Container(
-          height: 78,
-          child: BottomNavigationBar(
-            currentIndex: index,
-            selectedItemColor: Colors.purpleAccent[700],
-            unselectedItemColor: Colors.grey,
-            items: [
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    icon: Icon(Icons.home, size: 35),
-                    onPressed: () {
-                      onChangeIndex(0);
-                    },
-                  ),
-                  title: Text(
-                    'Home',
-                  )),
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    icon: Icon(
-                      Icons.chat,
-                      size: 35,
-                    ),
-                    onPressed: () {
-                      onChangeIndex(1);
-                    },
-                  ),
-                  title: Text('Chats')),
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    icon: Icon(Icons.work, size: 35),
-                    onPressed: () {
-                      onChangeIndex(2);
-                    },
-                  ),
-                  title: Text('My Bookings')),
-              BottomNavigationBarItem(
-                  icon: IconButton(
-                    icon: Icon(Icons.person, size: 35),
-                    onPressed: () {
-                      onChangeIndex(3);
-                    },
-                  ),
-                  title: Text('Profile')),
-            ],
-          ),
+      body: new Container(
+        height: SizeConfig.screenHeight,
+        width: SizeConfig.screenWidth,
+        child: new ListView(
+          children: <Widget>[
+            _categories('Categories', 'Service'),
+            _categories('Recommended for you', 'Service'),
+            _categories('Special offers', 'Service'),
+            _categories('Top offers', 'Service'),
+            _categories('Favourites', 'Service'),
+          ],
         ),
-        body: new Container(
-          // child: LiquidPullToRefresh(
-          //     height: 50,
-          //     borderWidth: 5.0,
-          //     showChildOpacityTransition: false,
-          child: new ListView(
-            children: <Widget>[
-              _categories('Categories', 'Element'),
-              _categories('Recommended for you', 'Element'),
-              _categories('Special offers', 'Element'),
-              _categories('Top offers', 'Element'),
-              _categories('Favourites', 'Element'),
-            ],
-          ),
-          // onRefresh: () {
-          //   print('Refreshed');
-          // })
-        ));
+      ),
+    );
   }
 }
 
 Widget _categories(String title, String subtitle) {
   return new Container(
-    padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+    padding: EdgeInsets.only(
+        top: SizeConfig.safeBlockVertical * 0.5,
+        left: SizeConfig.safeBlockHorizontal * 2,
+        right: SizeConfig.safeBlockHorizontal * 2,
+        bottom: SizeConfig.safeBlockVertical * 0.5),
     child: new Column(
       children: <Widget>[
         SizedBox(
-          height: 10,
+          height: SizeConfig.safeBlockVertical * 1,
         ),
         new Container(
           decoration: BoxDecoration(
@@ -124,21 +65,19 @@ Widget _categories(String title, String subtitle) {
                 child: new Row(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: EdgeInsets.only(
+                          left: SizeConfig.safeBlockHorizontal * 3),
                     ),
                     new Text(
                       title,
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 17),
+                          fontSize: SizeConfig.safeBlockHorizontal * 4.5),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(left: 200,),
-                    // ),
                     new Icon(
                       Icons.chevron_right,
-                      size: 25,
+                      size: SizeConfig.safeBlockVertical * 3,
                       color: Colors.white,
                     ),
                   ],
@@ -166,9 +105,11 @@ Widget _categories(String title, String subtitle) {
 
 Widget _services(String subtitle) {
   return new Container(
-      padding: EdgeInsets.only(left: 10, bottom: 10),
-      height: 150,
-      width: 150,
+      padding: EdgeInsets.only(
+          left: SizeConfig.safeBlockHorizontal * 2,
+          bottom: SizeConfig.safeBlockHorizontal * 2),
+      height: SizeConfig.blockSizeVertical * 17,
+      width: SizeConfig.blockSizeHorizontal * 38,
       child: new GestureDetector(
         onTap: () => print('Details of Service'),
         child: new Card(
@@ -177,17 +118,17 @@ Widget _services(String subtitle) {
           child: new Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
               ),
               new FlutterLogo(
-                size: 80,
+                size: SizeConfig.blockSizeVertical * 9,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 1),
               ),
               new Text(
                 subtitle,
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
               )
             ],
           ),

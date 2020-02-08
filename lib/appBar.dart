@@ -1,11 +1,15 @@
+import 'package:fabo_example_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'notifications.dart';
 
 TextEditingController _srch = new TextEditingController();
 
-Widget app_Bar(BuildContext context) {
+Widget app_Bar(
+  BuildContext context,
+) {
+  SizeConfig().init(context);
   return PreferredSize(
-      preferredSize: Size.fromHeight(100),
+      preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical * 13),
       child: Container(
           child: new AppBar(
         elevation: 10,
@@ -15,21 +19,28 @@ Widget app_Bar(BuildContext context) {
                 bottomLeft: Radius.circular(40),
                 bottomRight: Radius.circular(40))),
         title: new Container(
-          padding: EdgeInsets.all(25),
+          padding: EdgeInsets.only(
+              left: SizeConfig.safeBlockHorizontal * 2,
+              right: SizeConfig.safeBlockHorizontal * 2,
+              // top: SizeConfig.safeBlockVertical * 2,
+              bottom: SizeConfig.safeBlockVertical * 1),
           child: Text(
             'FaBo',
-            style: TextStyle(fontSize: 30, letterSpacing: 3),
+            style: TextStyle(
+                fontSize: SizeConfig.safeBlockHorizontal * 7, letterSpacing: 3),
           ),
         ),
-        // centerTitle: true,
+        centerTitle: true,
         flexibleSpace: new Container(
             padding: EdgeInsets.only(
-              top: 80,
-              left: 20,
-              right: 20,
-            ),
+                top: SizeConfig.safeBlockVertical * 10,
+                left: SizeConfig.safeBlockHorizontal * 5,
+                right: SizeConfig.safeBlockHorizontal * 5,
+                bottom: SizeConfig.safeBlockVertical * 0.5),
             child: new Container(
-              margin: EdgeInsets.only(bottom: 7, top: 5),
+              margin: EdgeInsets.only(
+                  bottom: SizeConfig.safeBlockVertical * 0.5,
+                  top: SizeConfig.safeBlockVertical * 0.5),
               decoration: BoxDecoration(
                   color: Color.fromARGB(100, 255, 255, 255),
                   borderRadius: BorderRadius.circular(40),
@@ -38,27 +49,33 @@ Widget app_Bar(BuildContext context) {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight)),
               child: new TextField(
+                  cursorColor: Colors.white30,
+                  cursorWidth: 1.5,
                   controller: _srch,
-                  style: TextStyle(fontSize: 17, color: Colors.white70),
+                  style: TextStyle(
+                      fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                      color: Colors.white70),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintStyle: new TextStyle(
                         color: Colors.white60,
-                        fontSize: 17,
+                        fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                         fontWeight: FontWeight.w500),
                     hintText: 'Search',
                     icon: Container(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: EdgeInsets.only(
+                            left: SizeConfig.safeBlockHorizontal * 3.5),
                         child: Icon(
                           Icons.search,
                           color: Colors.white54,
-                          size: 30,
+                          size: SizeConfig.safeBlockVertical * 3.2,
                         )),
                   )),
             )),
         actions: <Widget>[
           new Container(
-              padding: EdgeInsets.only(right: 7),
+              padding:
+                  EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 2),
               child: new Stack(
                 children: <Widget>[
                   IconButton(
@@ -69,21 +86,24 @@ Widget app_Bar(BuildContext context) {
                     },
                     icon: Icon(
                       Icons.notifications_none,
-                      size: 30,
+                      size: SizeConfig.safeBlockVertical * 3.7,
                     ),
                   ),
-                  new Positioned(
-                    left: 25,
-                    top: 10,
-                    child: new CircleAvatar(
-                      radius: 8,
-                      backgroundColor: Colors.cyanAccent[200],
-                      child: Text(
-                        '1',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ),
-                  )
+                  // new Positioned(
+                  //   left: SizeConfig.safeBlockHorizontal * 7,
+                  //   top: SizeConfig.safeBlockVertical * 1.5,
+                  //   child: new CircleAvatar(
+                  //     radius: SizeConfig.blockSizeVertical * 0.9,
+                  //     backgroundColor: Colors.pink[200],
+                  //     child: Text(
+                  //       '10',
+                  //       style: TextStyle(
+                  //           fontSize: SizeConfig.safeBlockHorizontal * 2.2,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: Colors.black),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ))
         ],

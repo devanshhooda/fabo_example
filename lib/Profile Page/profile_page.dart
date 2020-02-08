@@ -1,18 +1,23 @@
-import 'package:fabo_example_app/appBar.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import '../sizeConfig.dart';
 
 TextStyle _nameStyle = new TextStyle(
-    fontSize: 28,
+    fontSize: SizeConfig.safeBlockHorizontal * 7,
     color: Colors.deepPurple[900],
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.italic);
-TextStyle _emailStyle = new TextStyle(
-    fontSize: 22, color: Colors.deepPurple[900], fontWeight: FontWeight.w500);
 TextStyle _addressStyle = new TextStyle(
-    fontSize: 20,
+    fontSize: SizeConfig.safeBlockHorizontal * 5,
+    color: Colors.deepPurple[900],
+    fontWeight: FontWeight.w500);
+TextStyle _adDetailStyle = new TextStyle(
+    fontSize: SizeConfig.safeBlockHorizontal * 4.7,
     color: Colors.deepPurple[700],
     fontWeight: FontWeight.w400,
-    wordSpacing: 2);
+    wordSpacing: 2,
+    letterSpacing: 2);
+String imageUrl = 'assets/cris.jpeg';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -23,86 +28,42 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: app_Bar(context),
       body: new Container(
+        height: SizeConfig.screenHeight,
+        width: SizeConfig.screenWidth,
         decoration: BoxDecoration(
             gradient: RadialGradient(
                 center: Alignment.center,
                 colors: [Colors.purple, Colors.white],
-                radius: 0.9)),
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+                radius: 0.85)),
+        child: new ListView(
           children: <Widget>[
             new Container(
-              padding: EdgeInsets.all(40),
+              padding: EdgeInsets.only(
+                top: SizeConfig.safeBlockVertical * 15,
+              ),
               alignment: Alignment.center,
               child: new GestureDetector(
-                child: profilePhoto(),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ExtendedImage();
+                  }));
+                },
+                child: new Hero(tag: 1, child: profilePhoto()),
               ),
             ),
-            new Container(
-              // padding: EdgeInsets.only(top: 10),
-              child: new Text(
-                'Cris Evans',
-                style: _nameStyle,
-              ),
-            ),
-            new Container(
-              padding: EdgeInsets.only(top: 30, bottom: 5, right: 250),
-              child: new Text(
-                'Address: ',
-                style: _emailStyle,
-              ),
-            ),
-            new Container(
-              padding: EdgeInsets.only(left: 50, right: 50),
-              child: new Text(
-                '3 Arts Entertainment 9460 Wilshire Blvd. 7th Floor Beverly Hills, CA 90212 USA',
-                style: _addressStyle,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 100),
-            ),
-            new Container(
-              height: 60,
-              width: 250,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  gradient: LinearGradient(
-                      colors: [Colors.purple, Colors.redAccent],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight)),
-              child: new MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-                onPressed: () => print('Geolocation Should be displayed'),
-                child: new Container(
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                      ),
-                      new Text(
-                        'Geolocation',
-                        style: TextStyle(fontSize: 25, color: Colors.white),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                      ),
-                      new Icon(
-                        Icons.location_on,
-                        size: 27,
-                        color: Colors.white,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
+            info(context),
           ],
+        ),
+      ),
+      floatingActionButton: new Container(
+        alignment: Alignment.topRight,
+        padding: EdgeInsets.only(
+            top: SizeConfig.safeBlockVertical * 5,
+            right: SizeConfig.safeBlockHorizontal * 5),
+        child: new FloatingActionButton(
+          onPressed: () => print('Geolocation Should be printed'),
+          child: Icon(Icons.location_on),
         ),
       ),
     );
@@ -111,10 +72,88 @@ class _ProfilePageState extends State<ProfilePage> {
 
 Widget profilePhoto() {
   return new CircleAvatar(
-    radius: 100,
+    radius: SizeConfig.blockSizeVertical * 15,
     backgroundColor: Colors.grey[300],
     backgroundImage: AssetImage(
-      'assets/cris.jpeg',
+      imageUrl,
     ),
   );
+}
+
+Widget info(BuildContext context) {
+  return new Container(
+    child: new Column(
+      children: <Widget>[
+        new Container(
+          padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 5),
+          child: new ColorizeAnimatedTextKit(
+            speed: Duration(seconds: 1),
+            text: [
+              'Chris Evans',
+            ],
+            textStyle: _nameStyle,
+            colors: [
+              Colors.deepPurple[900],
+              Colors.blue,
+              Colors.blueGrey,
+              Colors.indigo,
+              Colors.purple,
+              Colors.black,
+              Colors.pink,
+              Colors.deepPurpleAccent
+            ],
+          ),
+        ),
+        new Container(
+          padding: new EdgeInsets.only(
+              right: SizeConfig.safeBlockHorizontal * 60,
+              top: SizeConfig.safeBlockVertical * 3),
+          child: new Text(
+            'Address : ',
+            style: _addressStyle,
+          ),
+        ),
+        new Container(
+          padding: new EdgeInsets.only(
+              left: SizeConfig.safeBlockHorizontal * 13,
+              right: SizeConfig.safeBlockHorizontal * 10,
+              top: SizeConfig.safeBlockVertical * 1.5),
+          child: new TypewriterAnimatedTextKit(
+            displayFullTextOnTap: true,
+            speed: Duration(milliseconds: 200),
+            text: [
+              '3 Arts Entertainment 9460 Wilshire Blvd. 7th Floor Beverly Hills, CA 90212 USA'
+            ],
+            textStyle: _adDetailStyle,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+class ExtendedImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: GestureDetector(
+        onHorizontalDragDown: (DragDownDetails dragDownDetails) {
+          Navigator.pop(context);
+        },
+        child: Center(
+            child: new Container(
+          height: SizeConfig.blockSizeVertical * 45,
+          width: SizeConfig.blockSizeVertical * 45,
+          color: Colors.white,
+          child: Hero(
+              tag: 1,
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.fill,
+              )),
+        )),
+      ),
+    );
+  }
 }
