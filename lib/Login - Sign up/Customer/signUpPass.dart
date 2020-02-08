@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../sizeConfig.dart';
 
 TextEditingController _pass = new TextEditingController();
-TextEditingController cnfrm_pass = new TextEditingController();
+TextEditingController _cnfrmPass = new TextEditingController();
 TextStyle _style = new TextStyle(
     fontSize: SizeConfig.safeBlockHorizontal * 4, color: Colors.blue);
 String errorMsg = "";
@@ -47,7 +47,7 @@ class _PasswordState extends State<Password> {
                   ),
                 ),
                 SizedBox(
-                  height: SizeConfig.safeBlockVertical * 15,
+                  height: SizeConfig.safeBlockVertical * 10,
                 ),
                 new Container(
                   padding: EdgeInsets.only(
@@ -117,7 +117,7 @@ class _PasswordState extends State<Password> {
                             EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
                         child: new TextField(
                           obscureText: true,
-                          controller: cnfrm_pass,
+                          controller: _cnfrmPass,
                           style: TextStyle(
                               fontSize: SizeConfig.safeBlockHorizontal * 5.5,
                               fontWeight: FontWeight.w600,
@@ -152,7 +152,7 @@ class _PasswordState extends State<Password> {
                   child: new RaisedButton(
                     onPressed: () {
                       if (_pass.toString().isEmpty ||
-                          cnfrm_pass.toString().isEmpty) {
+                          _cnfrmPass.toString().isEmpty) {
                         detectError();
                       } else {
                         print('Home Page screen');
@@ -174,31 +174,22 @@ class _PasswordState extends State<Password> {
                 ),
                 new Container(
                   padding:
-                      EdgeInsets.only(top: SizeConfig.safeBlockVertical * 10),
+                      EdgeInsets.only(top: SizeConfig.safeBlockVertical * 5),
                   child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Text(
                           'By signing up, you agree to the Metaducator\'s'),
-                      new Container(
-                        padding: EdgeInsets.only(
-                            left: SizeConfig.safeBlockHorizontal * 7),
-                        child: new Row(
-                          children: <Widget>[
-                            new FlatButton(
-                                onPressed: () =>
-                                    print('Terms & Conditions Page'),
-                                child: new Text('Terms & Conditions',
-                                    style: _style)),
-                            new Text('and'),
-                            new FlatButton(
-                                onPressed: () => print('Privacy policies Page'),
-                                child: new Text(
-                                  'Privacy policies',
-                                  style: _style,
-                                )),
-                          ],
-                        ),
-                      )
+                      new FlatButton(
+                          onPressed: () => print('Terms & Conditions Page'),
+                          child: new Text('Terms & Conditions', style: _style)),
+                      new Text('&'),
+                      new FlatButton(
+                          onPressed: () => print('Privacy policies Page'),
+                          child: new Text(
+                            'Privacy policies',
+                            style: _style,
+                          )),
                     ],
                   ),
                 )
