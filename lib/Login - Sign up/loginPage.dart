@@ -1,17 +1,18 @@
-import 'package:fabo_example_app/Login%20-%20Sign%20up/Customer/loginPage.dart';
-import 'package:fabo_example_app/sizeConfig.dart';
+import 'package:fabo_example_app/main.dart';
 import 'package:flutter/material.dart';
-import 'numberSignUp.dart';
 
-TextEditingController _name = new TextEditingController();
+import '../sizeConfig.dart';
+
+TextEditingController _phNum = new TextEditingController();
+TextEditingController _pass = new TextEditingController();
 String errorMsg = "";
 
-class Name extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _NameState createState() => _NameState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _NameState extends State<Name> {
+class _LoginPageState extends State<LoginPage> {
   void detectError() {
     setState(() {
       errorMsg = "The above column can't be empty";
@@ -38,47 +39,35 @@ class _NameState extends State<Name> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: SizeConfig.safeBlockVertical * 2.5,
-                      ),
+                      icon: Icon(Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: SizeConfig.safeBlockVertical * 2.5),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: SizeConfig.safeBlockVertical * 10,
+                  height: SizeConfig.safeBlockVertical * 7,
                 ),
                 new Container(
                   padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 30),
+                      left: SizeConfig.safeBlockHorizontal * 35),
                   child: new Text(
-                    'Sign Up',
+                    'Login',
                     style: TextStyle(
                         fontSize: SizeConfig.safeBlockHorizontal * 12,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                new Container(
-                  padding: EdgeInsets.only(
-                      top: SizeConfig.safeBlockVertical * 9,
-                      left: SizeConfig.safeBlockHorizontal * 7),
-                  child: new Text(
-                    'Enter your name :',
-                    style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 8),
-                  ),
-                ),
                 SizedBox(
-                  height: SizeConfig.safeBlockVertical * 3,
+                  height: SizeConfig.safeBlockVertical * 8,
                 ),
                 new Card(
-                  margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                  child: new Container(
-                      height: SizeConfig.blockSizeVertical * 7.5,
+                    margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                    child: new Container(
+                      height: SizeConfig.blockSizeVertical * 7,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
                           gradient: LinearGradient(
@@ -86,24 +75,65 @@ class _NameState extends State<Name> {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight)),
                       child: new Container(
+                          height: SizeConfig.blockSizeVertical * 7,
+                          padding:
+                              EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                          child: new TextField(
+                            controller: _phNum,
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 5.5,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.deepPurple),
+                            keyboardType: TextInputType.number,
+                            cursorWidth: 2.5,
+                            cursorColor: Colors.purpleAccent,
+                            decoration: InputDecoration(
+                              hintText: 'Phone Number',
+                              border: InputBorder.none,
+                              icon: Icon(
+                                Icons.phone,
+                                size: SizeConfig.safeBlockVertical * 4.5,
+                              ),
+                            ),
+                          )),
+                    )),
+                SizedBox(
+                  height: SizeConfig.safeBlockVertical * 5,
+                ),
+                new Card(
+                  margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                  child: new Container(
+                      height: SizeConfig.blockSizeVertical * 7,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          gradient: LinearGradient(
+                              colors: [Colors.white, Colors.purpleAccent],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight)),
+                      child: new Container(
+                        height: SizeConfig.blockSizeVertical * 7,
                         padding:
                             EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
                         child: new TextField(
-                          controller: _name,
+                          obscureText: true,
+                          controller: _pass,
                           style: TextStyle(
                               fontSize: SizeConfig.safeBlockHorizontal * 5.5,
                               fontWeight: FontWeight.w600,
                               color: Colors.deepPurple),
-                          textCapitalization: TextCapitalization.words,
                           cursorWidth: 2.5,
                           cursorColor: Colors.purpleAccent,
                           decoration: InputDecoration(
-                              hintText: 'Chris Evans',
-                              border: InputBorder.none,
-                              icon: Icon(
-                                Icons.person,
-                                size: SizeConfig.safeBlockVertical * 4.5,
-                              )),
+                            hintText: 'Password',
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.lock,
+                              size: SizeConfig.safeBlockVertical * 4,
+                            ),
+                          ),
                         ),
                       )),
                 ),
@@ -111,28 +141,36 @@ class _NameState extends State<Name> {
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
                 new Container(
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.safeBlockHorizontal * 43),
+                  child: FlatButton(
+                    onPressed: () => print('Forgot Passwod process'),
+                    child: new Text('Forgot Password ?',
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: SizeConfig.safeBlockHorizontal * 5,
+                            fontWeight: FontWeight.w500)),
+                  ),
+                ),
+                SizedBox(
+                  height: SizeConfig.safeBlockVertical * 4,
+                ),
+                new Container(
                   child: new Text(
                     errorMsg,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
-                SizedBox(
-                  height: SizeConfig.safeBlockVertical * 2,
-                ),
                 new Container(
-                  height: SizeConfig.blockSizeVertical * 5.5,
+                  height: SizeConfig.blockSizeVertical * 6,
                   padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 60,
-                      right: SizeConfig.safeBlockHorizontal * 5),
+                      left: SizeConfig.safeBlockHorizontal * 20,
+                      right: SizeConfig.safeBlockHorizontal * 20),
                   child: new RaisedButton(
                     onPressed: () {
-                      if (_name.toString().isNotEmpty) {
-                        print('No. Screen');
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PhoneNumber()));
-                      } else {
-                        detectError();
-                      }
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MyApp(),
+                      ));
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
@@ -140,7 +178,7 @@ class _NameState extends State<Name> {
                     elevation: 7,
                     child: new Container(
                       child: new Text(
-                        'Next',
+                        'Login',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.safeBlockHorizontal * 6),
@@ -206,41 +244,6 @@ class _NameState extends State<Name> {
                         ),
                       ),
                     )),
-                new Container(
-                  padding: EdgeInsets.only(
-                      top: SizeConfig.safeBlockVertical * 6,
-                      left: SizeConfig.safeBlockHorizontal * 7,
-                      // right: SizeConfig.safeBlockHorizontal * 5,
-                      bottom: SizeConfig.safeBlockVertical * 5),
-                  child: new Row(
-                    children: <Widget>[
-                      new Text(
-                        'Already have an account ?',
-                        style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 5),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: SizeConfig.safeBlockHorizontal * 3)),
-                      new GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LoginPage()));
-                          print('Login Page');
-                        },
-                        child: new Text(
-                          'Login.',
-                          style: TextStyle(
-                              letterSpacing: 1,
-                              fontSize: SizeConfig.safeBlockHorizontal * 6,
-                              color: Colors.blue,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      )
-                    ],
-                  ),
-                )
               ],
             ),
           )),

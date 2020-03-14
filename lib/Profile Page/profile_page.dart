@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import '../sizeConfig.dart';
 
@@ -34,8 +33,8 @@ class _ProfilePageState extends State<ProfilePage> {
         decoration: BoxDecoration(
             gradient: RadialGradient(
                 center: Alignment.center,
-                colors: [Colors.purple, Colors.white],
-                radius: 0.85)),
+                colors: [Colors.purple[200], Colors.white],
+                radius: 1)),
         child: new ListView(
           children: <Widget>[
             new Container(
@@ -86,22 +85,9 @@ Widget info(BuildContext context) {
       children: <Widget>[
         new Container(
           padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 5),
-          child: new ColorizeAnimatedTextKit(
-            speed: Duration(seconds: 1),
-            text: [
-              'Chris Evans',
-            ],
-            textStyle: _nameStyle,
-            colors: [
-              Colors.deepPurple[900],
-              Colors.blue,
-              Colors.blueGrey,
-              Colors.indigo,
-              Colors.purple,
-              Colors.black,
-              Colors.pink,
-              Colors.deepPurpleAccent
-            ],
+          child: new Text(
+            'Chris Evans',
+            style: _nameStyle,
           ),
         ),
         new Container(
@@ -118,13 +104,9 @@ Widget info(BuildContext context) {
               left: SizeConfig.safeBlockHorizontal * 13,
               right: SizeConfig.safeBlockHorizontal * 10,
               top: SizeConfig.safeBlockVertical * 1.5),
-          child: new TypewriterAnimatedTextKit(
-            displayFullTextOnTap: true,
-            speed: Duration(milliseconds: 200),
-            text: [
-              '3 Arts Entertainment 9460 Wilshire Blvd. 7th Floor Beverly Hills, CA 90212 USA'
-            ],
-            textStyle: _adDetailStyle,
+          child: new Text(
+            '3 Arts Entertainment 9460 Wilshire Blvd. 7th Floor Beverly Hills, CA 90212 USA',
+            style: _adDetailStyle,
           ),
         )
       ],

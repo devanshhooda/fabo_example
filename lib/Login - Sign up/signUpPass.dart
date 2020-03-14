@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../sizeConfig.dart';
+import '../sizeConfig.dart';
 
 TextEditingController _pass = new TextEditingController();
 TextEditingController _cnfrmPass = new TextEditingController();

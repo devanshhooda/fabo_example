@@ -1,7 +1,6 @@
-import 'package:fabo_example_app/Login%20-%20Sign%20up/Customer/signUpPass.dart';
 import 'package:flutter/material.dart';
-
-import '../../sizeConfig.dart';
+import '../sizeConfig.dart';
+import 'signUpPass.dart';
 
 TextEditingController _number = new TextEditingController();
 String errorMsg = "";

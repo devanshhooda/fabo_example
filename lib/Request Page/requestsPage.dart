@@ -1,12 +1,22 @@
+import 'package:fabo_example_app/Bookings%20Page/MyBookings.dart';
 import 'package:fabo_example_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
-class ChatsPage extends StatefulWidget {
-  @override
-  _ChatsPageState createState() => _ChatsPageState();
-}
 
-class _ChatsPageState extends State<ChatsPage> {
+TextStyle _subtitle =
+    new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4);
+
+class Requests extends StatelessWidget {
+  List<String> titles = [
+    'Macbook Air (13 inch)',
+    'Onida Washing machine',
+    'Fastrack Watch'
+  ];
+
+  List<String> noOfReplies = ['53', '13', '3'];
+
+  List<String> prices = ['80,000', '10,000', '2,000'];
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -15,37 +25,64 @@ class _ChatsPageState extends State<ChatsPage> {
       width: SizeConfig.screenWidth,
       padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 1),
       child: ListView.builder(
-        itemCount: 20,
+        itemCount: 3,
         itemBuilder: (context, int i) {
-          return chats(context, i);
+          return _requests(context, titles[i], noOfReplies[i], prices[i], i);
         },
       ),
     ));
   }
 }
 
-Widget chats(BuildContext context, int i) {
+Widget _requests(
+    BuildContext context, String title, String replies, String price, int i) {
   return new Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       new ListTile(
-        enabled: false,
+        // enabled: false,
+        isThreeLine: true,
         leading: profilePhoto(context, i),
         title: new Container(
           child: Text(
-            'Name',
+            '$title',
             style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                fontSize: SizeConfig.safeBlockHorizontal * 5,
                 color: Colors.black,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.start,
           ),
         ),
-        subtitle: new Container(
-          child: new Text('Last message...'),
+        subtitle: new Column(
+          children: <Widget>[
+            new Container(
+                child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                new Text(
+                  'Replies: $replies',
+                  style: _subtitle,
+                ),
+                new Text(
+                  'Rs $price (min)',
+                  style: _subtitle,
+                ),
+              ],
+            )),
+          ],
         ),
+        onTap: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => Bookings(title)));
+        },
       ),
       new Container(
-        width: SizeConfig.blockSizeHorizontal * 90,
-        child: new Divider(),
+        padding: EdgeInsets.only(
+            right: SizeConfig.safeBlockHorizontal * 3,
+            left: SizeConfig.safeBlockHorizontal * 3),
+        child: new Divider(
+          thickness: 0.7,
+        ),
       )
     ],
   );
@@ -62,7 +99,7 @@ Widget profilePhoto(BuildContext context, int i) {
         child: new Hero(
           tag: i,
           child: new CircleAvatar(
-            radius: SizeConfig.blockSizeVertical * 3.5,
+            radius: SizeConfig.blockSizeVertical * 4,
             backgroundColor: Colors.grey[300],
             child: FlutterLogo(
               size: SizeConfig.blockSizeVertical * 5,

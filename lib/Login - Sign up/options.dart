@@ -1,7 +1,7 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:fabo_example_app/Login%20-%20Sign%20up/Customer/signUpPage.dart';
 import 'package:flutter/material.dart';
 import '../sizeConfig.dart';
+import 'loginPage.dart';
+import 'signUpPage.dart';
 
 class OptionsPage extends StatelessWidget {
   @override
@@ -17,51 +17,55 @@ Widget _options(BuildContext context) {
   return new Container(
       height: SizeConfig.screenHeight,
       width: SizeConfig.screenWidth,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.purple, Colors.white70],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft)),
+      color: Color.fromARGB(205, 125, 135, 215),
       child: new Center(
-        child: new ListView(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Container(
-              padding: EdgeInsets.only(
-                  top: SizeConfig.safeBlockVertical * 10,
-                  left: SizeConfig.safeBlockHorizontal * 5),
-              child: RotateAnimatedTextKit(
-                transitionHeight: 100,
-                onTap: () {
-                  print('Animation Done');
-                },
-                text: ['Welcome to..', 'Fabo App'],
-                textStyle: TextStyle(
-                  fontSize: SizeConfig.safeBlockHorizontal * 12,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white70,
-                ),
+              child: new Text(
+                'Prizey',
+                style: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 12,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white70),
               ),
             ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 7,
+            ),
+            new Text(
+              'Find the best price \n in your neighbourhood',
+              style: TextStyle(fontSize: 25, color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 1,
+            ),
             new Container(
-              height: SizeConfig.blockSizeVertical * 70,
+              height: SizeConfig.blockSizeVertical * 60,
+              width: SizeConfig.blockSizeHorizontal * 100,
               padding: EdgeInsets.only(
-                  left: SizeConfig.safeBlockHorizontal * 1,
-                  right: SizeConfig.safeBlockHorizontal * 1,
-                  top: SizeConfig.safeBlockVertical * 5),
+                left: SizeConfig.safeBlockHorizontal * 1,
+                right: SizeConfig.safeBlockHorizontal * 1,
+                // top: SizeConfig.safeBlockVertical * 5
+              ),
               child: new Card(
-                color: Color.fromARGB(255, 255, 215, 255),
+                color: Colors.indigo[50],
                 elevation: 15,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(46)),
-                child: new ListView(
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     new Container(
                       padding: EdgeInsets.only(
-                          top: SizeConfig.safeBlockVertical * 8,
-                          left: SizeConfig.safeBlockHorizontal * 8),
+                          top: SizeConfig.safeBlockVertical * 3,
+                          right: SizeConfig.safeBlockHorizontal * 30),
                       child: new Text(
-                        'Sign in as : ',
+                        'New User ?',
                         style: TextStyle(
+                            color: Colors.indigo,
                             fontSize: SizeConfig.safeBlockHorizontal * 8.5,
                             fontWeight: FontWeight.w500,
                             fontStyle: FontStyle.italic),
@@ -69,82 +73,85 @@ Widget _options(BuildContext context) {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: SizeConfig.safeBlockVertical * 8),
+                          top: SizeConfig.safeBlockVertical * 2),
                     ),
                     new Container(
                       height: SizeConfig.blockSizeVertical * 10,
+                      width: SizeConfig.blockSizeHorizontal * 70,
                       padding: EdgeInsets.only(
+                          // top: SizeConfig.safeBlockHorizontal * 5,
                           left: SizeConfig.safeBlockHorizontal * 9,
                           right: SizeConfig.safeBlockHorizontal * 9),
                       child: new Container(
                         height: SizeConfig.blockSizeVertical * 8.5,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(80),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Colors.purpleAccent,
-                                  Colors.cyanAccent
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight)),
+                            color: Colors.indigo[300]),
                         child: new MaterialButton(
                           onPressed: () {
-                            print('Service Provider Page');
+                            print('Sign Up page');
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Name()));
                           },
                           child: new Text(
-                            'Service Provider',
+                            'Sign Up',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: SizeConfig.safeBlockHorizontal * 7),
+                                color: Colors.white,
+                                fontSize: SizeConfig.safeBlockHorizontal * 8),
                           ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: SizeConfig.safeBlockVertical * 7),
-                    ),
                     new Container(
                       padding: EdgeInsets.only(
-                          left: SizeConfig.safeBlockHorizontal * 43),
+                          // left: SizeConfig.safeBlockHorizontal * 43
+                          top: SizeConfig.blockSizeVertical * 5),
                       child: new Container(
                         child: new Text(
                           'OR',
                           style: TextStyle(
                               letterSpacing: 2,
-                              color: Colors.deepPurpleAccent,
+                              color: Colors.indigoAccent[200],
                               fontSize: SizeConfig.safeBlockHorizontal * 7,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: SizeConfig.safeBlockVertical * 7),
-                    ),
                     new Container(
                       padding: EdgeInsets.only(
-                          left: SizeConfig.safeBlockHorizontal * 9,
-                          right: SizeConfig.safeBlockHorizontal * 9),
+                          top: SizeConfig.safeBlockVertical * 5,
+                          right: SizeConfig.safeBlockHorizontal * 20),
+                      child: new Text(
+                        'Existing User ?',
+                        style: TextStyle(
+                            color: Colors.indigo,
+                            fontSize: SizeConfig.safeBlockHorizontal * 8.5,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: SizeConfig.safeBlockVertical * 2),
+                    ),
+                    new Container(
                       child: new Container(
                         height: SizeConfig.blockSizeVertical * 10,
+                        width: SizeConfig.blockSizeHorizontal * 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(80),
-                            gradient: LinearGradient(
-                                colors: [Colors.deepPurple, Colors.cyanAccent],
-                                end: Alignment.topLeft,
-                                begin: Alignment.bottomRight)),
+                            color: Colors.indigo[300]),
                         child: new MaterialButton(
                           onPressed: () {
-                            print('Customer Page');
+                            print('Login Page');
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Name()));
+                                builder: (context) => LoginPage()));
                           },
                           child: new Text(
-                            'Customer',
+                            'Login',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: SizeConfig.safeBlockHorizontal * 7),
+                                color: Colors.white,
+                                fontSize: SizeConfig.safeBlockHorizontal * 8),
                           ),
                         ),
                       ),

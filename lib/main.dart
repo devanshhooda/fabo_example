@@ -1,11 +1,12 @@
-import 'package:fabo_example_app/Bookings%20Page/MyBookings.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:fabo_example_app/appBar.dart';
+import 'package:fabo_example_app/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'Chat Page/chatsPage.dart';
 import 'Home Page/HomePage.dart';
 import 'Login - Sign up/options.dart';
 import 'Profile Page/profile_page.dart';
+import 'Request Page/requestsPage.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -13,8 +14,8 @@ void main() {
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-      primarySwatch: Colors.purple,
-      primaryColor: Colors.purpleAccent,
+      primarySwatch: Colors.indigo,
+      primaryColor: Colors.indigoAccent,
     ),
     home: OptionsPage(),
     // home: MyApp(),
@@ -37,21 +38,39 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         index = _index;
         pageController.animateToPage(_index,
-            duration: Duration(milliseconds: 1000), curve: Curves.ease);
+            duration: Duration(milliseconds: 270), curve: Curves.ease);
       });
     }
 
-    List<BottomNavigationBarItem> bottomItems = [
-      BottomNavigationBarItem(
+    // List<BottomNavigationBarItem> bottomItems = [
+    //   BottomNavigationBarItem(
+    //       icon: Icon(Icons.home),
+    //       title: Text(
+    //         'Home',
+    //       )),
+    //   // BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chats')),
+    //   BottomNavigationBarItem(
+    //       icon: Icon(Icons.work, size: 35), title: Text('My Bookings')),
+    //   BottomNavigationBarItem(
+    //       icon: Icon(Icons.person, size: 35), title: Text('Profile')),
+    // ];
+
+    List<BottomNavyBarItem> bottomItems = [
+      BottomNavyBarItem(
           icon: Icon(Icons.home),
-          title: Text(
-            'Home',
-          )),
-      BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chats')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.work, size: 35), title: Text('My Bookings')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.person, size: 35), title: Text('Profile')),
+          title: Text('Home'),
+          activeColor: Colors.deepPurpleAccent,
+          inactiveColor: Colors.grey),
+      BottomNavyBarItem(
+          icon: Icon(Icons.mobile_screen_share),
+          title: Text('Requests'),
+          activeColor: Colors.blue,
+          inactiveColor: Colors.grey),
+      BottomNavyBarItem(
+          icon: Icon(Icons.person),
+          title: Text('Profile'),
+          activeColor: Colors.pink,
+          inactiveColor: Colors.grey),
     ];
 
     @override
@@ -62,31 +81,43 @@ class _MyAppState extends State<MyApp> {
     Widget _pageView() {
       return new PageView(
         controller: pageController,
-        pageSnapping: true,
         onPageChanged: (index) {
           onPageChange(index);
         },
         children: <Widget>[
           HomePage(),
-          ChatsPage(),
-          Bookings(),
+          Requests(),
           ProfilePage(),
         ],
       );
     }
 
+    SizeConfig().init(context);
+
     return new Scaffold(
       appBar: app_Bar(context),
-      bottomNavigationBar: BottomNavigationBar(
-          iconSize: 30,
-          currentIndex: index,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.purpleAccent[700],
-          unselectedItemColor: Colors.grey,
-          onTap: (index) {
-            onPageChange(index);
-          },
-          items: bottomItems),
+      bottomNavigationBar: BottomNavyBar(
+        curve: Curves.ease,
+        // showElevation: false,
+        iconSize: SizeConfig.blockSizeHorizontal * 8,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        items: bottomItems,
+        selectedIndex: index,
+        onItemSelected: (index) {
+          onPageChange(index);
+        },
+        // backgroundColor: Color.fromARGB(225, 255, 225, 255),
+      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //     iconSize: 30,
+      //     currentIndex: index,
+      //     type: BottomNavigationBarType.fixed,
+      //     selectedItemColor: Colors.purpleAccent[700],
+      //     unselectedItemColor: Colors.grey,
+      // onTap: (index) {
+      //   onPageChange(index);
+      // },
+      //     items: bottomItems),
       body: _pageView(),
     );
   }
