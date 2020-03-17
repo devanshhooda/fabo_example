@@ -1,5 +1,4 @@
-
-import 'package:fabo_example_app/sizeConfig.dart';
+import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,23 +41,25 @@ Widget _categories(String title, String subtitle) {
         ),
         new Container(
           decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black38,
-                  blurRadius: 40.0,
-                  spreadRadius: 5.0,
-                  offset: Offset(
-                    10.0,
-                    30.0,
-                  ),
-                )
-              ],
-              borderRadius: BorderRadius.circular(20),
-              color: Color.fromARGB(200, 255, 255, 255),
-              gradient: LinearGradient(
-                  colors: [Colors.purple, Colors.pinkAccent],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight)),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.black38,
+            //     blurRadius: 40.0,
+            //     spreadRadius: 5.0,
+            //     offset: Offset(
+            //       10.0,
+            //       30.0,
+            //     ),
+            //   )
+            // ],
+            borderRadius: BorderRadius.circular(20),
+            // color: Color.fromARGB(200, 255, 255, 255),
+            color: Color.fromARGB(205, 125, 135, 215),
+            // gradient: LinearGradient(
+            //     colors: [Colors.purple, Colors.pinkAccent],
+            //     begin: Alignment.topLeft,
+            //     end: Alignment.bottomRight)
+          ),
           child: Column(
             children: <Widget>[
               new FlatButton(

@@ -1,7 +1,6 @@
-import 'package:fabo_example_app/Bookings%20Page/MyBookings.dart';
-import 'package:fabo_example_app/sizeConfig.dart';
+import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
-
+import 'bookings.dart';
 
 TextStyle _subtitle =
     new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4);
@@ -49,7 +48,7 @@ Widget _requests(
             style: TextStyle(
                 fontSize: SizeConfig.safeBlockHorizontal * 5,
                 color: Colors.black,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.w500),
             textAlign: TextAlign.start,
           ),
         ),
@@ -117,7 +116,7 @@ class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       body: GestureDetector(
         onHorizontalDragDown: (DragDownDetails dragDownDetails) {
           Navigator.pop(context);

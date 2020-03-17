@@ -1,5 +1,6 @@
+import 'package:fabo_example_app/utils/sizeConfig.dart';
+import 'package:fabo_example_app/views/screens/options.dart';
 import 'package:flutter/material.dart';
-import '../sizeConfig.dart';
 
 TextStyle _nameStyle = new TextStyle(
     fontSize: SizeConfig.safeBlockHorizontal * 7,
@@ -7,11 +8,11 @@ TextStyle _nameStyle = new TextStyle(
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.italic);
 TextStyle _addressStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 5,
+    fontSize: SizeConfig.safeBlockHorizontal * 4.5,
     color: Colors.deepPurple[900],
     fontWeight: FontWeight.w500);
 TextStyle _adDetailStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 4.7,
+    fontSize: SizeConfig.safeBlockHorizontal * 4,
     color: Colors.deepPurple[700],
     fontWeight: FontWeight.w400,
     wordSpacing: 2,
@@ -30,16 +31,11 @@ class _ProfilePageState extends State<ProfilePage> {
       body: new Container(
         height: SizeConfig.screenHeight,
         width: SizeConfig.screenWidth,
-        decoration: BoxDecoration(
-            gradient: RadialGradient(
-                center: Alignment.center,
-                colors: [Colors.purple[200], Colors.white],
-                radius: 1)),
         child: new ListView(
           children: <Widget>[
             new Container(
               padding: EdgeInsets.only(
-                top: SizeConfig.safeBlockVertical * 15,
+                top: SizeConfig.safeBlockVertical * 10,
               ),
               alignment: Alignment.center,
               child: new GestureDetector(
@@ -52,6 +48,13 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             info(context),
+            new Padding(
+              padding: EdgeInsets.only(
+                  left: SizeConfig.safeBlockHorizontal * 25,
+                  right: SizeConfig.safeBlockHorizontal * 25,
+                  top: SizeConfig.blockSizeVertical * 3),
+              child: signOutButton(context),
+            )
           ],
         ),
       ),
@@ -84,7 +87,7 @@ Widget info(BuildContext context) {
     child: new Column(
       children: <Widget>[
         new Container(
-          padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 5),
+          padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 3),
           child: new Text(
             'Chris Evans',
             style: _nameStyle,
@@ -93,7 +96,7 @@ Widget info(BuildContext context) {
         new Container(
           padding: new EdgeInsets.only(
               right: SizeConfig.safeBlockHorizontal * 60,
-              top: SizeConfig.safeBlockVertical * 3),
+              top: SizeConfig.safeBlockVertical * 2),
           child: new Text(
             'Address : ',
             style: _addressStyle,
@@ -108,7 +111,7 @@ Widget info(BuildContext context) {
             '3 Arts Entertainment 9460 Wilshire Blvd. 7th Floor Beverly Hills, CA 90212 USA',
             style: _adDetailStyle,
           ),
-        )
+        ),
       ],
     ),
   );
@@ -118,7 +121,7 @@ class ExtendedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: GestureDetector(
         onHorizontalDragDown: (DragDownDetails dragDownDetails) {
           Navigator.pop(context);
@@ -138,4 +141,24 @@ class ExtendedImage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget signOutButton(BuildContext context) {
+  return new Container(
+    height: SizeConfig.blockSizeVertical * 7,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20), color: Colors.indigo),
+    child: new MaterialButton(
+      onPressed: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => OptionsPage()));
+        print('Sign Out');
+      },
+      child: Text(
+        'Sign Out',
+        style: TextStyle(
+            color: Colors.white, fontSize: SizeConfig.safeBlockHorizontal * 5),
+      ),
+    ),
+  );
 }

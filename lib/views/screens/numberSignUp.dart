@@ -1,9 +1,6 @@
+import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
-import '../sizeConfig.dart';
 import 'signUpPass.dart';
-
-TextEditingController _number = new TextEditingController();
-String errorMsg = "";
 
 class PhoneNumber extends StatefulWidget {
   // PhoneNumber(String name) {}
@@ -12,9 +9,24 @@ class PhoneNumber extends StatefulWidget {
 }
 
 class _PhoneNumberState extends State<PhoneNumber> {
+  TextEditingController _number = new TextEditingController();
+  String errorMsg = "";
+
+  Color nmbrClr = Colors.black12;
+
+  void changeNameColor(String input) {
+    setState(() {
+      if (input.isNotEmpty) {
+        nmbrClr = Colors.red[100];
+      } else {
+        nmbrClr = Colors.black12;
+      }
+    });
+  }
+
   void detectError() {
     setState(() {
-      errorMsg = "The above column can't be empty";
+      errorMsg = "Above column can't be empty";
     });
   }
 
@@ -33,7 +45,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
                       top: SizeConfig.safeBlockVertical * 2),
                   child: new CircleAvatar(
                     radius: SizeConfig.blockSizeVertical * 2.2,
-                    backgroundColor: Colors.deepPurpleAccent,
+                    backgroundColor: Colors.indigoAccent,
                     child: new IconButton(
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -45,59 +57,60 @@ class _PhoneNumberState extends State<PhoneNumber> {
                   ),
                 ),
                 SizedBox(
-                  height: SizeConfig.safeBlockVertical * 22,
+                  height: SizeConfig.safeBlockVertical * 25,
                 ),
                 new Container(
                   padding:
-                      EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 5),
+                      EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 7),
                   child: new Text(
                     'Please enter your phone number :',
                     style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 8),
+                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 6.5),
                   ),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
-                new Card(
-                  margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                  child: new Container(
-                      height: SizeConfig.blockSizeVertical * 7.5,
+                new Container(
+                    height: SizeConfig.blockSizeVertical * 7.5,
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.safeBlockHorizontal * 7,
+                      right: SizeConfig.safeBlockHorizontal * 7,
+                    ),
+                    child: new Container(
+                      padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.purpleAccent],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
-                      child: new Container(
-                        padding:
-                            EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-                        child: new TextField(
-                          style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.deepPurple),
-                          controller: _number,
-                          keyboardType: TextInputType.number,
-                          cursorWidth: 2.5,
-                          cursorColor: Colors.purpleAccent,
-                          decoration: InputDecoration(
-                              hintText: 'e.x.- 987651234',
-                              border: InputBorder.none,
-                              icon: Icon(
-                                Icons.phone,
-                                size: SizeConfig.safeBlockVertical * 4.5,
-                              )),
-                        ),
-                      )),
-                ),
+                        color: nmbrClr,
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: new TextField(
+                        style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 5.5,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.indigoAccent),
+                        controller: _number,
+                        keyboardType: TextInputType.number,
+                        cursorWidth: 2.5,
+                        cursorColor: Colors.indigo,
+                        decoration: InputDecoration(
+                            hintText: 'e.x.- 987651234',
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.phone,
+                              size: SizeConfig.safeBlockVertical * 4.5,
+                            )),
+                        onChanged: (String nmbr) {
+                          nmbr = _number.text;
+                          changeNameColor(nmbr);
+                        },
+                      ),
+                    )),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
                 new Container(
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.safeBlockHorizontal * 30),
                   child: new Text(
                     errorMsg,
                     style: TextStyle(color: Colors.red),
@@ -113,14 +126,18 @@ class _PhoneNumberState extends State<PhoneNumber> {
                       right: SizeConfig.safeBlockHorizontal * 5),
                   child: new RaisedButton(
                     onPressed: () {
-                      print('Password Screen');
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Password()));
+                      if (_number.text.isNotEmpty) {
+                        print('Password Screen');
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Password()));
+                      } else {
+                        detectError();
+                      }
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     color: Colors.green,
-                    elevation: 7,
+                    elevation: 0,
                     child: new Container(
                       child: new Text(
                         'Next',

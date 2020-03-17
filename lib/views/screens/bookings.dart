@@ -1,5 +1,5 @@
+import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
-import '../sizeConfig.dart';
 
 class Bookings extends StatelessWidget {
   String appBarTitle;
@@ -12,7 +12,8 @@ class Bookings extends StatelessWidget {
     return new Scaffold(
       appBar: new AppBar(
           title: new Text('$appBarTitle'),
-          backgroundColor: Colors.deepPurpleAccent),
+          // backgroundColor: Colors.deepPurpleAccent
+          ),
       body: new Container(
         height: SizeConfig.screenHeight,
         width: SizeConfig.screenWidth,

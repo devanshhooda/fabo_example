@@ -1,10 +1,7 @@
-import 'package:fabo_example_app/sizeConfig.dart';
+import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
 import 'numberSignUp.dart';
-
-TextEditingController _name = new TextEditingController();
-String errorMsg = "";
 
 class Name extends StatefulWidget {
   @override
@@ -12,9 +9,24 @@ class Name extends StatefulWidget {
 }
 
 class _NameState extends State<Name> {
+  TextEditingController _name = new TextEditingController();
+  String errorMsg = "";
+
+  Color nameClr = Colors.black12;
+
+  void changeNameColor(String input) {
+    setState(() {
+      if (input.isNotEmpty) {
+        nameClr = Colors.red[100];
+      } else {
+        nameClr = Colors.black12;
+      }
+    });
+  }
+
   void detectError() {
     setState(() {
-      errorMsg = "The above column can't be empty";
+      errorMsg = "Above field can't be empty";
     });
   }
 
@@ -33,7 +45,7 @@ class _NameState extends State<Name> {
                       top: SizeConfig.safeBlockVertical * 2),
                   child: new CircleAvatar(
                     radius: SizeConfig.blockSizeVertical * 2.2,
-                    backgroundColor: Colors.deepPurpleAccent,
+                    backgroundColor: Colors.indigoAccent,
                     child: new IconButton(
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -51,73 +63,75 @@ class _NameState extends State<Name> {
                 ),
                 new Container(
                   padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 30),
+                      left: SizeConfig.safeBlockHorizontal * 33),
                   child: new Text(
                     'Sign Up',
                     style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 12,
+                        fontSize: SizeConfig.safeBlockHorizontal * 10,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
                 new Container(
                   padding: EdgeInsets.only(
                       top: SizeConfig.safeBlockVertical * 9,
-                      left: SizeConfig.safeBlockHorizontal * 7),
+                      left: SizeConfig.safeBlockHorizontal * 9),
                   child: new Text(
                     'Enter your name :',
                     style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 8),
+                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 7),
                   ),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
-                new Card(
-                  margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
+                new Container(
+                  height: SizeConfig.blockSizeVertical * 7.5,
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.safeBlockHorizontal * 7,
+                    right: SizeConfig.safeBlockHorizontal * 7,
+                  ),
                   child: new Container(
-                      height: SizeConfig.blockSizeVertical * 7.5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.purpleAccent],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
-                      child: new Container(
-                        padding:
-                            EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
-                        child: new TextField(
-                          controller: _name,
-                          style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.deepPurple),
-                          textCapitalization: TextCapitalization.words,
-                          cursorWidth: 2.5,
-                          cursorColor: Colors.purpleAccent,
-                          decoration: InputDecoration(
-                              hintText: 'Chris Evans',
-                              border: InputBorder.none,
-                              icon: Icon(
-                                Icons.person,
-                                size: SizeConfig.safeBlockVertical * 4.5,
-                              )),
-                        ),
-                      )),
+                    padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                    decoration: BoxDecoration(
+                      color: nameClr,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: new TextField(
+                      controller: _name,
+                      style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 5.5,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.indigoAccent),
+                      textCapitalization: TextCapitalization.words,
+                      cursorWidth: 2.5,
+                      cursorColor: Colors.indigo,
+                      decoration: InputDecoration(
+                          hintText: 'Chris Evans',
+                          border: InputBorder.none,
+                          icon: Icon(
+                            Icons.person,
+                            size: SizeConfig.safeBlockVertical * 4.5,
+                          )),
+                      onChanged: (String name) {
+                        name = _name.text;
+                        changeNameColor(name);
+                      },
+                    ),
+                  ),
                 ),
                 SizedBox(
-                  height: SizeConfig.safeBlockVertical * 3,
+                  height: SizeConfig.safeBlockVertical * 2,
                 ),
                 new Container(
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.safeBlockHorizontal * 30),
                   child: new Text(
                     errorMsg,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
                 SizedBox(
-                  height: SizeConfig.safeBlockVertical * 2,
+                  height: SizeConfig.safeBlockVertical * 3,
                 ),
                 new Container(
                   height: SizeConfig.blockSizeVertical * 5.5,
@@ -126,7 +140,7 @@ class _NameState extends State<Name> {
                       right: SizeConfig.safeBlockHorizontal * 5),
                   child: new RaisedButton(
                     onPressed: () {
-                      if (_name.toString().isNotEmpty) {
+                      if (_name.text.isNotEmpty) {
                         print('No. Screen');
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => PhoneNumber()));
@@ -137,7 +151,7 @@ class _NameState extends State<Name> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     color: Colors.green,
-                    elevation: 7,
+                    elevation: 0,
                     child: new Container(
                       child: new Text(
                         'Next',
@@ -175,7 +189,7 @@ class _NameState extends State<Name> {
                       borderRadius: BorderRadius.circular(40),
                     ),
                     child: new Card(
-                      elevation: 10,
+                      // elevation: 10,
                       margin:
                           EdgeInsets.all(SizeConfig.safeBlockHorizontal * 0.2),
                       shape: RoundedRectangleBorder(
@@ -209,7 +223,7 @@ class _NameState extends State<Name> {
                 new Container(
                   padding: EdgeInsets.only(
                       top: SizeConfig.safeBlockVertical * 6,
-                      left: SizeConfig.safeBlockHorizontal * 7,
+                      left: SizeConfig.safeBlockHorizontal * 15,
                       // right: SizeConfig.safeBlockHorizontal * 5,
                       bottom: SizeConfig.safeBlockVertical * 5),
                   child: new Row(
@@ -217,7 +231,7 @@ class _NameState extends State<Name> {
                       new Text(
                         'Already have an account ?',
                         style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 5),
+                            fontSize: SizeConfig.safeBlockHorizontal * 4),
                       ),
                       Padding(
                           padding: EdgeInsets.only(
@@ -232,7 +246,7 @@ class _NameState extends State<Name> {
                           'Login.',
                           style: TextStyle(
                               letterSpacing: 1,
-                              fontSize: SizeConfig.safeBlockHorizontal * 6,
+                              fontSize: SizeConfig.safeBlockHorizontal * 5,
                               color: Colors.blue,
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.w500),

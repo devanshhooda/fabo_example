@@ -1,6 +1,6 @@
-import 'package:fabo_example_app/sizeConfig.dart';
+import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
-import 'notifications.dart';
+import 'screens/notifications.dart';
 
 TextEditingController _srch = new TextEditingController();
 
@@ -10,22 +10,14 @@ Widget app_Bar(
   SizeConfig().init(context);
   return PreferredSize(
       preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical * 13),
-      child: 
-      Container(
+      child: Container(
           child: new AppBar(
-        elevation: 10,
-        backgroundColor: Colors.deepPurpleAccent,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40))),
+        backgroundColor: Colors.deepPurpleAccent[300],
         title: new Container(
           padding: EdgeInsets.only(
               left: SizeConfig.safeBlockHorizontal * 2,
               right: SizeConfig.safeBlockHorizontal * 2,
-              // top: SizeConfig.safeBlockVertical * 2,
-              bottom: SizeConfig.safeBlockVertical * 1
-              ),
+              bottom: SizeConfig.safeBlockVertical * 1),
           child: Text(
             'Prizey',
             style: TextStyle(
@@ -45,14 +37,16 @@ Widget app_Bar(
                       bottom: SizeConfig.safeBlockVertical * 0.5,
                       top: SizeConfig.safeBlockVertical * 0.5),
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(100, 255, 255, 255),
+                      // color: Color.fromARGB(100, 255, 255, 255),
+                      color: Colors.white70,
                       borderRadius: BorderRadius.circular(40),
-                      gradient: LinearGradient(
-                          colors: [Colors.pink, Colors.white60],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight)),
+                      // gradient: LinearGradient(
+                      //     colors: [Colors.pink, Colors.white60],
+                      //     begin: Alignment.topLeft,
+                      //     end: Alignment.bottomRight)
+                      ),
                   child: new TextField(
-                      cursorColor: Colors.white30,
+                      cursorColor: Colors.black,
                       cursorWidth: 1.5,
                       controller: _srch,
                       style: TextStyle(
@@ -61,7 +55,7 @@ Widget app_Bar(
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintStyle: new TextStyle(
-                            color: Colors.white60,
+                            color: Colors.black87,
                             fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                             fontWeight: FontWeight.w500),
                         hintText: 'Search',
@@ -70,7 +64,7 @@ Widget app_Bar(
                                 left: SizeConfig.safeBlockHorizontal * 3.5),
                             child: Icon(
                               Icons.search,
-                              color: Colors.white54,
+                              color: Colors.black,
                               size: SizeConfig.safeBlockVertical * 3.2,
                             )),
                       )),

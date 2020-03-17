@@ -1,4 +1,4 @@
-import 'package:fabo_example_app/sizeConfig.dart';
+import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 class Notifications extends StatefulWidget {
@@ -12,7 +12,7 @@ class _NotificationsState extends State<Notifications> {
     return new Scaffold(
       appBar: new PreferredSize(
           child: AppBar(
-            backgroundColor: Colors.deepPurpleAccent,
+            // backgroundColor: Colors.deepPurpleAccent,
             title: new Text('Notifications'),
           ),
           preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical * 7)),
