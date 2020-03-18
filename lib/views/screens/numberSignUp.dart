@@ -1,6 +1,7 @@
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'signUpPass.dart';
+import 'loginPage.dart';
 
 class PhoneNumber extends StatefulWidget {
   // PhoneNumber(String name) {}
@@ -65,39 +66,39 @@ class _PhoneNumberState extends State<PhoneNumber> {
                   child: new Text(
                     'Please enter your phone number :',
                     style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 6.5),
+                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 5),
                   ),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
                 new Container(
-                    height: SizeConfig.blockSizeVertical * 7.5,
+                    height: SizeConfig.blockSizeVertical * 6,
                     padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 7,
                       right: SizeConfig.safeBlockHorizontal * 7,
                     ),
                     child: new Container(
-                      padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                      padding: EdgeInsets.only(
+                      left: SizeConfig.safeBlockHorizontal * 3,
+                      top: SizeConfig.safeBlockHorizontal * 0.5),
                       decoration: BoxDecoration(
                         color: nmbrClr,
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: new TextField(
-                        style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.indigoAccent),
+                        style: inputTextStyle,
                         controller: _number,
                         keyboardType: TextInputType.number,
                         cursorWidth: 2.5,
                         cursorColor: Colors.indigo,
                         decoration: InputDecoration(
                             hintText: 'e.x.- 987651234',
+                            hintStyle: hintStyle,
                             border: InputBorder.none,
                             icon: Icon(
                               Icons.phone,
-                              size: SizeConfig.safeBlockVertical * 4.5,
+                              size: SizeConfig.safeBlockVertical * 3,
                             )),
                         onChanged: (String nmbr) {
                           nmbr = _number.text;
@@ -143,7 +144,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
                         'Next',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: SizeConfig.safeBlockHorizontal * 6),
+                            fontSize: SizeConfig.safeBlockHorizontal * 5),
                       ),
                     ),
                   ),

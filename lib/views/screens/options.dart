@@ -27,17 +27,19 @@ Widget _options(BuildContext context) {
               child: new Text(
                 'Prizey',
                 style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 12,
+                    fontSize: SizeConfig.safeBlockHorizontal * 10,
                     fontWeight: FontWeight.w800,
                     color: Colors.indigo),
               ),
             ),
             SizedBox(
-              height: SizeConfig.blockSizeVertical * 7,
+              height: SizeConfig.blockSizeVertical * 4,
             ),
             new Text(
               'Find the best price \n in your neighbourhood',
-              style: TextStyle(fontSize: 25, color: Colors.black),
+              style: TextStyle(
+                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                  color: Colors.black),
               textAlign: TextAlign.center,
             ),
             SizedBox(
@@ -50,25 +52,20 @@ Widget _options(BuildContext context) {
               padding: EdgeInsets.only(
                 left: SizeConfig.safeBlockHorizontal * 1,
                 right: SizeConfig.safeBlockHorizontal * 1,
-                // top: SizeConfig.safeBlockVertical * 5
               ),
-              // child: new Card(
-              //   color: Colors.indigo[50],
-              // shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(46)),
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Container(
                     padding: EdgeInsets.only(
-                        top: SizeConfig.safeBlockVertical * 3,
-                        // right: SizeConfig.safeBlockHorizontal * 30
-                        ),
+                      top: SizeConfig.safeBlockVertical * 3,
+                      // right: SizeConfig.safeBlockHorizontal * 30
+                    ),
                     child: new Text(
                       'New User ?',
                       style: TextStyle(
                           color: Colors.indigo,
-                          fontSize: SizeConfig.safeBlockHorizontal * 8,
+                          fontSize: SizeConfig.safeBlockHorizontal * 6,
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.italic),
                     ),
@@ -99,7 +96,7 @@ Widget _options(BuildContext context) {
                           'Sign Up',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: SizeConfig.safeBlockHorizontal * 7.5),
+                              fontSize: SizeConfig.safeBlockHorizontal * 7),
                         ),
                       ),
                     ),
@@ -114,21 +111,21 @@ Widget _options(BuildContext context) {
                         style: TextStyle(
                             letterSpacing: 2,
                             color: Colors.indigoAccent[200],
-                            fontSize: SizeConfig.safeBlockHorizontal * 7.5,
+                            fontSize: SizeConfig.safeBlockHorizontal * 6,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
                   new Container(
                     padding: EdgeInsets.only(
-                        top: SizeConfig.safeBlockVertical * 5,
-                        // right: SizeConfig.safeBlockHorizontal * 20
-                        ),
+                      top: SizeConfig.safeBlockVertical * 5,
+                      // right: SizeConfig.safeBlockHorizontal * 20
+                    ),
                     child: new Text(
                       'Existing User ?',
                       style: TextStyle(
                           color: Colors.indigo,
-                          fontSize: SizeConfig.safeBlockHorizontal * 7.5,
+                          fontSize: SizeConfig.safeBlockHorizontal * 6,
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.italic),
                     ),
@@ -154,7 +151,7 @@ Widget _options(BuildContext context) {
                           'Login',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: SizeConfig.safeBlockHorizontal * 8),
+                              fontSize: SizeConfig.safeBlockHorizontal * 7),
                         ),
                       ),
                     ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'bookings.dart';
 
 TextStyle _subtitle =
-    new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4);
+    new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3.5);
 
 class Requests extends StatelessWidget {
   List<String> titles = [
@@ -46,7 +46,7 @@ Widget _requests(
           child: Text(
             '$title',
             style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 5,
+                fontSize: SizeConfig.safeBlockHorizontal * 4,
                 color: Colors.black,
                 fontWeight: FontWeight.w500),
             textAlign: TextAlign.start,

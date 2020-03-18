@@ -1,8 +1,7 @@
 import 'package:fabo_example_app/utils/sizeConfig.dart';
-import 'package:fabo_example_app/views/screens/homePage.dart';
 import 'package:flutter/material.dart';
-
 import '../../main.dart';
+import 'loginPage.dart';
 
 class Password extends StatefulWidget {
   @override
@@ -84,20 +83,22 @@ class _PasswordState extends State<Password> {
                   child: new Text(
                     'Now choose a password :',
                     style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 7),
+                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 5),
                   ),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
                 new Container(
-                    height: SizeConfig.blockSizeVertical * 7.5,
+                    height: SizeConfig.blockSizeVertical * 6,
                     padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 7,
                       right: SizeConfig.safeBlockHorizontal * 7,
                     ),
                     child: new Container(
-                      padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                      padding: EdgeInsets.only(
+                          left: SizeConfig.safeBlockHorizontal * 3,
+                          top: SizeConfig.safeBlockHorizontal * 0.5),
                       decoration: BoxDecoration(
                         color: passClr,
                         borderRadius: BorderRadius.circular(40),
@@ -105,18 +106,16 @@ class _PasswordState extends State<Password> {
                       child: new TextField(
                         controller: _pass,
                         obscureText: true,
-                        style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.indigoAccent),
+                        style: inputTextStyle,
                         cursorWidth: 2.5,
                         cursorColor: Colors.indigo,
                         decoration: InputDecoration(
                             hintText: 'Password',
+                            hintStyle: hintStyle,
                             border: InputBorder.none,
                             icon: Icon(
                               Icons.lock,
-                              size: SizeConfig.safeBlockVertical * 4,
+                              size: SizeConfig.safeBlockVertical * 3,
                             )),
                         onChanged: (String pass) {
                           pass = _pass.text;
@@ -128,13 +127,15 @@ class _PasswordState extends State<Password> {
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
                 new Container(
-                    height: SizeConfig.blockSizeVertical * 7.5,
+                    height: SizeConfig.blockSizeVertical * 6,
                     padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 7,
                       right: SizeConfig.safeBlockHorizontal * 7,
                     ),
                     child: new Container(
-                      padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                      padding: EdgeInsets.only(
+                          left: SizeConfig.safeBlockHorizontal * 3,
+                          top: SizeConfig.safeBlockHorizontal * 0.5),
                       decoration: BoxDecoration(
                         color: confirmPassClr,
                         borderRadius: BorderRadius.circular(40),
@@ -142,17 +143,15 @@ class _PasswordState extends State<Password> {
                       child: new TextField(
                         obscureText: true,
                         controller: _cnfrmPass,
-                        style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.indigoAccent),
+                        style: inputTextStyle,
                         cursorWidth: 2.5,
                         cursorColor: Colors.indigo,
                         decoration: InputDecoration(
                             hintText: 'Confirm Password',
+                            hintStyle: hintStyle,
                             border: InputBorder.none,
                             icon: Icon(Icons.lock,
-                                size: SizeConfig.safeBlockVertical * 4)),
+                                size: SizeConfig.safeBlockVertical * 3)),
                         onChanged: (String cnfrmPass) {
                           cnfrmPass = _cnfrmPass.text;
                           changPassColor(cnfrmPass, 2);
@@ -176,8 +175,8 @@ class _PasswordState extends State<Password> {
                 new Container(
                   height: SizeConfig.blockSizeVertical * 5.5,
                   padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 10,
-                      right: SizeConfig.safeBlockHorizontal * 10),
+                      left: SizeConfig.safeBlockHorizontal * 15,
+                      right: SizeConfig.safeBlockHorizontal * 15),
                   child: new RaisedButton(
                     onPressed: () {
                       if (_pass.text.isEmpty || _cnfrmPass.text.isEmpty) {
@@ -185,8 +184,9 @@ class _PasswordState extends State<Password> {
                       } else if (_pass.text != _cnfrmPass.text) {
                         detectError(false);
                       } else {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => MyApp()));
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => MyApp()),
+                            ModalRoute.withName(''));
                         print('Home Page screen');
                       }
                     },
@@ -199,7 +199,7 @@ class _PasswordState extends State<Password> {
                         'Create Account',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: SizeConfig.safeBlockHorizontal * 6),
+                            fontSize: SizeConfig.safeBlockHorizontal * 5),
                       ),
                     ),
                   ),

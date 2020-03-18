@@ -78,39 +78,39 @@ class _NameState extends State<Name> {
                   child: new Text(
                     'Enter your name :',
                     style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 7),
+                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 5),
                   ),
                 ),
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 3,
                 ),
                 new Container(
-                  height: SizeConfig.blockSizeVertical * 7.5,
+                  height: SizeConfig.blockSizeVertical * 6,
                   padding: EdgeInsets.only(
                     left: SizeConfig.safeBlockHorizontal * 7,
                     right: SizeConfig.safeBlockHorizontal * 7,
                   ),
                   child: new Container(
-                    padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.safeBlockHorizontal * 3,
+                      top: SizeConfig.safeBlockHorizontal * 0.5),
                     decoration: BoxDecoration(
                       color: nameClr,
                       borderRadius: BorderRadius.circular(40),
                     ),
                     child: new TextField(
                       controller: _name,
-                      style: TextStyle(
-                          fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.indigoAccent),
+                      style: inputTextStyle,
                       textCapitalization: TextCapitalization.words,
                       cursorWidth: 2.5,
                       cursorColor: Colors.indigo,
                       decoration: InputDecoration(
                           hintText: 'Chris Evans',
+                          hintStyle: hintStyle,
                           border: InputBorder.none,
                           icon: Icon(
                             Icons.person,
-                            size: SizeConfig.safeBlockVertical * 4.5,
+                            size: SizeConfig.safeBlockVertical * 3,
                           )),
                       onChanged: (String name) {
                         name = _name.text;
@@ -157,7 +157,7 @@ class _NameState extends State<Name> {
                         'Next',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: SizeConfig.safeBlockHorizontal * 6),
+                            fontSize: SizeConfig.safeBlockHorizontal * 5),
                       ),
                     ),
                   ),
@@ -171,7 +171,7 @@ class _NameState extends State<Name> {
                   child: new Text(
                     'OR',
                     style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 5,
+                        fontSize: SizeConfig.safeBlockHorizontal * 4,
                         letterSpacing: 2,
                         fontWeight: FontWeight.w500,
                         color: Colors.black),
@@ -210,11 +210,13 @@ class _NameState extends State<Name> {
                                 fit: BoxFit.fill,
                               ),
                             ),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.safeBlockHorizontal * 2)),
                             new Text(
                               'Sign In with Google',
                               style: TextStyle(
-                                  fontSize:
-                                      SizeConfig.safeBlockHorizontal * 5.5),
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5),
                             )
                           ],
                         ),

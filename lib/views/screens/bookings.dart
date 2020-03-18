@@ -11,9 +11,9 @@ class Bookings extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-          title: new Text('$appBarTitle'),
-          // backgroundColor: Colors.deepPurpleAccent
-          ),
+        title: new Text('$appBarTitle'),
+        // backgroundColor: Colors.deepPurpleAccent
+      ),
       body: new Container(
         height: SizeConfig.screenHeight,
         width: SizeConfig.screenWidth,
@@ -33,6 +33,7 @@ class Bookings extends StatelessWidget {
             ),
             _booking('Apple Provider', '1.2', '80,000'),
             _booking('Apple Provider', '1.2', '80,000'),
+            _booking('Apple Provider', '1.2', '80,000'),
           ],
         ),
       ),
@@ -48,9 +49,8 @@ Widget _itemPicture() {
         left: SizeConfig.safeBlockHorizontal * 2,
         right: SizeConfig.safeBlockHorizontal * 2,
         top: SizeConfig.safeBlockVertical * 1),
-    child: new Card(
-      elevation: 10,
-      color: Colors.black54,
+    child: new Container(
+      color: Colors.black45,
       child: new FlutterLogo(
         size: SizeConfig.blockSizeVertical * 25,
       ),
@@ -70,7 +70,7 @@ Widget _itemDetails(String productName, String year, String category) {
           child: new Text(
             productName,
             style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 5,
+                fontSize: SizeConfig.safeBlockHorizontal * 4,
                 fontWeight: FontWeight.bold),
           ),
         ),
@@ -79,7 +79,7 @@ Widget _itemDetails(String productName, String year, String category) {
           child: new Text(
             'Model Year: $year',
             style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 4,
+                fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                 color: Colors.black54),
           ),
         ),
@@ -88,7 +88,7 @@ Widget _itemDetails(String productName, String year, String category) {
           child: new Text(
             'Category: $category',
             style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 4,
+                fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                 color: Colors.black54),
           ),
         ),
@@ -104,9 +104,9 @@ Widget _booking(String providerName, String address, String price) {
         bottom: SizeConfig.safeBlockVertical * 1,
         left: SizeConfig.safeBlockHorizontal * 2,
         right: SizeConfig.safeBlockHorizontal * 2),
-    child: new Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    child: new Container(
+      decoration: BoxDecoration(
+          color: Colors.grey[300], borderRadius: BorderRadius.circular(30)),
       child: new Row(
         children: <Widget>[_picture(), _details(providerName, address, price)],
       ),
@@ -119,9 +119,9 @@ Widget _picture() {
       padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
       child: new CircleAvatar(
         backgroundColor: Colors.black,
-        radius: SizeConfig.blockSizeVertical * 8,
+        radius: SizeConfig.blockSizeVertical * 7,
         child: new FlutterLogo(
-          size: SizeConfig.blockSizeVertical * 10,
+          size: SizeConfig.blockSizeVertical * 9,
         ),
       ));
 }
@@ -139,7 +139,7 @@ Widget _details(String providerName, String distance, String price) {
           child: new Text(
             providerName,
             style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 5.5,
+                fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                 fontWeight: FontWeight.w500),
           ),
         ),
@@ -150,8 +150,8 @@ Widget _details(String providerName, String distance, String price) {
           child: new Text(
             'Distance: $distance KM',
             style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 4,
-                color: Colors.black45),
+                fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                color: Colors.black54),
           ),
         ),
         SizedBox(
@@ -161,7 +161,7 @@ Widget _details(String providerName, String distance, String price) {
           'Rs. $price',
           style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.safeBlockHorizontal * 4),
+              fontSize: SizeConfig.safeBlockHorizontal * 3.5),
         ),
         SizedBox(
           height: SizeConfig.safeBlockVertical * 3,
@@ -176,7 +176,7 @@ Widget _details(String providerName, String distance, String price) {
                 onPressed: () => print('Calling...'),
                 icon: Icon(
                   Icons.phone,
-                  color: Colors.deepPurple,
+                  color: Colors.indigo,
                 ),
                 iconSize: SizeConfig.safeBlockVertical * 4,
               ),
@@ -192,7 +192,7 @@ Widget _details(String providerName, String distance, String price) {
                 onPressed: () => print('Location of service will be shown'),
                 icon: Icon(
                   Icons.location_on,
-                  color: Colors.deepPurple,
+                  color: Colors.indigo,
                 ),
                 iconSize: SizeConfig.safeBlockVertical * 3.5,
               ),

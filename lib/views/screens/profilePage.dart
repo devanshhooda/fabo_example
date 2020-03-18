@@ -3,20 +3,21 @@ import 'package:fabo_example_app/views/screens/options.dart';
 import 'package:flutter/material.dart';
 
 TextStyle _nameStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 7,
+    fontSize: SizeConfig.safeBlockHorizontal * 5,
     color: Colors.deepPurple[900],
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.italic);
 TextStyle _addressStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+    fontSize: SizeConfig.safeBlockHorizontal * 4,
     color: Colors.deepPurple[900],
     fontWeight: FontWeight.w500);
 TextStyle _adDetailStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 4,
+    fontSize: SizeConfig.safeBlockHorizontal * 3.5,
     color: Colors.deepPurple[700],
     fontWeight: FontWeight.w400,
     wordSpacing: 2,
     letterSpacing: 2);
+
 String imageUrl = 'assets/cris.jpeg';
 
 class ProfilePage extends StatefulWidget {
@@ -50,8 +51,8 @@ class _ProfilePageState extends State<ProfilePage> {
             info(context),
             new Padding(
               padding: EdgeInsets.only(
-                  left: SizeConfig.safeBlockHorizontal * 25,
-                  right: SizeConfig.safeBlockHorizontal * 25,
+                  left: SizeConfig.safeBlockHorizontal * 30,
+                  right: SizeConfig.safeBlockHorizontal * 30,
                   top: SizeConfig.blockSizeVertical * 3),
               child: signOutButton(context),
             )
@@ -74,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 Widget profilePhoto() {
   return new CircleAvatar(
-    radius: SizeConfig.blockSizeVertical * 15,
+    radius: SizeConfig.blockSizeVertical * 12,
     backgroundColor: Colors.grey[300],
     backgroundImage: AssetImage(
       imageUrl,
@@ -86,14 +87,14 @@ Widget info(BuildContext context) {
   return new Container(
     child: new Column(
       children: <Widget>[
-        new Container(
+        new Padding(
           padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 3),
           child: new Text(
             'Chris Evans',
             style: _nameStyle,
           ),
         ),
-        new Container(
+        new Padding(
           padding: new EdgeInsets.only(
               right: SizeConfig.safeBlockHorizontal * 60,
               top: SizeConfig.safeBlockVertical * 2),
@@ -102,9 +103,9 @@ Widget info(BuildContext context) {
             style: _addressStyle,
           ),
         ),
-        new Container(
+        new Padding(
           padding: new EdgeInsets.only(
-              left: SizeConfig.safeBlockHorizontal * 13,
+              left: SizeConfig.safeBlockHorizontal * 15,
               right: SizeConfig.safeBlockHorizontal * 10,
               top: SizeConfig.safeBlockVertical * 1.5),
           child: new Text(
@@ -145,19 +146,21 @@ class ExtendedImage extends StatelessWidget {
 
 Widget signOutButton(BuildContext context) {
   return new Container(
-    height: SizeConfig.blockSizeVertical * 7,
+    height: SizeConfig.blockSizeVertical * 6,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20), color: Colors.indigo),
     child: new MaterialButton(
       onPressed: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => OptionsPage()));
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => OptionsPage()),
+            ModalRoute.withName(''));
         print('Sign Out');
       },
       child: Text(
         'Sign Out',
         style: TextStyle(
-            color: Colors.white, fontSize: SizeConfig.safeBlockHorizontal * 5),
+            color: Colors.white,
+            fontSize: SizeConfig.safeBlockHorizontal * 4.5),
       ),
     ),
   );

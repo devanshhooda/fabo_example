@@ -41,30 +41,15 @@ Widget _categories(String title, String subtitle) {
         ),
         new Container(
           decoration: BoxDecoration(
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.black38,
-            //     blurRadius: 40.0,
-            //     spreadRadius: 5.0,
-            //     offset: Offset(
-            //       10.0,
-            //       30.0,
-            //     ),
-            //   )
-            // ],
             borderRadius: BorderRadius.circular(20),
-            // color: Color.fromARGB(200, 255, 255, 255),
-            color: Color.fromARGB(205, 125, 135, 215),
-            // gradient: LinearGradient(
-            //     colors: [Colors.purple, Colors.pinkAccent],
-            //     begin: Alignment.topLeft,
-            //     end: Alignment.bottomRight)
+            color: Colors.black26
           ),
           child: Column(
             children: <Widget>[
               new FlatButton(
                 onPressed: () => print('$title page'),
                 child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
@@ -73,14 +58,15 @@ Widget _categories(String title, String subtitle) {
                     new Text(
                       title,
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          fontSize: SizeConfig.safeBlockHorizontal * 4.5),
+                          fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                     ),
+                    // new SizedBox(),
                     new Icon(
                       Icons.chevron_right,
-                      size: SizeConfig.safeBlockVertical * 3,
-                      color: Colors.white,
+                      size: SizeConfig.safeBlockVertical * 2.5,
+                      color: Colors.black,
                     ),
                   ],
                 ),
@@ -130,7 +116,7 @@ Widget _services(String subtitle) {
               ),
               new Text(
                 subtitle,
-                style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
+                style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3),
               )
             ],
           ),

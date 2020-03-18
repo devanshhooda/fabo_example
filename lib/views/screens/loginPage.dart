@@ -2,6 +2,13 @@ import 'package:fabo_example_app/main.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
+TextStyle inputTextStyle = TextStyle(
+    fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+    fontWeight: FontWeight.w600,
+    color: Colors.indigoAccent);
+
+TextStyle hintStyle = TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4.5);
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -89,32 +96,25 @@ class _LoginPageState extends State<LoginPage> {
                 right: SizeConfig.safeBlockHorizontal * 7,
               ),
               child: new Container(
-                  height: SizeConfig.blockSizeVertical * 7,
+                  height: SizeConfig.blockSizeVertical * 6,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40), color: phnClr
-                      // color: Colors.black12
-                      //     gradient: LinearGradient(
-                      //         colors: [Colors.white, Colors.purpleAccent],
-                      //         begin: Alignment.topLeft,
-                      //         end: Alignment.bottomRight)
-                      ),
-                  padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                      borderRadius: BorderRadius.circular(40), color: phnClr),
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.safeBlockHorizontal * 3,
+                      top: SizeConfig.safeBlockHorizontal * 0.5),
                   child: new TextField(
                     controller: _phNum,
-                    style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.indigoAccent),
+                    style: inputTextStyle,
                     keyboardType: TextInputType.number,
-                    cursorWidth: 2.5,
+                    cursorWidth: 2,
                     cursorColor: Colors.indigo,
                     decoration: InputDecoration(
-                      // enabled: false,
                       hintText: 'Phone Number',
+                      hintStyle: hintStyle,
                       border: InputBorder.none,
                       icon: Icon(
                         Icons.phone,
-                        size: SizeConfig.safeBlockVertical * 4.5,
+                        size: SizeConfig.safeBlockVertical * 3.5,
                       ),
                     ),
                     onChanged: (String phn) {
@@ -128,14 +128,16 @@ class _LoginPageState extends State<LoginPage> {
               height: SizeConfig.safeBlockVertical * 5,
             ),
             new Container(
-              height: SizeConfig.blockSizeVertical * 7,
+              height: SizeConfig.blockSizeVertical * 6,
               padding: EdgeInsets.only(
                 left: SizeConfig.safeBlockHorizontal * 7,
                 right: SizeConfig.safeBlockHorizontal * 7,
               ),
               child: new Container(
                 height: SizeConfig.blockSizeVertical * 7,
-                padding: EdgeInsets.all(SizeConfig.safeBlockVertical * 1),
+                padding: EdgeInsets.only(
+                    left: SizeConfig.safeBlockHorizontal * 3,
+                    top: SizeConfig.safeBlockHorizontal * 0.5),
                 decoration: BoxDecoration(
                   color: passClr,
                   borderRadius: BorderRadius.circular(40),
@@ -143,18 +145,16 @@ class _LoginPageState extends State<LoginPage> {
                 child: new TextField(
                   obscureText: true,
                   controller: _pass,
-                  style: TextStyle(
-                      fontSize: SizeConfig.safeBlockHorizontal * 5.5,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.indigoAccent),
+                  style: inputTextStyle,
                   cursorWidth: 2.5,
                   cursorColor: Colors.indigo,
                   decoration: InputDecoration(
                     hintText: 'Password',
+                    hintStyle: hintStyle,
                     border: InputBorder.none,
                     icon: Icon(
                       Icons.lock,
-                      size: SizeConfig.safeBlockVertical * 4,
+                      size: SizeConfig.safeBlockVertical * 3,
                     ),
                   ),
                   onChanged: (String phn) {
@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: new Text('Forgot Password ?',
                     style: TextStyle(
                         color: Colors.blue,
-                        fontSize: SizeConfig.safeBlockHorizontal * 5,
+                        fontSize: SizeConfig.safeBlockHorizontal * 4,
                         fontWeight: FontWeight.w500)),
               ),
             ),
@@ -197,16 +197,16 @@ class _LoginPageState extends State<LoginPage> {
             new Container(
               height: SizeConfig.blockSizeVertical * 6,
               padding: EdgeInsets.only(
-                  left: SizeConfig.safeBlockHorizontal * 20,
-                  right: SizeConfig.safeBlockHorizontal * 20),
+                  left: SizeConfig.safeBlockHorizontal * 25,
+                  right: SizeConfig.safeBlockHorizontal * 25),
               child: new RaisedButton(
                 onPressed: () {
                   if (_phNum.text.isEmpty || _pass.text.isEmpty) {
                     detectError();
                   } else {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MyApp(),
-                    ));
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => MyApp()),
+                        ModalRoute.withName(''));
                   }
                 },
                 shape: RoundedRectangleBorder(
@@ -218,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Login',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: SizeConfig.safeBlockHorizontal * 5.5),
+                        fontSize: SizeConfig.safeBlockHorizontal * 5),
                   ),
                 ),
               ),
@@ -232,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
               child: new Text(
                 'OR',
                 style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 5,
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
                     letterSpacing: 2,
                     fontWeight: FontWeight.w500,
                     color: Colors.black),
@@ -250,7 +250,6 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: new Card(
-                  // elevation: 0,
                   margin: EdgeInsets.all(SizeConfig.safeBlockHorizontal * 0.2),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
@@ -269,10 +268,13 @@ class _LoginPageState extends State<LoginPage> {
                             fit: BoxFit.fill,
                           ),
                         ),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: SizeConfig.safeBlockHorizontal * 2)),
                         new Text(
                           'Sign In with Google',
                           style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 5.5),
+                              fontSize: SizeConfig.safeBlockHorizontal * 5),
                         )
                       ],
                     ),
