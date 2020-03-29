@@ -53,6 +53,7 @@ Widget _requests(
           ),
         ),
         subtitle: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             new Container(
                 child: new Column(
@@ -116,7 +117,6 @@ class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black,
       body: GestureDetector(
         onHorizontalDragDown: (DragDownDetails dragDownDetails) {
           Navigator.pop(context);

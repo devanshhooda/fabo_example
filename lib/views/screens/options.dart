@@ -17,7 +17,6 @@ Widget _options(BuildContext context) {
   return new Container(
       height: SizeConfig.screenHeight,
       width: SizeConfig.screenWidth,
-      // color: Color.fromARGB(205, 125, 135, 215),
       color: Colors.white,
       child: new Center(
         child: new Column(
@@ -42,9 +41,6 @@ Widget _options(BuildContext context) {
                   color: Colors.black),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 1,
-            ),
             new Container(
               height: SizeConfig.blockSizeVertical * 60,
               width: SizeConfig.blockSizeHorizontal * 100,
@@ -59,7 +55,6 @@ Widget _options(BuildContext context) {
                   new Container(
                     padding: EdgeInsets.only(
                       top: SizeConfig.safeBlockVertical * 3,
-                      // right: SizeConfig.safeBlockHorizontal * 30
                     ),
                     child: new Text(
                       'New User ?',
@@ -75,12 +70,8 @@ Widget _options(BuildContext context) {
                         EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
                   ),
                   new Container(
-                    height: SizeConfig.blockSizeVertical * 10,
-                    width: SizeConfig.blockSizeHorizontal * 70,
-                    padding: EdgeInsets.only(
-                        // top: SizeConfig.safeBlockHorizontal * 5,
-                        left: SizeConfig.safeBlockHorizontal * 9,
-                        right: SizeConfig.safeBlockHorizontal * 9),
+                    height: SizeConfig.blockSizeVertical * 8,
+                    width: SizeConfig.blockSizeHorizontal * 45,
                     child: new Container(
                       height: SizeConfig.blockSizeVertical * 8.5,
                       decoration: BoxDecoration(
@@ -96,22 +87,21 @@ Widget _options(BuildContext context) {
                           'Sign Up',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: SizeConfig.safeBlockHorizontal * 7),
+                              fontSize: SizeConfig.safeBlockHorizontal * 6),
                         ),
                       ),
                     ),
                   ),
                   new Container(
-                    padding: EdgeInsets.only(
-                        // left: SizeConfig.safeBlockHorizontal * 43
-                        top: SizeConfig.blockSizeVertical * 5),
+                    padding:
+                        EdgeInsets.only(top: SizeConfig.blockSizeVertical * 5),
                     child: new Container(
                       child: new Text(
                         'OR',
                         style: TextStyle(
                             letterSpacing: 2,
                             color: Colors.indigoAccent[200],
-                            fontSize: SizeConfig.safeBlockHorizontal * 6,
+                            fontSize: SizeConfig.safeBlockHorizontal * 5.5,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -119,7 +109,6 @@ Widget _options(BuildContext context) {
                   new Container(
                     padding: EdgeInsets.only(
                       top: SizeConfig.safeBlockVertical * 5,
-                      // right: SizeConfig.safeBlockHorizontal * 20
                     ),
                     child: new Text(
                       'Existing User ?',
@@ -136,8 +125,8 @@ Widget _options(BuildContext context) {
                   ),
                   new Container(
                     child: new Container(
-                      height: SizeConfig.blockSizeVertical * 10,
-                      width: SizeConfig.blockSizeHorizontal * 50,
+                      height: SizeConfig.blockSizeVertical * 8,
+                      width: SizeConfig.blockSizeHorizontal * 45,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(80),
                           color: Colors.indigo[300]),
@@ -151,14 +140,13 @@ Widget _options(BuildContext context) {
                           'Login',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: SizeConfig.safeBlockHorizontal * 7),
+                              fontSize: SizeConfig.safeBlockHorizontal * 6),
                         ),
                       ),
                     ),
                   )
                 ],
               ),
-              // ),
             ),
           ],
         ),

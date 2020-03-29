@@ -41,9 +41,7 @@ Widget _categories(String title, String subtitle) {
         ),
         new Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.black26
-          ),
+              borderRadius: BorderRadius.circular(20), color: Colors.black26),
           child: Column(
             children: <Widget>[
               new FlatButton(
@@ -96,27 +94,23 @@ Widget _services(String subtitle) {
       padding: EdgeInsets.only(
           left: SizeConfig.safeBlockHorizontal * 2,
           bottom: SizeConfig.safeBlockHorizontal * 2),
-      height: SizeConfig.blockSizeVertical * 17,
-      width: SizeConfig.blockSizeHorizontal * 38,
+      height: 200,
+      width: 175,
       child: new GestureDetector(
         onTap: () => print('Details of Service'),
         child: new Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
-              ),
               new FlutterLogo(
-                size: SizeConfig.blockSizeVertical * 9,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 1),
+                size: SizeConfig.blockSizeVertical * 10,
               ),
               new Text(
                 subtitle,
-                style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3),
+                style:
+                    TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3.5),
               )
             ],
           ),

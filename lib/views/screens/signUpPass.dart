@@ -81,7 +81,7 @@ class _PasswordState extends State<Password> {
                   padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 10),
                   child: new Text(
-                    'Now choose a password :',
+                    'Verify OTP :',
                     style:
                         TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 5),
                   ),
@@ -110,51 +110,16 @@ class _PasswordState extends State<Password> {
                         cursorWidth: 2.5,
                         cursorColor: Colors.indigo,
                         decoration: InputDecoration(
-                            hintText: 'Password',
+                            hintText: 'OTP',
                             hintStyle: hintStyle,
                             border: InputBorder.none,
                             icon: Icon(
-                              Icons.lock,
+                              Icons.vpn_key,
                               size: SizeConfig.safeBlockVertical * 3,
                             )),
                         onChanged: (String pass) {
                           pass = _pass.text;
                           changPassColor(pass, 1);
-                        },
-                      ),
-                    )),
-                SizedBox(
-                  height: SizeConfig.safeBlockVertical * 3,
-                ),
-                new Container(
-                    height: SizeConfig.blockSizeVertical * 6,
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 7,
-                      right: SizeConfig.safeBlockHorizontal * 7,
-                    ),
-                    child: new Container(
-                      padding: EdgeInsets.only(
-                          left: SizeConfig.safeBlockHorizontal * 3,
-                          top: SizeConfig.safeBlockHorizontal * 0.5),
-                      decoration: BoxDecoration(
-                        color: confirmPassClr,
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: new TextField(
-                        obscureText: true,
-                        controller: _cnfrmPass,
-                        style: inputTextStyle,
-                        cursorWidth: 2.5,
-                        cursorColor: Colors.indigo,
-                        decoration: InputDecoration(
-                            hintText: 'Confirm Password',
-                            hintStyle: hintStyle,
-                            border: InputBorder.none,
-                            icon: Icon(Icons.lock,
-                                size: SizeConfig.safeBlockVertical * 3)),
-                        onChanged: (String cnfrmPass) {
-                          cnfrmPass = _cnfrmPass.text;
-                          changPassColor(cnfrmPass, 2);
                         },
                       ),
                     )),

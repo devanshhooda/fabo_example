@@ -2,22 +2,6 @@ import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:fabo_example_app/views/screens/options.dart';
 import 'package:flutter/material.dart';
 
-TextStyle _nameStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 5,
-    color: Colors.deepPurple[900],
-    fontWeight: FontWeight.bold,
-    fontStyle: FontStyle.italic);
-TextStyle _addressStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 4,
-    color: Colors.deepPurple[900],
-    fontWeight: FontWeight.w500);
-TextStyle _adDetailStyle = new TextStyle(
-    fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-    color: Colors.deepPurple[700],
-    fontWeight: FontWeight.w400,
-    wordSpacing: 2,
-    letterSpacing: 2);
-
 String imageUrl = 'assets/cris.jpeg';
 
 class ProfilePage extends StatefulWidget {
@@ -91,7 +75,11 @@ Widget info(BuildContext context) {
           padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 3),
           child: new Text(
             'Chris Evans',
-            style: _nameStyle,
+            style: TextStyle(
+                fontSize: SizeConfig.safeBlockHorizontal * 5,
+                color: Colors.deepPurple[900],
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic),
           ),
         ),
         new Padding(
@@ -100,7 +88,10 @@ Widget info(BuildContext context) {
               top: SizeConfig.safeBlockVertical * 2),
           child: new Text(
             'Address : ',
-            style: _addressStyle,
+            style: TextStyle(
+                fontSize: SizeConfig.safeBlockHorizontal * 4,
+                color: Colors.deepPurple[900],
+                fontWeight: FontWeight.w500),
           ),
         ),
         new Padding(
@@ -110,7 +101,12 @@ Widget info(BuildContext context) {
               top: SizeConfig.safeBlockVertical * 1.5),
           child: new Text(
             '3 Arts Entertainment 9460 Wilshire Blvd. 7th Floor Beverly Hills, CA 90212 USA',
-            style: _adDetailStyle,
+            style: TextStyle(
+                fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                color: Colors.deepPurple[700],
+                fontWeight: FontWeight.w400,
+                wordSpacing: 2,
+                letterSpacing: 2),
           ),
         ),
       ],

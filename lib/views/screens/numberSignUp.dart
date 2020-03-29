@@ -1,3 +1,4 @@
+import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'signUpPass.dart';
@@ -80,8 +81,8 @@ class _PhoneNumberState extends State<PhoneNumber> {
                     ),
                     child: new Container(
                       padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 3,
-                      top: SizeConfig.safeBlockHorizontal * 0.5),
+                          left: SizeConfig.safeBlockHorizontal * 3,
+                          top: SizeConfig.safeBlockHorizontal * 0.5),
                       decoration: BoxDecoration(
                         color: nmbrClr,
                         borderRadius: BorderRadius.circular(40),
@@ -123,12 +124,14 @@ class _PhoneNumberState extends State<PhoneNumber> {
                 new Container(
                   height: SizeConfig.blockSizeVertical * 5.5,
                   padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 60,
-                      right: SizeConfig.safeBlockHorizontal * 5),
+                      left: SizeConfig.safeBlockHorizontal * 30,
+                      right: SizeConfig.safeBlockHorizontal * 30),
                   child: new RaisedButton(
                     onPressed: () {
+                      UserAuth userAuth;
                       if (_number.text.isNotEmpty) {
-                        print('Password Screen');
+                        userAuth.sendOtp(_number.text);
+                        print('OTP Screen');
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => Password()));
                       } else {
@@ -141,7 +144,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
                     elevation: 0,
                     child: new Container(
                       child: new Text(
-                        'Next',
+                        'Send OTP',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.safeBlockHorizontal * 5),

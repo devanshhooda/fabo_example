@@ -12,7 +12,6 @@ class Bookings extends StatelessWidget {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('$appBarTitle'),
-        // backgroundColor: Colors.deepPurpleAccent
       ),
       body: new Container(
         height: SizeConfig.screenHeight,
@@ -28,7 +27,16 @@ class Bookings extends StatelessWidget {
               ),
               child: Divider(
                 thickness: 5,
-                height: SizeConfig.blockSizeVertical * 5,
+                height: SizeConfig.blockSizeVertical * 3,
+              ),
+            ),
+            new Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  _sortButton('Distance'),
+                  _sortButton('Price'),
+                ],
               ),
             ),
             _booking('Apple Provider', '1.2', '80,000'),
@@ -201,5 +209,21 @@ Widget _details(String providerName, String distance, String price) {
         ))
       ],
     ),
+  );
+}
+
+Widget _sortButton(String sortingMethod) {
+  return new Container(
+    child: new FlatButton(
+        onPressed: () {},
+        child: new Row(
+          children: <Widget>[
+            Text(sortingMethod),
+            Padding(
+                padding:
+                    EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 1)),
+            Icon(Icons.sort)
+          ],
+        )),
   );
 }

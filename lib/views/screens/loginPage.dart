@@ -125,6 +125,36 @@ class _LoginPageState extends State<LoginPage> {
               // )
             ),
             SizedBox(
+              height: SizeConfig.safeBlockVertical * 2,
+            ),
+            new Container(
+              height: SizeConfig.blockSizeVertical * 6,
+              padding: EdgeInsets.only(
+                  left: SizeConfig.safeBlockHorizontal * 25,
+                  right: SizeConfig.safeBlockHorizontal * 25),
+              child: new RaisedButton(
+                onPressed: () {
+                  if (_phNum.text.isEmpty) {
+                    detectError();
+                  } else {
+                    print('OTP Send');
+                  }
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                color: Colors.green,
+                elevation: 0,
+                child: new Container(
+                  child: new Text(
+                    'Send OTP',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: SizeConfig.safeBlockHorizontal * 4.5),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
               height: SizeConfig.safeBlockVertical * 5,
             ),
             new Container(
@@ -149,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                   cursorWidth: 2.5,
                   cursorColor: Colors.indigo,
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: 'OTP',
                     hintStyle: hintStyle,
                     border: InputBorder.none,
                     icon: Icon(
@@ -166,34 +196,25 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: SizeConfig.safeBlockVertical * 3,
-            ),
-            new Container(
-              padding:
-                  EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 43),
-              child: FlatButton(
-                onPressed: () => print('Forgot Passwod process'),
-                child: new Text('Forgot Password ?',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: SizeConfig.safeBlockHorizontal * 4,
-                        fontWeight: FontWeight.w500)),
-              ),
-            ),
-            SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
             ),
-            new Container(
-              padding:
-                  EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 30),
-              child: new Text(
-                errorMsg,
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.safeBlockVertical * 3,
-            ),
+
+            // new Container(
+            //   padding:
+            //       EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 43),
+            //   child: FlatButton(
+            //     onPressed: () => print('Forgot Passwod process'),
+            //     child: new Text('Forgot Password ?',
+            //         style: TextStyle(
+            //             color: Colors.blue,
+            //             fontSize: SizeConfig.safeBlockHorizontal * 4,
+            //             fontWeight: FontWeight.w500)),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: SizeConfig.safeBlockVertical * 2,
+            // ),
+
             new Container(
               height: SizeConfig.blockSizeVertical * 6,
               padding: EdgeInsets.only(
@@ -215,16 +236,27 @@ class _LoginPageState extends State<LoginPage> {
                 elevation: 0,
                 child: new Container(
                   child: new Text(
-                    'Login',
+                    'Verify & Login',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: SizeConfig.safeBlockHorizontal * 5),
+                        fontSize: SizeConfig.safeBlockHorizontal * 4.5),
                   ),
                 ),
               ),
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 4,
+            ),
+            new Container(
+              padding:
+                  EdgeInsets.only(left: SizeConfig.safeBlockHorizontal * 30),
+              child: new Text(
+                errorMsg,
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.safeBlockVertical * 3,
             ),
             new Container(
               padding:

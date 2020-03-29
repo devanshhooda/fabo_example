@@ -10,8 +10,7 @@ import 'views/screens/requestsPage.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  runApp(
-    new MaterialApp(
+  runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primarySwatch: Colors.indigo,
@@ -46,7 +45,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     SizeConfig().init(context);
 
     TabController controller = TabController(length: 3, vsync: this);
-    
+
     return new Scaffold(
       appBar: app_Bar(context),
       bottomNavigationBar: Material(
