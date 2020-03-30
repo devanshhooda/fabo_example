@@ -137,11 +137,14 @@ class _PhoneNumberState extends State<PhoneNumber> {
                       String phoneNumber = _number.text;
                       if (phoneNumber.isNotEmpty) {
                         userAuth.sendOtp(phoneNumber);
-                        print('OTP Screen');
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Password(phoneNumber)));
-                      } else {
-                        detectError();
+                        if (_number.text.isNotEmpty) {
+                          userAuth.sendOtp(_number.text);
+                          print('OTP Screen');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Password(phoneNumber)));
+                        } else {
+                          detectError();
+                        }
                       }
                     },
                     shape: RoundedRectangleBorder(
