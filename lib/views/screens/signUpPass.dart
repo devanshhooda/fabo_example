@@ -1,51 +1,48 @@
+import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import '../../main.dart';
 import 'loginPage.dart';
 
+String phoneNumber;
+
 class Password extends StatefulWidget {
+  Password(String phnNmbr) {
+    phoneNumber = phnNmbr;
+  }
   @override
   _PasswordState createState() => _PasswordState();
 }
 
 class _PasswordState extends State<Password> {
   TextEditingController _pass = new TextEditingController();
-  TextEditingController _cnfrmPass = new TextEditingController();
   TextStyle _style = new TextStyle(
       fontSize: SizeConfig.safeBlockHorizontal * 4, color: Colors.blue);
   String errorMsg = "";
-
   Color passClr = Colors.black12;
   Color confirmPassClr = Colors.black12;
+  UserAuth userAuth;
 
-  void changPassColor(String input, int i) {
-    if (i == 1) {
-      setState(() {
-        if (input.isNotEmpty) {
-          passClr = Colors.red[100];
-        } else {
-          passClr = Colors.black12;
-        }
-      });
-    } else if (i == 2) {
-      setState(() {
-        if (input.isNotEmpty) {
-          confirmPassClr = Colors.red[100];
-        } else {
-          confirmPassClr = Colors.black12;
-        }
-      });
-    }
-  }
-
-  void detectError(bool i) {
+  void changPassColor(String input) {
     setState(() {
-      if (i) {
-        errorMsg = "Above fields can't be empty";
+      if (input.isNotEmpty) {
+        passClr = Colors.red[100];
       } else {
-        errorMsg = "Passwords doesn't match";
+        passClr = Colors.black12;
       }
     });
+  }
+
+  void detectError() {
+    setState(() {
+      errorMsg = "Above fields can't be empty";
+    });
+  }
+
+  @override
+  void initState() {
+    userAuth = UserAuth();
+    super.initState();
   }
 
   @override
@@ -119,7 +116,7 @@ class _PasswordState extends State<Password> {
                             )),
                         onChanged: (String pass) {
                           pass = _pass.text;
-                          changPassColor(pass, 1);
+                          changPassColor(pass);
                         },
                       ),
                     )),
@@ -144,11 +141,9 @@ class _PasswordState extends State<Password> {
                       right: SizeConfig.safeBlockHorizontal * 15),
                   child: new RaisedButton(
                     onPressed: () {
-                      if (_pass.text.isEmpty || _cnfrmPass.text.isEmpty) {
-                        detectError(true);
-                      } else if (_pass.text != _cnfrmPass.text) {
-                        detectError(false);
-                      } else {
+                      String otp = _pass.text;
+                      if (otp.isNotEmpty) {
+                        userAuth.verifyOtp(phoneNumber, otp);
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) => MyApp()),
                             ModalRoute.withName(''));
