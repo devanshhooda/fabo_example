@@ -5,7 +5,6 @@ import 'signUpPass.dart';
 import 'loginPage.dart';
 
 class PhoneNumber extends StatefulWidget {
-  // PhoneNumber(String name) {}
   @override
   _PhoneNumberState createState() => _PhoneNumberState();
 }

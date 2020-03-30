@@ -18,5 +18,7 @@ class UserAuth with ChangeNotifier {
     }
   }
 
-  Future verifyOtp(String otp) {}
+  Future verifyOtp(String otp) async {
+    
+  }
 }
