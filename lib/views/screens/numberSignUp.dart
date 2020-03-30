@@ -13,6 +13,7 @@ class PhoneNumber extends StatefulWidget {
 class _PhoneNumberState extends State<PhoneNumber> {
   TextEditingController _number = new TextEditingController();
   String errorMsg = "";
+  UserAuth userAuth;
 
   Color nmbrClr = Colors.black12;
 
@@ -30,6 +31,12 @@ class _PhoneNumberState extends State<PhoneNumber> {
     setState(() {
       errorMsg = "Above column can't be empty";
     });
+  }
+
+  @override
+  void initState() {
+    userAuth = UserAuth();
+    super.initState();
   }
 
   @override
@@ -128,7 +135,6 @@ class _PhoneNumberState extends State<PhoneNumber> {
                       right: SizeConfig.safeBlockHorizontal * 30),
                   child: new RaisedButton(
                     onPressed: () {
-                      UserAuth userAuth;
                       if (_number.text.isNotEmpty) {
                         userAuth.sendOtp(_number.text);
                         print('OTP Screen');
