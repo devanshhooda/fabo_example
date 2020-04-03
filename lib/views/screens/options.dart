@@ -1,7 +1,7 @@
 import 'package:fabo_example_app/utils/sizeConfig.dart';
+import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:flutter/material.dart';
 import 'loginPage.dart';
-import 'signUpPage.dart';
 
 class OptionsPage extends StatelessWidget {
   @override
@@ -79,9 +79,9 @@ Widget _options(BuildContext context) {
                           color: Colors.indigo[300]),
                       child: new MaterialButton(
                         onPressed: () {
-                          print('Sign Up page');
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => Name()));
+                          print('Number Sign Up page');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => PhoneNumber()));
                         },
                         child: new Text(
                           'Sign Up',

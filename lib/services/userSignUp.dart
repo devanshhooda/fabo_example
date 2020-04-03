@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class UserAuth with ChangeNotifier {
   String url = 'http://13.233.195.211:7777';
-  String otpId, loginStatus, otpStatus, userStatus,details;
+  String otpId, loginStatus, otpStatus, userStatus, details, phoneNumber;
 
   Future sendOtp(String phoneNumber) async {
     String sendOtpUrl = '$url' + '/api/auth/sendotp';
@@ -14,6 +14,7 @@ class UserAuth with ChangeNotifier {
           await http.post(sendOtpUrl, body: {'mobile': phoneNumber});
       var data = json.decode(response.body);
       otpId = data['otp_id'];
+      notifyListeners();
       print(data);
     } catch (e) {
       print(e.toString());
@@ -28,7 +29,7 @@ class UserAuth with ChangeNotifier {
       var data = json.decode(response.body);
       loginStatus = data['Status'];
       otpStatus = data['Details'];
-      // notifyListeners();
+      notifyListeners();
       print(data);
     } catch (e) {
       print(e.toString());
@@ -42,7 +43,7 @@ class UserAuth with ChangeNotifier {
           await http.post(checkPhoneUrl, body: {'mobile': phoneNumber});
       var data = json.decode(response.body);
       userStatus = data['Status'];
-      // notifyListeners();
+      notifyListeners();
       print(data);
     } catch (e) {
       print(e.toString());
@@ -56,21 +57,25 @@ class UserAuth with ChangeNotifier {
           body: {'mobile': phoneNumber, 'type': 'Customer'});
       var data = json.decode(response.body);
       userStatus = data['Status'];
-      // notifyListeners();
+      notifyListeners();
       print(data);
     } catch (e) {
       print(e.toString());
     }
   }
 
-  Future addNewUser(String phoneNumber) async {
+  Future addNewUser(String phoneNumber, String firstName, String lastName,
+      String address) async {
     String addUserUrl = '$url' + '/api/user/addnew';
     try {
-      http.Response response = await http
-          .post(addUserUrl, body: {'mobile': phoneNumber, 'type': 'Customer'});
+      http.Response response = await http.post(addUserUrl, body: {
+        'mobile': phoneNumber,
+        'type': 'Customer',
+        'address': address
+      });
       var data = json.decode(response.body);
       details = data['user'];
-      // notifyListeners();
+      notifyListeners();
       print(data);
     } catch (e) {
       print(e.toString());
