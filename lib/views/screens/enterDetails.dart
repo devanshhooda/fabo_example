@@ -8,7 +8,6 @@ import 'loginPage.dart';
 String phoneNumber;
 
 class NameSignUp extends StatefulWidget {
-  String phoneNumber;
   NameSignUp(String phnNmbr) {
     phoneNumber = phnNmbr;
   }
@@ -21,9 +20,7 @@ class _NameSignUpState extends State<NameSignUp> {
   TextEditingController _firstName = new TextEditingController();
   TextEditingController _lastName = new TextEditingController();
   TextEditingController _address = new TextEditingController();
-
   String errorMsg = "";
-
   Color firstNameClr = Colors.black12;
   Color lastNameClr = Colors.black12;
 
@@ -53,16 +50,17 @@ class _NameSignUpState extends State<NameSignUp> {
     });
   }
 
-  // UserAuth _userAuth;
+  // UserAuth userAuth;
 
   // @override
   // void initState() {
-  //   _userAuth = new UserAuth();
+  //   userAuth = new UserAuth();
   //   super.initState();
   // }
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context, listen: false);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
@@ -216,8 +214,8 @@ class _NameSignUpState extends State<NameSignUp> {
                       if (firstName.isNotEmpty &&
                           lastName.isNotEmpty &&
                           address.isNotEmpty) {
-                        final userAuth =
-                            Provider.of<UserAuth>(context, listen: false);
+                        // final userAuth =
+                        //     Provider.of<UserAuth>(context, listen: false);
                         userAuth.addNewUser(
                             phoneNumber, firstName, lastName, address);
                         Navigator.of(context).pushAndRemoveUntil(

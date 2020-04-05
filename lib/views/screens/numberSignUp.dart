@@ -36,16 +36,17 @@ class _PhoneNumberState extends State<PhoneNumber> {
     });
   }
 
-  // UserAuth _userAuth;
+  // UserAuth userAuth;
 
   // @override
   // void initState() {
-  //   _userAuth = new UserAuth();
+  //   userAuth = new UserAuth();
   //   super.initState();
   // }
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context, listen: false);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
@@ -157,8 +158,6 @@ class _PhoneNumberState extends State<PhoneNumber> {
                     onPressed: () {
                       String phoneNumber = _number.text;
                       if (phoneNumber.isNotEmpty) {
-                        final userAuth =
-                            Provider.of<UserAuth>(context, listen: false);
                         userAuth.sendOtp(phoneNumber);
                         print('OTP Screen');
                         Navigator.of(context).push(MaterialPageRoute(

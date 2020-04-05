@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class UserAuth with ChangeNotifier {
-  String url = 'http://13.233.195.211:7777';
+  String url = 'http://13.232.214.36:7777';
   String otpId, loginStatus, otpStatus, userStatus, details, phoneNumber;
 
   Future sendOtp(String phoneNumber) async {

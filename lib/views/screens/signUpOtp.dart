@@ -2,11 +2,12 @@ import 'package:fabo_example_app/main.dart';
 import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:fabo_example_app/views/screens/enterDetails.dart';
+import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'loginPage.dart';
 
-String phoneNumber;
+// String phoneNumber;
 
 class Password extends StatefulWidget {
   Password(String phnNmbr) {
@@ -38,16 +39,17 @@ class _PasswordState extends State<Password> {
     });
   }
 
-  // UserAuth _userAuth;
+  // UserAuth userAuth;
 
   // @override
   // void initState() {
-  //   _userAuth = new UserAuth();
+  //   userAuth = new UserAuth();
   //   super.initState();
   // }
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context, listen: false);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
@@ -145,8 +147,8 @@ class _PasswordState extends State<Password> {
                     onPressed: () {
                       String otp = _pass.text;
                       if (otp.isNotEmpty) {
-                        final userAuth =
-                            Provider.of<UserAuth>(context);
+                        // final userAuth =
+                        //     Provider.of<UserAuth>(context);
                         userAuth.verifyOtp(phoneNumber, otp);
                         userAuth.checkRegistration(phoneNumber);
                         if (userAuth.loginStatus == 'Success') {
