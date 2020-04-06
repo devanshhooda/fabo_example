@@ -40,7 +40,7 @@ class UserAuth with ChangeNotifier {
       if (otp.isNotEmpty) {
         http.Response response = await http.post(
           verifyOtpUrl,
-          headers: <String, String>{'Authorization': token},
+          headers: <String, String>{'Authorization': 'jwt ' + token},
           body: {'otp': otp, 'medium': 'SMS'},
         );
         var data = json.decode(response.body);
@@ -62,7 +62,7 @@ class UserAuth with ChangeNotifier {
     String checkPhoneUrl = '$url' + '/api/user/getuser';
     try {
       http.Response response = await http.get(checkPhoneUrl,
-          headers: <String, String>{'Authorization': token});
+          headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
@@ -99,10 +99,10 @@ class UserAuth with ChangeNotifier {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
         http.Response response =
             await http.post(addUserUrl, headers: <String, String>{
-          'Authorization': token
+          'Authorization': 'jwt ' + token
         }, body: {
           'type': 'Customer',
-          'token': token,
+          'token': 'Firebase Token',
           'firstName': firstName,
           'lastName': lastName,
           'address': address
