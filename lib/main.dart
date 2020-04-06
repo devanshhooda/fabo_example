@@ -29,11 +29,11 @@ class PrizeyCustomerApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<UserAuth>(
           create: (context) => UserAuth(),
-          child: Password(''),
+          child: Password(),
         ),
         ChangeNotifierProvider<UserAuth>(
           create: (context) => UserAuth(),
-          child: NameSignUp(''),
+          child: NameSignUp(),
         ),
       ],
       child: new MaterialApp(

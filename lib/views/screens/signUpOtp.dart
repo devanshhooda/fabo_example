@@ -1,25 +1,17 @@
-import 'package:fabo_example_app/main.dart';
 import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:fabo_example_app/views/screens/enterDetails.dart';
-import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'loginPage.dart';
 
-// String phoneNumber;
-
 class Password extends StatefulWidget {
-  Password(String phnNmbr) {
-    phoneNumber = phnNmbr;
-  }
   @override
   _PasswordState createState() => _PasswordState();
 }
 
 class _PasswordState extends State<Password> {
   TextEditingController _pass = new TextEditingController();
-  String errorMsg = "";
   Color passClr = Colors.black12;
   Color confirmPassClr = Colors.black12;
 
@@ -33,18 +25,10 @@ class _PasswordState extends State<Password> {
     });
   }
 
-  void detectError() {
-    setState(() {
-      errorMsg = "Above field can't be empty";
-    });
-  }
-
-  // UserAuth userAuth;
-
-  // @override
-  // void initState() {
-  //   userAuth = new UserAuth();
-  //   super.initState();
+  // void detectError() {
+  //   setState(() {
+  //     errorMsg = "Above field can't be empty";
+  //   });
   // }
 
   @override
@@ -131,7 +115,9 @@ class _PasswordState extends State<Password> {
                   padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 30),
                   child: new Text(
-                    errorMsg,
+                    userAuth.verifyOtpStatus != null
+                        ? userAuth.verifyOtpStatus
+                        : userAuth.verifyOtpMsg,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
@@ -146,28 +132,13 @@ class _PasswordState extends State<Password> {
                   child: new RaisedButton(
                     onPressed: () {
                       String otp = _pass.text;
-                      if (otp.isNotEmpty) {
-                        // final userAuth =
-                        //     Provider.of<UserAuth>(context);
-                        userAuth.verifyOtp(phoneNumber, otp);
-                        userAuth.checkRegistration(phoneNumber);
-                        if (userAuth.loginStatus == 'Success') {
-                          if (userAuth.userStatus == 'Verified') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MyApp()));
-                            print('User exist');
-                          } else {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => NameSignUp(phoneNumber)));
-                            print('Enter details screen');
-                          }
-                        } else {
-                          setState(() {
-                            errorMsg = userAuth.otpStatus;
-                          });
-                        }
-                      } else {
-                        detectError();
+                      userAuth.verifyOtp(otp);
+                      userAuth.getRegisteredUser();
+                      if (userAuth.verifyOtpStatus == 'Success' &&
+                          userAuth.userStatus == 'Success') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => NameSignUp()));
+                        print('User exist');
                       }
                     },
                     shape: RoundedRectangleBorder(

@@ -15,9 +15,6 @@ class _PhoneNumberState extends State<PhoneNumber> {
   static String phoneNumber = _number.text;
   TextStyle _style = new TextStyle(
       fontSize: SizeConfig.safeBlockHorizontal * 4, color: Colors.blue);
-
-  String errorMsg = "";
-
   Color nmbrClr = Colors.black12;
 
   void changePhoneNumberColor(String input) {
@@ -30,11 +27,11 @@ class _PhoneNumberState extends State<PhoneNumber> {
     });
   }
 
-  void detectError() {
-    setState(() {
-      errorMsg = "Above field can't be empty";
-    });
-  }
+  // void detectError() {
+  //   setState(() {
+  //     errorMsg = "Above field can't be empty";
+  //   });
+  // }
 
   // UserAuth userAuth;
 
@@ -142,7 +139,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
                   padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 28),
                   child: new Text(
-                    errorMsg,
+                    userAuth.sendOtpMsg,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
@@ -157,16 +154,10 @@ class _PhoneNumberState extends State<PhoneNumber> {
                   child: new RaisedButton(
                     onPressed: () {
                       String phoneNumber = _number.text;
-                      if (phoneNumber.isNotEmpty) {
-                        userAuth.sendOtp(phoneNumber);
-                        print('OTP Screen');
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Password(
-                                  phoneNumber,
-                                )));
-                      } else {
-                        detectError();
-                      }
+                      userAuth.sendOtp(phoneNumber);
+                      print('OTP Screen');
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Password()));
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),

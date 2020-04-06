@@ -5,13 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'loginPage.dart';
 
-String phoneNumber;
-
 class NameSignUp extends StatefulWidget {
-  NameSignUp(String phnNmbr) {
-    phoneNumber = phnNmbr;
-  }
-
   @override
   _NameSignUpState createState() => _NameSignUpState();
 }
@@ -20,7 +14,6 @@ class _NameSignUpState extends State<NameSignUp> {
   TextEditingController _firstName = new TextEditingController();
   TextEditingController _lastName = new TextEditingController();
   TextEditingController _address = new TextEditingController();
-  String errorMsg = "";
   Color firstNameClr = Colors.black12;
   Color lastNameClr = Colors.black12;
 
@@ -44,18 +37,10 @@ class _NameSignUpState extends State<NameSignUp> {
     });
   }
 
-  void detectError() {
-    setState(() {
-      errorMsg = "Above fields can't be empty";
-    });
-  }
-
-  // UserAuth userAuth;
-
-  // @override
-  // void initState() {
-  //   userAuth = new UserAuth();
-  //   super.initState();
+  // void detectError() {
+  //   setState(() {
+  //     errorMsg = "Above fields can't be empty";
+  //   });
   // }
 
   @override
@@ -194,7 +179,7 @@ class _NameSignUpState extends State<NameSignUp> {
                   padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 30),
                   child: new Text(
-                    errorMsg,
+                    userAuth.detailsPageMsg,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
@@ -211,20 +196,11 @@ class _NameSignUpState extends State<NameSignUp> {
                       String firstName = _firstName.text,
                           lastName = _lastName.text,
                           address = _address.text;
-                      if (firstName.isNotEmpty &&
-                          lastName.isNotEmpty &&
-                          address.isNotEmpty) {
-                        // final userAuth =
-                        //     Provider.of<UserAuth>(context, listen: false);
-                        userAuth.addNewUser(
-                            phoneNumber, firstName, lastName, address);
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => MyApp()),
-                            ModalRoute.withName(''));
-                        print('Home Page Screen');
-                      } else {
-                        detectError();
-                      }
+                      userAuth.createUser(firstName, lastName, address);
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                          ModalRoute.withName(''));
+                      print('Home Page Screen');
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
