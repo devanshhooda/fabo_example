@@ -1,3 +1,4 @@
+import 'package:fabo_example_app/main.dart';
 import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:fabo_example_app/views/screens/enterDetails.dart';
@@ -33,7 +34,7 @@ class _PasswordState extends State<Password> {
 
   @override
   Widget build(BuildContext context) {
-    final userAuth = Provider.of<UserAuth>(context, listen: false);
+    final userAuth = Provider.of<UserAuth>(context);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
@@ -115,7 +116,7 @@ class _PasswordState extends State<Password> {
                   padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 30),
                   child: new Text(
-                    userAuth.verifyOtpStatus != null
+                    userAuth.verifyOtpStatus.isNotEmpty
                         ? userAuth.verifyOtpStatus
                         : userAuth.verifyOtpMsg,
                     style: TextStyle(color: Colors.red),
@@ -130,15 +131,21 @@ class _PasswordState extends State<Password> {
                       left: SizeConfig.safeBlockHorizontal * 25,
                       right: SizeConfig.safeBlockHorizontal * 25),
                   child: new RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       String otp = _pass.text;
-                      userAuth.verifyOtp(otp);
-                      userAuth.getRegisteredUser();
-                      if (userAuth.verifyOtpStatus == 'Success' &&
-                          userAuth.userStatus == 'Success') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => NameSignUp()));
-                        print('User exist');
+                      bool otpVerified = await userAuth.verifyOtp(otp);
+                      bool userExist = await userAuth.getRegisteredUser();
+                      if (otpVerified &&
+                          userAuth.verifyOtpStatus == 'Success') {
+                        if (userExist && userAuth.userStatus == 'Success') {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) => MyApp()),
+                              ModalRoute.withName(''));
+                          print('User exist hence logged in');
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => NameSignUp()));
+                        }
                       }
                     },
                     shape: RoundedRectangleBorder(

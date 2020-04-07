@@ -13,7 +13,7 @@ class UserAuth with ChangeNotifier {
       detailsPageMsg = '';
   var userDetails;
 
-  Future sendOtp(String phoneNumber) async {
+  Future<bool> sendOtp(String phoneNumber) async {
     String sendOtpUrl = '$url' + '/api/auth/sendotp';
     try {
       if (phoneNumber.isNotEmpty) {
@@ -24,17 +24,19 @@ class UserAuth with ChangeNotifier {
           sendOtpStatus = data['status'];
           token = data['token'];
         }
-        print(data);
+        print('Send OTP method: ' + data);
       } else {
         sendOtpMsg = 'Above Field can\'t be empty';
       }
       notifyListeners();
+      return true;
     } catch (e) {
       print(e.toString());
+      return false;
     }
   }
 
-  Future verifyOtp(String otp) async {
+  Future<bool> verifyOtp(String otp) async {
     String verifyOtpUrl = '$url' + '/api/auth/verifyotp';
     try {
       if (otp.isNotEmpty) {
@@ -48,17 +50,19 @@ class UserAuth with ChangeNotifier {
           verifyOtpStatus = data['status'];
           token = data['token'];
         }
-        print(data);
+        print('Verify OTP method: ' + data);
       } else {
         verifyOtpMsg = 'Above Field can\'t be empty';
       }
       notifyListeners();
+      return true;
     } catch (e) {
       print(e.toString());
+      return false;
     }
   }
 
-  Future getRegisteredUser() async {
+  Future<bool> getRegisteredUser() async {
     String checkPhoneUrl = '$url' + '/api/user/getuser';
     try {
       http.Response response = await http.get(checkPhoneUrl,
@@ -70,13 +74,15 @@ class UserAuth with ChangeNotifier {
         token = data['token'];
       }
       notifyListeners();
-      print(data);
+      print('Get registered method: ' + data);
+      return true;
     } catch (e) {
       print(e.toString());
+      return false;
     }
   }
 
-  Future getUserProfile() async {
+  Future<bool> getUserProfile() async {
     String profileFetchingUrl = '$url' + '/api/user/profile';
     try {
       http.Response response =
@@ -87,13 +93,16 @@ class UserAuth with ChangeNotifier {
         userDetails = data['user'];
       }
       notifyListeners();
-      print(data);
+      print('Get user profile method: ' + data);
+      return true;
     } catch (e) {
       print(e.toString());
+      return false;
     }
   }
 
-  Future createUser(String firstName, String lastName, String address) async {
+  Future<bool> createUser(
+      String firstName, String lastName, String address) async {
     String addUserUrl = '$url' + '/api/user/adduser';
     try {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
@@ -113,13 +122,15 @@ class UserAuth with ChangeNotifier {
           userDetails = data['user'];
           token = data['token'];
         }
-        print(data);
+        print('Create new user method: ' + data);
       } else {
-        detailsPageMsg = 'Above Field can\'t be empty';
+        detailsPageMsg = 'Above Fields can\'t be empty';
       }
       notifyListeners();
+      return true;
     } catch (e) {
       print(e.toString());
+      return false;
     }
   }
 }

@@ -45,7 +45,7 @@ class _NameSignUpState extends State<NameSignUp> {
 
   @override
   Widget build(BuildContext context) {
-    final userAuth = Provider.of<UserAuth>(context, listen: false);
+    final userAuth = Provider.of<UserAuth>(context);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
@@ -192,14 +192,17 @@ class _NameSignUpState extends State<NameSignUp> {
                       left: SizeConfig.safeBlockHorizontal * 25,
                       right: SizeConfig.safeBlockHorizontal * 25),
                   child: new RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       String firstName = _firstName.text,
                           lastName = _lastName.text,
                           address = _address.text;
-                      userAuth.createUser(firstName, lastName, address);
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => MyApp()),
-                          ModalRoute.withName(''));
+                      bool userCreated = await userAuth.createUser(
+                          firstName, lastName, address);
+                      if (userCreated && userAuth.userStatus == 'Success') {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => MyApp()),
+                            ModalRoute.withName(''));
+                      }
                       print('Home Page Screen');
                     },
                     shape: RoundedRectangleBorder(

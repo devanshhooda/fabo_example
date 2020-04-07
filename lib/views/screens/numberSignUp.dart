@@ -43,7 +43,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
 
   @override
   Widget build(BuildContext context) {
-    final userAuth = Provider.of<UserAuth>(context, listen: false);
+    final userAuth = Provider.of<UserAuth>(context);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
@@ -152,12 +152,14 @@ class _PhoneNumberState extends State<PhoneNumber> {
                       left: SizeConfig.safeBlockHorizontal * 30,
                       right: SizeConfig.safeBlockHorizontal * 30),
                   child: new RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       String phoneNumber = _number.text;
-                      userAuth.sendOtp(phoneNumber);
+                      bool otpSent = await userAuth.sendOtp(phoneNumber);
                       print('OTP Screen');
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Password()));
+                      if (otpSent && userAuth.sendOtpStatus == 'Success') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Password()));
+                      }
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
