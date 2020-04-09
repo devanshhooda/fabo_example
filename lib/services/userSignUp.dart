@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserAuth with ChangeNotifier {
+  SharedPreferences sharedPreferences;
   String url = 'http://13.232.214.36:7777';
   String token,
       sendOtpStatus,
@@ -42,13 +44,14 @@ class UserAuth with ChangeNotifier {
       if (otp.isNotEmpty) {
         http.Response response = await http.post(
           verifyOtpUrl,
-          headers: <String, String>{'Authorization': 'jwt ' + token},
+          headers: <String, String>{'Authorization': 'jwt ' + getTokenFromSP()},
           body: {'otp': otp, 'medium': 'SMS'},
         );
         var data = json.decode(response.body);
         if (data != null) {
           verifyOtpStatus = data['status'];
           token = data['token'];
+          addTokenToSP(token);
         }
         print('Verify OTP method: ' + data);
       } else {
@@ -66,12 +69,15 @@ class UserAuth with ChangeNotifier {
     String checkPhoneUrl = '$url' + '/api/user/getuser';
     try {
       http.Response response = await http.get(checkPhoneUrl,
-          headers: <String, String>{'Authorization': 'jwt ' + token});
+          headers: <String, String>{
+            'Authorization': 'jwt ' + getTokenFromSP()
+          });
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
         userDetails = data['user'];
         token = data['token'];
+        addTokenToSP(token);
       }
       notifyListeners();
       print('Get registered method: ' + data);
@@ -85,12 +91,14 @@ class UserAuth with ChangeNotifier {
   Future<bool> getUserProfile() async {
     String profileFetchingUrl = '$url' + '/api/user/profile';
     try {
-      http.Response response =
-          await http.post(profileFetchingUrl, body: {'type': 'Customer'});
+      http.Response response = await http.post(profileFetchingUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + getTokenFromSP()},
+          body: {'type': 'Customer'});
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
         userDetails = data['user'];
+        addTokenToSP(token);
       }
       notifyListeners();
       print('Get user profile method: ' + data);
@@ -108,7 +116,7 @@ class UserAuth with ChangeNotifier {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
         http.Response response =
             await http.post(addUserUrl, headers: <String, String>{
-          'Authorization': 'jwt ' + token
+          'Authorization': 'jwt ' + getTokenFromSP()
         }, body: {
           'type': 'Customer',
           'token': 'Firebase Token',
@@ -121,6 +129,7 @@ class UserAuth with ChangeNotifier {
           userStatus = data['status'];
           userDetails = data['user'];
           token = data['token'];
+          addTokenToSP(token);
         }
         print('Create new user method: ' + data);
       } else {
@@ -132,5 +141,20 @@ class UserAuth with ChangeNotifier {
       print(e.toString());
       return false;
     }
+  }
+
+  addTokenToSP(String token) async {
+    if (sharedPreferences == null) {
+      sharedPreferences = await SharedPreferences.getInstance();
+    }
+    sharedPreferences.setString('token', token);
+  }
+
+  getTokenFromSP() async {
+    if (sharedPreferences == null) {
+      sharedPreferences = await SharedPreferences.getInstance();
+    }
+    String _token = sharedPreferences.getString('token');
+    return _token;
   }
 }

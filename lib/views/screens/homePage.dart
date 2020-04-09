@@ -1,5 +1,7 @@
+import 'package:fabo_example_app/services/productsNcategories.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -116,4 +118,10 @@ Widget _services(String subtitle) {
           ),
         ),
       ));
+
+  getcontent(BuildContext context) async {
+    final content = Provider.of<HomeContent>(context);
+    bool fetchCategory = await content.getCategories();
+    bool fetchProducts = await content.getProducts();
+  }
 }
