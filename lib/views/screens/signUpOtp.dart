@@ -135,9 +135,8 @@ class _PasswordState extends State<Password> {
                       String otp = _pass.text;
                       bool otpVerified = await userAuth.verifyOtp(otp);
                       bool userExist = await userAuth.getRegisteredUser();
-                      if (otpVerified &&
-                          userAuth.verifyOtpStatus == 'Success') {
-                        if (userExist && userAuth.userStatus == 'Success') {
+                      if (otpVerified) {
+                        if (userExist) {
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (context) => MyApp()),
                               ModalRoute.withName(''));
@@ -145,6 +144,7 @@ class _PasswordState extends State<Password> {
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => NameSignUp()));
+                          print('Enter details screen');
                         }
                       }
                     },

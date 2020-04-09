@@ -13,54 +13,49 @@ class HomeContent with ChangeNotifier {
   String getCategoriesStatus, getProdeuctsStatus;
   String noOfCategories, categoryId;
 
-  Future<bool> getCategories() async {
+  Future getCategories() async {
     String categoryUrl = url + '/api/category/list';
     try {
-      http.Response response = await http.get(categoryUrl,
-          headers: <String, String>{
-            'Authorization': 'jwt ' + _auth.getTokenFromSP()
-          });
+      http.Response response =
+          await http.get(categoryUrl, headers: <String, String>{
+        // 'Authorization': 'jwt ' + _auth.getTokenFromSP()
+        'Authorization': 'jwt ' + _auth.token
+      });
       var data = json.decode(response.body);
       if (data != null) {
         categories = data['categories'];
         noOfCategories = data['count'];
         categoryId = data['count']['_id'];
         getCategoriesStatus = data['status'];
-      }
-      if (getCategoriesStatus == 'Success') {
-        return true;
-      } else {
-        return false;
+        notifyListeners();
+        print('getCategories : ' + data);
+        getProducts();
       }
     } catch (e) {
       print(e.toString());
-      return false;
     }
   }
 
-  Future<bool> getProducts() async {
+  Future getProducts() async {
     String categoryUrl =
         url + '/api/product/incategory?limit=$noOfCategories&id=$categoryId';
     try {
-      http.Response response = await http.get(categoryUrl,
-          headers: <String, String>{
-            'Authorization': 'jwt ' + _auth.getTokenFromSP()
-          });
+      http.Response response =
+          await http.get(categoryUrl, headers: <String, String>{
+        // 'Authorization': 'jwt ' + _auth.getTokenFromSP()
+        'Authorization': 'jwt ' + _auth.token
+      });
       var data = json.decode(response.body);
       if (data != null) {
         categories = data['categories'];
         noOfCategories = data['count'];
         categoryId = data['count']['_id'];
         getProdeuctsStatus = data['status'];
-      }
-      if (getProdeuctsStatus == 'Success') {
-        return true;
-      } else {
-        return false;
+        notifyListeners();
+        print('getProducts : ' + data);
       }
     } catch (e) {
       print(e.toString());
-      return false;
     }
   }
 }

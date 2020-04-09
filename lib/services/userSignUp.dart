@@ -25,13 +25,18 @@ class UserAuth with ChangeNotifier {
         if (data != null) {
           sendOtpStatus = data['status'];
           token = data['token'];
+          addTokenToSP(token);
         }
         print('Send OTP method: ' + data);
       } else {
         sendOtpMsg = 'Above Field can\'t be empty';
       }
       notifyListeners();
-      return true;
+      if (sendOtpStatus == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e.toString());
       return false;
@@ -44,7 +49,10 @@ class UserAuth with ChangeNotifier {
       if (otp.isNotEmpty) {
         http.Response response = await http.post(
           verifyOtpUrl,
-          headers: <String, String>{'Authorization': 'jwt ' + getTokenFromSP()},
+          headers: <String, String>{
+            'Authorization': 'jwt ' + getTokenFromSP()
+            // 'Authorization': 'jwt ' + token
+          },
           body: {'otp': otp, 'medium': 'SMS'},
         );
         var data = json.decode(response.body);
@@ -58,7 +66,11 @@ class UserAuth with ChangeNotifier {
         verifyOtpMsg = 'Above Field can\'t be empty';
       }
       notifyListeners();
-      return true;
+      if (verifyOtpStatus == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e.toString());
       return false;
@@ -68,10 +80,11 @@ class UserAuth with ChangeNotifier {
   Future<bool> getRegisteredUser() async {
     String checkPhoneUrl = '$url' + '/api/user/getuser';
     try {
-      http.Response response = await http.get(checkPhoneUrl,
-          headers: <String, String>{
-            'Authorization': 'jwt ' + getTokenFromSP()
-          });
+      http.Response response =
+          await http.get(checkPhoneUrl, headers: <String, String>{
+        'Authorization': 'jwt ' + getTokenFromSP()
+        // 'Authorization': 'jwt ' + token
+      });
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
@@ -81,7 +94,11 @@ class UserAuth with ChangeNotifier {
       }
       notifyListeners();
       print('Get registered method: ' + data);
-      return true;
+      if (userStatus == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e.toString());
       return false;
@@ -91,9 +108,13 @@ class UserAuth with ChangeNotifier {
   Future<bool> getUserProfile() async {
     String profileFetchingUrl = '$url' + '/api/user/profile';
     try {
-      http.Response response = await http.post(profileFetchingUrl,
-          headers: <String, String>{'Authorization': 'jwt ' + getTokenFromSP()},
-          body: {'type': 'Customer'});
+      http.Response response =
+          await http.post(profileFetchingUrl, headers: <String, String>{
+        'Authorization': 'jwt ' + getTokenFromSP()
+        // 'Authorization': 'jwt ' + token
+      }, body: {
+        'type': 'Customer'
+      });
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
@@ -101,8 +122,12 @@ class UserAuth with ChangeNotifier {
         addTokenToSP(token);
       }
       notifyListeners();
-      print('Get user profile method: ' + data);
-      return true;
+      print('Get user profile method : ' + data);
+      if (userStatus == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e.toString());
       return false;
@@ -117,6 +142,7 @@ class UserAuth with ChangeNotifier {
         http.Response response =
             await http.post(addUserUrl, headers: <String, String>{
           'Authorization': 'jwt ' + getTokenFromSP()
+          // 'Authorization': 'jwt ' + token
         }, body: {
           'type': 'Customer',
           'token': 'Firebase Token',
@@ -136,7 +162,11 @@ class UserAuth with ChangeNotifier {
         detailsPageMsg = 'Above Fields can\'t be empty';
       }
       notifyListeners();
-      return true;
+      if (userStatus == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e.toString());
       return false;

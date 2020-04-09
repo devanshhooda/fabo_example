@@ -155,10 +155,10 @@ class _PhoneNumberState extends State<PhoneNumber> {
                     onPressed: () async {
                       String phoneNumber = _number.text;
                       bool otpSent = await userAuth.sendOtp(phoneNumber);
-                      print('OTP Screen');
-                      if (otpSent && userAuth.sendOtpStatus == 'Success') {
+                      if (otpSent) {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => Password()));
+                        print('OTP Screen');
                       }
                     },
                     shape: RoundedRectangleBorder(

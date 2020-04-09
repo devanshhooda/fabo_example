@@ -198,7 +198,7 @@ class _NameSignUpState extends State<NameSignUp> {
                           address = _address.text;
                       bool userCreated = await userAuth.createUser(
                           firstName, lastName, address);
-                      if (userCreated && userAuth.userStatus == 'Success') {
+                      if (userCreated) {
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) => MyApp()),
                             ModalRoute.withName(''));

@@ -11,20 +11,25 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final content = Provider.of<HomeContent>(context);
     return new Scaffold(
       body: new Container(
-        height: SizeConfig.screenHeight,
-        width: SizeConfig.screenWidth,
-        child: new ListView(
-          children: <Widget>[
-            _categories('Categories', 'Service'),
-            _categories('Recommended for you', 'Service'),
-            _categories('Special offers', 'Service'),
-            _categories('Top offers', 'Service'),
-            _categories('Favourites', 'Service'),
-          ],
-        ),
-      ),
+          height: SizeConfig.screenHeight,
+          width: SizeConfig.screenWidth,
+          child: FutureBuilder<HomeContent>(
+              future: content.getCategories(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<HomeContent> snapshot) {
+                return new ListView(
+                  children: <Widget>[
+                    _categories('Categories', 'Service'),
+                    _categories('Recommended for you', 'Service'),
+                    _categories('Special offers', 'Service'),
+                    _categories('Top offers', 'Service'),
+                    _categories('Favourites', 'Service'),
+                  ],
+                );
+              })),
     );
   }
 }
@@ -119,9 +124,8 @@ Widget _services(String subtitle) {
         ),
       ));
 
-  getcontent(BuildContext context) async {
-    final content = Provider.of<HomeContent>(context);
-    bool fetchCategory = await content.getCategories();
-    bool fetchProducts = await content.getProducts();
-  }
+  // getcontent(BuildContext context) async {
+
+  //   bool fetchProducts = await content.getProducts();
+  // }
 }
