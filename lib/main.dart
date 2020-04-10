@@ -1,3 +1,4 @@
+import 'package:fabo_example_app/services/productsNcategories.dart';
 import 'package:fabo_example_app/views/screens/enterDetails.dart';
 import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:fabo_example_app/views/screens/options.dart';
@@ -11,6 +12,7 @@ import 'views/screens/homePage.dart';
 import 'views/screens/profilePage.dart';
 import 'views/screens/requestsPage.dart';
 import 'package:fabo_example_app/services/userSignUp.dart';
+import './services/userSignUp.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -25,6 +27,10 @@ class PrizeyCustomerApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserAuth>(
           create: (context) => UserAuth(),
+          child: LoginCheck(),
+        ),
+        ChangeNotifierProvider<UserAuth>(
+          create: (context) => UserAuth(),
           child: PhoneNumber(),
         ),
         ChangeNotifierProvider<UserAuth>(
@@ -35,6 +41,11 @@ class PrizeyCustomerApp extends StatelessWidget {
           create: (context) => UserAuth(),
           child: NameSignUp(),
         ),
+        ChangeNotifierProvider<HomeContent>(
+          create: (context) => HomeContent(),
+          // child: HomePage(),
+          child: MyApp(),
+        )
       ],
       child: new MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -42,9 +53,26 @@ class PrizeyCustomerApp extends StatelessWidget {
           primarySwatch: Colors.indigo,
           primaryColor: Colors.indigoAccent,
         ),
-        home: OptionsPage(),
+        home: LoginCheck(),
       ),
     );
+  }
+}
+
+class LoginCheck extends StatefulWidget {
+  @override
+  _LoginCheckState createState() => _LoginCheckState();
+}
+
+class _LoginCheckState extends State<LoginCheck> {
+  @override
+  Widget build(BuildContext context) {
+    UserAuth _auth = Provider.of<UserAuth>(context);
+    if (_auth.getTokenFromSP() == '') {
+      return OptionsPage();
+    } else {
+      return MyApp();
+    }
   }
 }
 

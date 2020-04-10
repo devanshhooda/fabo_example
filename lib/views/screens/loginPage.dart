@@ -208,20 +208,20 @@ class _LoginPageState extends State<LoginPage> {
                   String otp = _otp.text;
                   bool otpVerified = await userAuth.verifyOtp(otp);
                   bool userExist = await userAuth.getRegisteredUser();
-                  if (otpVerified && userAuth.verifyOtpStatus == 'Success') {
-                    if (userExist && userAuth.userStatus == 'Success') {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => MyApp()),
-                          ModalRoute.withName(''));
-                      print('User exist hence logged in');
-                    } else {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => PhoneNumber()),
-                          ModalRoute.withName('/'));
-                      print('User does\'t exist hence sign up screen');
-                    }
-                  }
+                  // if (otpVerified) {
+                  //   if (userExist) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => MyApp()),
+                      ModalRoute.withName(''));
+                  print('User exist hence logged in');
+                  //   } else {
+                  //     Navigator.of(context).pushAndRemoveUntil(
+                  //         MaterialPageRoute(
+                  //             builder: (context) => PhoneNumber()),
+                  //         ModalRoute.withName('/'));
+                  //     print('User does\'t exist hence sign up screen');
+                  //   }
+                  // }
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),

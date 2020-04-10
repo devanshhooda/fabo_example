@@ -25,9 +25,9 @@ class UserAuth with ChangeNotifier {
         if (data != null) {
           sendOtpStatus = data['status'];
           token = data['token'];
-          addTokenToSP(token);
+          // addTokenToSP(token);
         }
-        print('Send OTP method: ' + data);
+        // print('Send OTP method: ' + data.toString());
       } else {
         sendOtpMsg = 'Above Field can\'t be empty';
       }
@@ -50,8 +50,8 @@ class UserAuth with ChangeNotifier {
         http.Response response = await http.post(
           verifyOtpUrl,
           headers: <String, String>{
-            'Authorization': 'jwt ' + getTokenFromSP()
-            // 'Authorization': 'jwt ' + token
+            // 'Authorization': 'jwt ' + getTokenFromSP()
+            'Authorization': 'jwt ' + token
           },
           body: {'otp': otp, 'medium': 'SMS'},
         );
@@ -61,7 +61,7 @@ class UserAuth with ChangeNotifier {
           token = data['token'];
           addTokenToSP(token);
         }
-        print('Verify OTP method: ' + data);
+        // print('Verify OTP method: ' + data);
       } else {
         verifyOtpMsg = 'Above Field can\'t be empty';
       }
@@ -93,7 +93,7 @@ class UserAuth with ChangeNotifier {
         addTokenToSP(token);
       }
       notifyListeners();
-      print('Get registered method: ' + data);
+      // print('Get registered method: ' + data);
       if (userStatus == 'Success') {
         return true;
       } else {
@@ -122,7 +122,7 @@ class UserAuth with ChangeNotifier {
         addTokenToSP(token);
       }
       notifyListeners();
-      print('Get user profile method : ' + data);
+      // print('Get user profile method : ' + data);
       if (userStatus == 'Success') {
         return true;
       } else {
@@ -157,7 +157,7 @@ class UserAuth with ChangeNotifier {
           token = data['token'];
           addTokenToSP(token);
         }
-        print('Create new user method: ' + data);
+        // print('Create new user method: ' + data);
       } else {
         detailsPageMsg = 'Above Fields can\'t be empty';
       }
@@ -185,6 +185,10 @@ class UserAuth with ChangeNotifier {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     String _token = sharedPreferences.getString('token');
-    return _token;
+    if (_token.isEmpty || _token == null) {
+      return '';
+    } else {
+      return _token;
+    }
   }
 }

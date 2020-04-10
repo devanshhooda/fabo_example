@@ -116,7 +116,8 @@ class _PasswordState extends State<Password> {
                   padding: EdgeInsets.only(
                       left: SizeConfig.safeBlockHorizontal * 30),
                   child: new Text(
-                    userAuth.verifyOtpStatus.isNotEmpty
+                    (userAuth.verifyOtpStatus != null &&
+                            userAuth.verifyOtpStatus.isNotEmpty)
                         ? userAuth.verifyOtpStatus
                         : userAuth.verifyOtpMsg,
                     style: TextStyle(color: Colors.red),

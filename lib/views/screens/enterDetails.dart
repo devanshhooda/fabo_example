@@ -202,8 +202,8 @@ class _NameSignUpState extends State<NameSignUp> {
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) => MyApp()),
                             ModalRoute.withName(''));
+                        print('Home Page Screen');
                       }
-                      print('Home Page Screen');
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),

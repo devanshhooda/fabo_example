@@ -18,8 +18,8 @@ class HomeContent with ChangeNotifier {
     try {
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
-        // 'Authorization': 'jwt ' + _auth.getTokenFromSP()
-        'Authorization': 'jwt ' + _auth.token
+        'Authorization': 'jwt ' + _auth.getTokenFromSP()
+        // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
       if (data != null) {
@@ -42,8 +42,8 @@ class HomeContent with ChangeNotifier {
     try {
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
-        // 'Authorization': 'jwt ' + _auth.getTokenFromSP()
-        'Authorization': 'jwt ' + _auth.token
+        'Authorization': 'jwt ' + _auth.getTokenFromSP()
+        // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
       if (data != null) {
