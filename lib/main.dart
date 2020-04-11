@@ -1,4 +1,3 @@
-import 'package:fabo_example_app/services/productsNcategories.dart';
 import 'package:fabo_example_app/views/screens/enterDetails.dart';
 import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:fabo_example_app/views/screens/options.dart';
@@ -41,10 +40,10 @@ class PrizeyCustomerApp extends StatelessWidget {
           create: (context) => UserAuth(),
           child: NameSignUp(),
         ),
-        ChangeNotifierProvider<HomeContent>(
-          create: (context) => HomeContent(),
-          // child: HomePage(),
-          child: MyApp(),
+        ChangeNotifierProvider<UserAuth>(
+          create: (context) => UserAuth(),
+          child: HomePage(),
+          // child: MyApp(),
         )
       ],
       child: new MaterialApp(
@@ -67,6 +66,7 @@ class LoginCheck extends StatefulWidget {
 class _LoginCheckState extends State<LoginCheck> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     UserAuth _auth = Provider.of<UserAuth>(context);
     if (_auth.getTokenFromSP() == '') {
       return OptionsPage();
@@ -97,8 +97,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         icon: Icon(Icons.person),
       ),
     ];
-
-    SizeConfig().init(context);
 
     TabController controller = TabController(length: 3, vsync: this);
 

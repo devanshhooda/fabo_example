@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:fabo_example_app/models/categoriesModel.dart';
+import 'package:fabo_example_app/models/productsModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -189,6 +191,61 @@ class UserAuth with ChangeNotifier {
       return '';
     } else {
       return _token;
+    }
+  }
+
+  List<CategoriesModel> categoriesList;
+  List<ProductsModel> productsList;
+  String getCategoriesStatus, getProdeuctsStatus;
+  String noOfCategories, categoryId, productId;
+  // String categoryName, productName;
+  // String catImgUrl, prodImgUrl;
+
+  Future getCategories() async {
+    String categoryUrl = url + '/api/category/list';
+    try {
+      http.Response response =
+          await http.get(categoryUrl, headers: <String, String>{
+        'Authorization': 'jwt ' + getTokenFromSP()
+        // 'Authorization': 'jwt ' + _auth.token
+      });
+      var data = json.decode(response.body);
+      if (data != null) {
+        categoriesList = data['categories'] as List;
+        noOfCategories = data['count'];
+        categoryId = data['count']['_id'];
+        // categoryName = data['categories']['name'];
+        // catImgUrl = data['categories']['image_url'];
+        getCategoriesStatus = data['status'];
+        notifyListeners();
+        print('getCategories : ' + data.toString());
+        getProducts();
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future getProducts() async {
+    String categoryUrl =
+        url + '/api/product/incategory?limit=$noOfCategories&id=$categoryId';
+    try {
+      http.Response response =
+          await http.get(categoryUrl, headers: <String, String>{
+        'Authorization': 'jwt ' + getTokenFromSP()
+        // 'Authorization': 'jwt ' + _auth.token
+      });
+      var data = json.decode(response.body);
+
+      if (data != null) {
+        productsList = data['products'] as List;
+        productId = data['products']['_id'];
+        getProdeuctsStatus = data['status'];
+        notifyListeners();
+        print('getProducts : ' + data.toString());
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 }
