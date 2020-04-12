@@ -189,7 +189,7 @@ class UserAuth with ChangeNotifier {
 
   String getCategoriesStatus, getProdeuctsStatus;
   // String categoryId, productId;
-  String noOfCategories;
+  int noOfCategories;
 
   Future<List<CategoriesModel>> getCategories() async {
     String categoryUrl = url + '/api/category/list';
@@ -205,8 +205,8 @@ class UserAuth with ChangeNotifier {
       });
       var data = json.decode(response.body);
       List _categories;
-      _categories = data['catgoris'] as List;
-      print(_categories);
+      _categories = data['catgories'] as List;
+      //print(_categories);
       for (var i in _categories) {
         CategoriesModel category = CategoriesModel(
             id: i['_id'], name: i['name'], imageUrl: i['image_url']);
@@ -224,7 +224,7 @@ class UserAuth with ChangeNotifier {
 
   Future<List<ProductsModel>> getProducts(String categoryId) async {
     String categoryUrl = url + '/api/product/incategory?limit=5&id=$categoryId';
-    List<ProductsModel> productsList;
+    List<ProductsModel> productsList = List<ProductsModel> ();
     try {
       // token = await getTokenFromSP();
       token =

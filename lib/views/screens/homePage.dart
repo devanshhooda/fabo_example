@@ -103,16 +103,16 @@ Widget _categories(
                         scrollDirection: Axis.horizontal,
                         child: new Row(
                           children: <Widget>[
-                            _services(snapshot.data[0].name,
-                                snapshot.data[0].imageUrl),
-                            _services(snapshot.data[1].name,
-                                snapshot.data[1].imageUrl),
-                            _services(snapshot.data[2].name,
-                                snapshot.data[2].imageUrl),
-                            _services(snapshot.data[3].name,
-                                snapshot.data[3].imageUrl),
-                            _services(snapshot.data[4].name,
-                                snapshot.data[4].imageUrl),
+                            snapshot.data.length>=1 ? _services(snapshot.data[0].name,
+                                snapshot.data[0].imageUrl) : Container(),
+                            snapshot.data.length>=2 ? _services(snapshot.data[1].name,
+                                snapshot.data[1].imageUrl) : Container(),
+                            snapshot.data.length>=3 ? _services(snapshot.data[2].name,
+                                snapshot.data[2].imageUrl) : Container(),
+                            snapshot.data.length>=4 ? _services(snapshot.data[3].name,
+                                snapshot.data[3].imageUrl) : Container(),
+                            snapshot.data.length>=5 ? _services(snapshot.data[4].name,
+                                snapshot.data[4].imageUrl) : Container(),
                           ],
                         ),
                       );
@@ -128,6 +128,7 @@ Widget _categories(
 }
 
 Widget _services(String productName, String imageUrl) {
+  //print(productName);
   if (productName == null || imageUrl == null) {
     return Container();
   }
