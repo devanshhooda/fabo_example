@@ -27,7 +27,7 @@ class UserAuth with ChangeNotifier {
         if (data != null) {
           sendOtpStatus = data['status'];
           token = data['token'];
-          // addTokenToSP(token);
+          addTokenToSP(token);
         }
         // print('Send OTP method: ' + data.toString());
       } else {
@@ -49,12 +49,10 @@ class UserAuth with ChangeNotifier {
     String verifyOtpUrl = '$url' + '/api/auth/verifyotp';
     try {
       if (otp.isNotEmpty) {
+        token = await getTokenFromSP();
         http.Response response = await http.post(
           verifyOtpUrl,
-          headers: <String, String>{
-            // 'Authorization': 'jwt ' + getTokenFromSP()
-            'Authorization': 'jwt ' + token
-          },
+          headers: <String, String>{'Authorization': 'jwt ' + token},
           body: {'otp': otp, 'medium': 'SMS'},
         );
         var data = json.decode(response.body);
@@ -82,11 +80,9 @@ class UserAuth with ChangeNotifier {
   Future<bool> getRegisteredUser() async {
     String checkPhoneUrl = '$url' + '/api/user/getuser';
     try {
-      http.Response response =
-          await http.get(checkPhoneUrl, headers: <String, String>{
-        'Authorization': 'jwt ' + getTokenFromSP()
-        // 'Authorization': 'jwt ' + token
-      });
+      token = await getTokenFromSP();
+      http.Response response = await http.get(checkPhoneUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
@@ -110,13 +106,10 @@ class UserAuth with ChangeNotifier {
   Future<bool> getUserProfile() async {
     String profileFetchingUrl = '$url' + '/api/user/profile';
     try {
-      http.Response response =
-          await http.post(profileFetchingUrl, headers: <String, String>{
-        'Authorization': 'jwt ' + getTokenFromSP()
-        // 'Authorization': 'jwt ' + token
-      }, body: {
-        'type': 'Customer'
-      });
+      token = await getTokenFromSP();
+      http.Response response = await http.post(profileFetchingUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token},
+          body: {'type': 'Customer'});
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
@@ -141,10 +134,10 @@ class UserAuth with ChangeNotifier {
     String addUserUrl = '$url' + '/api/user/adduser';
     try {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
+        token = await getTokenFromSP();
         http.Response response =
             await http.post(addUserUrl, headers: <String, String>{
-          'Authorization': 'jwt ' + getTokenFromSP()
-          // 'Authorization': 'jwt ' + token
+          'Authorization': 'jwt ' + token
         }, body: {
           'type': 'Customer',
           'token': 'Firebase Token',
@@ -187,7 +180,7 @@ class UserAuth with ChangeNotifier {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     String _token = sharedPreferences.getString('token');
-    if ( _token == null || _token.isEmpty) {
+    if (_token == null || _token.isEmpty) {
       return '';
     } else {
       return _token;
@@ -195,15 +188,16 @@ class UserAuth with ChangeNotifier {
   }
 
   String getCategoriesStatus, getProdeuctsStatus;
-  String categoryId, productId;
-  int noOfCategories;
+  // String categoryId, productId;
+  String noOfCategories;
 
   Future<List<CategoriesModel>> getCategories() async {
     String categoryUrl = url + '/api/category/list';
-    List<CategoriesModel> categoriesList = List<CategoriesModel> ();
+    List<CategoriesModel> categoriesList = List<CategoriesModel>();
     try {
-      String token = await getTokenFromSP();
-      token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
+      // token = await getTokenFromSP();
+      token =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
         'Authorization': 'jwt ' + token
@@ -211,7 +205,7 @@ class UserAuth with ChangeNotifier {
       });
       var data = json.decode(response.body);
       List _categories;
-      _categories = data['catgories'] as List;
+      _categories = data['catgoris'] as List;
       print(_categories);
       for (var i in _categories) {
         CategoriesModel category = CategoriesModel(
@@ -221,22 +215,23 @@ class UserAuth with ChangeNotifier {
       noOfCategories = data['count'];
       getCategoriesStatus = data['status'];
       notifyListeners();
-      print('Categories list(auth): $categoriesList');
-      // getProducts();
+      // print('Categories list(auth): $categoriesList');
     } catch (e) {
       print(e);
     }
     return categoriesList;
   }
 
-  Future<List<ProductsModel>> getProducts() async {
-    String categoryUrl =
-        url + '/api/product/incategory?limit=$noOfCategories&id=$categoryId';
+  Future<List<ProductsModel>> getProducts(String categoryId) async {
+    String categoryUrl = url + '/api/product/incategory?limit=5&id=$categoryId';
     List<ProductsModel> productsList;
     try {
+      // token = await getTokenFromSP();
+      token =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
-        'Authorization': 'jwt ' + getTokenFromSP()
+        'Authorization': 'jwt ' + token
         // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
@@ -250,7 +245,7 @@ class UserAuth with ChangeNotifier {
       }
       getProdeuctsStatus = data['status'];
       notifyListeners();
-      print('Products list(auth): $productsList');
+      // print('Products list(auth): $productsList');
     } catch (e) {
       print(e);
     }

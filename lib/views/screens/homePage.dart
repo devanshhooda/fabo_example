@@ -22,27 +22,29 @@ class _HomePageState extends State<HomePage> {
               future: content.getCategories(),
               builder: (BuildContext context,
                   AsyncSnapshot<List<CategoriesModel>> snapshot) {
-                // List<CategoriesModel> categoriesList = content.categoriesList;
-                // List<ProductsModel> productsList = content.productsList;
-                print(snapshot.hasData);
-                // print('Products list: $productsList');
+                // print(snapshot.hasData);
                 // if (snapshot.connectionState == ConnectionState.none &&
                 //     snapshot.error) {
+                //   return Center(child: CircularProgressIndicator());
+                // }
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      // itemCount: int.parse(content.noOfCategories),
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, i) {
+                        return _categories(content, snapshot.data[i].name,
+                            snapshot.data[i].id);
+                      });
+                }
                 return Center(child: CircularProgressIndicator());
-                // return ListView.builder(
-                //     // itemCount: int.parse(content.noOfCategories),
-                //     itemCount: categoriesList.length,
-                //     itemBuilder: (context, i) {
-                //       return _categories(categoriesList[i].name,
-                //           productsList[i].name, productsList[i].imageUrl);
-                //     });
               })),
     );
   }
 }
 
-Widget _categories(String categoryName, String productname, String imageUrl) {
-  if (categoryName == null || productname == null || imageUrl == null) {
+Widget _categories(
+    UserAuth productsContent, String categoryName, String categoryId) {
+  if (categoryName == null) {
     return Center(
       child: CircularProgressIndicator(),
     );
@@ -88,18 +90,35 @@ Widget _categories(String categoryName, String productname, String imageUrl) {
                   ],
                 ),
               ),
-              new SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: new Row(
-                  children: <Widget>[
-                    _services(productname, imageUrl),
-                    _services(productname, imageUrl),
-                    _services(productname, imageUrl),
-                    _services(productname, imageUrl),
-                    _services(productname, imageUrl),
-                  ],
-                ),
-              )
+              FutureBuilder<List<ProductsModel>>(
+                  future: productsContent.getProducts(categoryId),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<ProductsModel>> snapshot) {
+                    // if (snapshot.connectionState == ConnectionState.none &&
+                    //     snapshot.error) {
+                    //   return Center(child: CircularProgressIndicator());
+                    // }
+                    if (snapshot.hasData) {
+                      return new SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: new Row(
+                          children: <Widget>[
+                            _services(snapshot.data[0].name,
+                                snapshot.data[0].imageUrl),
+                            _services(snapshot.data[1].name,
+                                snapshot.data[1].imageUrl),
+                            _services(snapshot.data[2].name,
+                                snapshot.data[2].imageUrl),
+                            _services(snapshot.data[3].name,
+                                snapshot.data[3].imageUrl),
+                            _services(snapshot.data[4].name,
+                                snapshot.data[4].imageUrl),
+                          ],
+                        ),
+                      );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  })
             ],
           ),
         )
@@ -108,11 +127,9 @@ Widget _categories(String categoryName, String productname, String imageUrl) {
   );
 }
 
-Widget _services(String productname, String imageUrl) {
-  if (productname == null || imageUrl == null) {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
+Widget _services(String productName, String imageUrl) {
+  if (productName == null || imageUrl == null) {
+    return Container();
   }
   return Container(
       padding: EdgeInsets.only(
@@ -136,7 +153,7 @@ Widget _services(String productname, String imageUrl) {
                 fit: BoxFit.fill,
               ),
               new Text(
-                productname,
+                productName,
                 style:
                     TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3.5),
               )
