@@ -13,7 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    UserAuth content = Provider.of<UserAuth>(context);
+    // UserAuth content = Provider.of<UserAuth>(context);
+    UserAuth content = new UserAuth();
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
@@ -32,8 +33,9 @@ class _HomePageState extends State<HomePage> {
                       // itemCount: int.parse(content.noOfCategories),
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i) {
-                        return _categories(content, snapshot.data[i].name,
-                            snapshot.data[i].id);
+                        String categoryName = snapshot.data[i].name;
+                        String categoryId = snapshot.data[i].id;
+                        return _categories(content, categoryName, categoryId);
                       });
                 }
                 return Center(child: CircularProgressIndicator());
@@ -103,16 +105,26 @@ Widget _categories(
                         scrollDirection: Axis.horizontal,
                         child: new Row(
                           children: <Widget>[
-                            snapshot.data.length>=1 ? _services(snapshot.data[0].name,
-                                snapshot.data[0].imageUrl) : Container(),
-                            snapshot.data.length>=2 ? _services(snapshot.data[1].name,
-                                snapshot.data[1].imageUrl) : Container(),
-                            snapshot.data.length>=3 ? _services(snapshot.data[2].name,
-                                snapshot.data[2].imageUrl) : Container(),
-                            snapshot.data.length>=4 ? _services(snapshot.data[3].name,
-                                snapshot.data[3].imageUrl) : Container(),
-                            snapshot.data.length>=5 ? _services(snapshot.data[4].name,
-                                snapshot.data[4].imageUrl) : Container(),
+                            snapshot.data.length >= 1
+                                ? _services(snapshot.data[0].name,
+                                    snapshot.data[0].imageUrl)
+                                : Container(),
+                            snapshot.data.length >= 2
+                                ? _services(snapshot.data[1].name,
+                                    snapshot.data[1].imageUrl)
+                                : Container(),
+                            snapshot.data.length >= 3
+                                ? _services(snapshot.data[2].name,
+                                    snapshot.data[2].imageUrl)
+                                : Container(),
+                            snapshot.data.length >= 4
+                                ? _services(snapshot.data[3].name,
+                                    snapshot.data[3].imageUrl)
+                                : Container(),
+                            snapshot.data.length >= 5
+                                ? _services(snapshot.data[4].name,
+                                    snapshot.data[4].imageUrl)
+                                : Container(),
                           ],
                         ),
                       );

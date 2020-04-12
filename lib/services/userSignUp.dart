@@ -26,6 +26,7 @@ class UserAuth with ChangeNotifier {
         var data = json.decode(response.body);
         if (data != null) {
           sendOtpStatus = data['status'];
+          print('send-otp status : $sendOtpStatus');
           token = data['token'];
           addTokenToSP(token);
         }
@@ -58,6 +59,7 @@ class UserAuth with ChangeNotifier {
         var data = json.decode(response.body);
         if (data != null) {
           verifyOtpStatus = data['status'];
+          print('verify-otp status : $verifyOtpStatus');
           token = data['token'];
           addTokenToSP(token);
         }
@@ -86,6 +88,7 @@ class UserAuth with ChangeNotifier {
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
+        print('verify-otp status : $userStatus');
         userDetails = data['user'];
         token = data['token'];
         addTokenToSP(token);
@@ -113,6 +116,7 @@ class UserAuth with ChangeNotifier {
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
+        print('verify-otp status : $userStatus');
         userDetails = data['user'];
         addTokenToSP(token);
       }
@@ -148,6 +152,7 @@ class UserAuth with ChangeNotifier {
         var data = json.decode(response.body);
         if (data != null) {
           userStatus = data['status'];
+          print('verify-otp status : $userStatus');
           userDetails = data['user'];
           token = data['token'];
           addTokenToSP(token);
@@ -195,9 +200,9 @@ class UserAuth with ChangeNotifier {
     String categoryUrl = url + '/api/category/list';
     List<CategoriesModel> categoriesList = List<CategoriesModel>();
     try {
-      // token = await getTokenFromSP();
-      token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
+      token = await getTokenFromSP();
+      // token =
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
         'Authorization': 'jwt ' + token
@@ -224,11 +229,11 @@ class UserAuth with ChangeNotifier {
 
   Future<List<ProductsModel>> getProducts(String categoryId) async {
     String categoryUrl = url + '/api/product/incategory?limit=5&id=$categoryId';
-    List<ProductsModel> productsList = List<ProductsModel> ();
+    List<ProductsModel> productsList = List<ProductsModel>();
     try {
-      // token = await getTokenFromSP();
-      token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
+      token = await getTokenFromSP();
+      // token =
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
         'Authorization': 'jwt ' + token

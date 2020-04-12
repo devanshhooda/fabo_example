@@ -40,11 +40,11 @@ class PrizeyCustomerApp extends StatelessWidget {
           create: (context) => UserAuth(),
           child: NameSignUp(),
         ),
-        ChangeNotifierProvider<UserAuth>(
-          create: (context) => UserAuth(),
-          child: HomePage(),
-          // child: MyApp(),
-        )
+        // ChangeNotifierProvider<UserAuth>(
+        //   create: (context) => UserAuth(),
+        //   child: HomePage(),
+        //   // child: MyApp(),
+        // )
       ],
       child: new MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -68,11 +68,18 @@ class _LoginCheckState extends State<LoginCheck> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     UserAuth _auth = Provider.of<UserAuth>(context);
-    if (_auth.getTokenFromSP() == '') {
-      return OptionsPage();
-    } else {
-      return MyApp();
-    }
+    return FutureBuilder(
+        future: _auth.getTokenFromSP(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data == '') {
+              return OptionsPage();
+            } else {
+              return MyApp();
+            }
+          }
+          return CircularProgressIndicator();
+        });
   }
 }
 
