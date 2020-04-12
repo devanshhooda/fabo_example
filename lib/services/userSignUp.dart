@@ -187,7 +187,7 @@ class UserAuth with ChangeNotifier {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     String _token = sharedPreferences.getString('token');
-    if (_token.isEmpty || _token == null) {
+    if ( _token == null || _token.isEmpty) {
       return '';
     } else {
       return _token;
@@ -195,20 +195,24 @@ class UserAuth with ChangeNotifier {
   }
 
   String getCategoriesStatus, getProdeuctsStatus;
-  String noOfCategories, categoryId, productId;
+  String categoryId, productId;
+  int noOfCategories;
 
   Future<List<CategoriesModel>> getCategories() async {
     String categoryUrl = url + '/api/category/list';
-    List<CategoriesModel> categoriesList;
+    List<CategoriesModel> categoriesList = List<CategoriesModel> ();
     try {
+      String token = await getTokenFromSP();
+      token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
-        'Authorization': 'jwt ' + getTokenFromSP()
+        'Authorization': 'jwt ' + token
         // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
       List _categories;
-      _categories = data['categories'] as List;
+      _categories = data['catgories'] as List;
+      print(_categories);
       for (var i in _categories) {
         CategoriesModel category = CategoriesModel(
             id: i['_id'], name: i['name'], imageUrl: i['image_url']);
