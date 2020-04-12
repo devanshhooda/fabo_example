@@ -40,7 +40,7 @@ class UserAuth with ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
       return false;
     }
   }
@@ -74,7 +74,7 @@ class UserAuth with ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
       return false;
     }
   }
@@ -102,7 +102,7 @@ class UserAuth with ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
       return false;
     }
   }
@@ -131,7 +131,7 @@ class UserAuth with ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
       return false;
     }
   }
@@ -170,7 +170,7 @@ class UserAuth with ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
       return false;
     }
   }
@@ -194,15 +194,12 @@ class UserAuth with ChangeNotifier {
     }
   }
 
-  List<CategoriesModel> categoriesList;
-  List<ProductsModel> productsList;
   String getCategoriesStatus, getProdeuctsStatus;
   String noOfCategories, categoryId, productId;
-  // String categoryName, productName;
-  // String catImgUrl, prodImgUrl;
 
-  Future getCategories() async {
+  Future<List<CategoriesModel>> getCategories() async {
     String categoryUrl = url + '/api/category/list';
+    List<CategoriesModel> categoriesList;
     try {
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
@@ -210,25 +207,28 @@ class UserAuth with ChangeNotifier {
         // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
-      if (data != null) {
-        categoriesList = data['categories'] as List;
-        noOfCategories = data['count'];
-        categoryId = data['count']['_id'];
-        // categoryName = data['categories']['name'];
-        // catImgUrl = data['categories']['image_url'];
-        getCategoriesStatus = data['status'];
-        notifyListeners();
-        print('getCategories : ' + data.toString());
-        getProducts();
+      List _categories;
+      _categories = data['categories'] as List;
+      for (var i in _categories) {
+        CategoriesModel category = CategoriesModel(
+            id: i['_id'], name: i['name'], imageUrl: i['image_url']);
+        categoriesList.add(category);
       }
+      noOfCategories = data['count'];
+      getCategoriesStatus = data['status'];
+      notifyListeners();
+      print('Categories list(auth): $categoriesList');
+      // getProducts();
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
+    return categoriesList;
   }
 
-  Future getProducts() async {
+  Future<List<ProductsModel>> getProducts() async {
     String categoryUrl =
         url + '/api/product/incategory?limit=$noOfCategories&id=$categoryId';
+    List<ProductsModel> productsList;
     try {
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
@@ -237,15 +237,19 @@ class UserAuth with ChangeNotifier {
       });
       var data = json.decode(response.body);
 
-      if (data != null) {
-        productsList = data['products'] as List;
-        productId = data['products']['_id'];
-        getProdeuctsStatus = data['status'];
-        notifyListeners();
-        print('getProducts : ' + data.toString());
+      List _products;
+      _products = data['products'] as List;
+      for (var i in _products) {
+        ProductsModel product = ProductsModel(
+            id: i['_id'], name: i['name'], imageUrl: i['image_url']);
+        productsList.add(product);
       }
+      getProdeuctsStatus = data['status'];
+      notifyListeners();
+      print('Products list(auth): $productsList');
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
+    return productsList;
   }
 }

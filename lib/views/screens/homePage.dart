@@ -13,28 +13,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final content = Provider.of<UserAuth>(context);
+    UserAuth content = Provider.of<UserAuth>(context);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,
           width: SizeConfig.screenWidth,
-          child: FutureBuilder(
+          child: FutureBuilder<List<CategoriesModel>>(
               future: content.getCategories(),
-              builder: (context, snapshot) {
-                List<CategoriesModel> categoriesList = content.categoriesList;
-                List<ProductsModel> productsList = content.productsList;
-
-                if (snapshot.connectionState != ConnectionState.done &&
-                    !snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
-
-                return ListView.builder(
-                    itemCount: int.parse(content.noOfCategories),
-                    itemBuilder: (context, i) {
-                      return _categories(categoriesList[i].name,
-                          productsList[i].name, productsList[i].imageUrl);
-                    });
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<CategoriesModel>> snapshot) {
+                // List<CategoriesModel> categoriesList = content.categoriesList;
+                // List<ProductsModel> productsList = content.productsList;
+                print(snapshot.hasData);
+                // print('Products list: $productsList');
+                // if (snapshot.connectionState == ConnectionState.none &&
+                //     snapshot.error) {
+                return Center(child: CircularProgressIndicator());
+                // return ListView.builder(
+                //     // itemCount: int.parse(content.noOfCategories),
+                //     itemCount: categoriesList.length,
+                //     itemBuilder: (context, i) {
+                //       return _categories(categoriesList[i].name,
+                //           productsList[i].name, productsList[i].imageUrl);
+                //     });
               })),
     );
   }
@@ -144,13 +145,3 @@ Widget _services(String productname, String imageUrl) {
         ),
       ));
 }
-
-//  new ListView(
-//                   children: <Widget>[
-//                     _categories('Categories', 'Service'),
-//                     _categories('Recommended for you', 'Service'),
-//                     _categories('Special offers', 'Service'),
-//                     _categories('Top offers', 'Service'),
-//                     _categories('Favourites', 'Service'),
-//                   ],
-//                 );
