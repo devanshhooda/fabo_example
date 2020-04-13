@@ -24,6 +24,8 @@ class UserAuth with ChangeNotifier {
         http.Response response = await http.post(sendOtpUrl,
             body: {'mobile': phoneNumber, 'medium': 'SMS', 'type': 'Customer'});
         var data = json.decode(response.body);
+        print("Get Send Otp Request:");
+        print(data);
         if (data != null) {
           sendOtpStatus = data['status'];
           print('send-otp status : $sendOtpStatus');
@@ -57,6 +59,8 @@ class UserAuth with ChangeNotifier {
           body: {'otp': otp, 'medium': 'SMS'},
         );
         var data = json.decode(response.body);
+        print("Get Verify OTP Request: ");
+        print(data);
         if (data != null) {
           verifyOtpStatus = data['status'];
           print('verify-otp status : $verifyOtpStatus');
@@ -86,16 +90,18 @@ class UserAuth with ChangeNotifier {
       http.Response response = await http.get(checkPhoneUrl,
           headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
+      print("Get Registered User: ");
+      print(data);
       if (data != null) {
         userStatus = data['status'];
         print('user status : $userStatus');
         userDetails = data['user'];
         token = data['token'];
-        await addTokenToSP(token);
       }
       notifyListeners();
       // print('Get registered method: ' + data);
       if (userStatus == 'Success') {
+        await addTokenToSP(token);
         return true;
       } else {
         return false;
@@ -139,6 +145,8 @@ class UserAuth with ChangeNotifier {
     try {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
         token = await getTokenFromSP();
+        print("Asked to create new User:");
+        print(token);
         print('token : $token');
         http.Response response =
             await http.post(addUserUrl, headers: <String, String>{
@@ -151,6 +159,7 @@ class UserAuth with ChangeNotifier {
           'address': address
         });
         var data = json.decode(response.body);
+        print("Create User Request: ");
         print(data);
         if (data != null) {
           userStatus = data['status'];
@@ -177,6 +186,7 @@ class UserAuth with ChangeNotifier {
   }
 
   addTokenToSP(String token) async {
+    print("Add Token: $token");
     if (sharedPreferences == null) {
       sharedPreferences = await SharedPreferences.getInstance();
     }
@@ -188,6 +198,7 @@ class UserAuth with ChangeNotifier {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     String _token = sharedPreferences.getString('token');
+    print("Get Token: $_token");
     return _token;
   }
 
@@ -225,7 +236,8 @@ class UserAuth with ChangeNotifier {
       var data = json.decode(response.body);
       List _categories;
       _categories = data['catgories'] as List;
-      //print(_categories);
+      print("Get All Categories");
+      print(_categories);
       for (var i in _categories) {
         CategoriesModel category = CategoriesModel(
             id: i['_id'], name: i['name'], imageUrl: i['image_url']);
@@ -254,7 +266,7 @@ class UserAuth with ChangeNotifier {
         // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
-
+      print(data);
       List _products;
       _products = data['products'] as List;
       for (var i in _products) {
@@ -263,6 +275,8 @@ class UserAuth with ChangeNotifier {
         productsList.add(product);
       }
       getProdeuctsStatus = data['status'];
+      print(getProdeuctsStatus);
+      print(productsList[0].name);
       notifyListeners();
       // print('Products list(auth): $productsList');
     } catch (e) {
