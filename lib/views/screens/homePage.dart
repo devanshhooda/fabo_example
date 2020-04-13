@@ -13,8 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    // UserAuth content = Provider.of<UserAuth>(context);
-    UserAuth content = new UserAuth();
+    UserAuth content = Provider.of<UserAuth>(context);
     return new Scaffold(
       body: new Container(
           height: SizeConfig.screenHeight,

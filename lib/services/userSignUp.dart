@@ -28,7 +28,7 @@ class UserAuth with ChangeNotifier {
           sendOtpStatus = data['status'];
           print('send-otp status : $sendOtpStatus');
           token = data['token'];
-          addTokenToSP(token);
+          await addTokenToSP(token);
         }
         // print('Send OTP method: ' + data.toString());
       } else {
@@ -61,7 +61,7 @@ class UserAuth with ChangeNotifier {
           verifyOtpStatus = data['status'];
           print('verify-otp status : $verifyOtpStatus');
           token = data['token'];
-          addTokenToSP(token);
+          await addTokenToSP(token);
         }
         // print('Verify OTP method: ' + data);
       } else {
@@ -88,10 +88,10 @@ class UserAuth with ChangeNotifier {
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
-        print('verify-otp status : $userStatus');
+        print('user status : $userStatus');
         userDetails = data['user'];
         token = data['token'];
-        addTokenToSP(token);
+        await addTokenToSP(token);
       }
       notifyListeners();
       // print('Get registered method: ' + data);
@@ -116,9 +116,9 @@ class UserAuth with ChangeNotifier {
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
-        print('verify-otp status : $userStatus');
+        print('user status : $userStatus');
         userDetails = data['user'];
-        addTokenToSP(token);
+        await addTokenToSP(token);
       }
       notifyListeners();
       // print('Get user profile method : ' + data);
@@ -139,6 +139,7 @@ class UserAuth with ChangeNotifier {
     try {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
         token = await getTokenFromSP();
+        print('token : $token');
         http.Response response =
             await http.post(addUserUrl, headers: <String, String>{
           'Authorization': 'jwt ' + token
@@ -150,12 +151,13 @@ class UserAuth with ChangeNotifier {
           'address': address
         });
         var data = json.decode(response.body);
+        print(data);
         if (data != null) {
           userStatus = data['status'];
-          print('verify-otp status : $userStatus');
+          print('user status : $userStatus');
           userDetails = data['user'];
           token = data['token'];
-          addTokenToSP(token);
+          await addTokenToSP(token);
         }
         // print('Create new user method: ' + data);
       } else {
@@ -163,6 +165,7 @@ class UserAuth with ChangeNotifier {
       }
       notifyListeners();
       if (userStatus == 'Success') {
+        await addUserStatusToSP();
         return true;
       } else {
         return false;
@@ -185,11 +188,22 @@ class UserAuth with ChangeNotifier {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     String _token = sharedPreferences.getString('token');
-    if (_token == null || _token.isEmpty) {
-      return '';
-    } else {
-      return _token;
+    return _token;
+  }
+
+  addUserStatusToSP() async {
+    if (sharedPreferences == null) {
+      sharedPreferences = await SharedPreferences.getInstance();
     }
+    sharedPreferences.setBool('userExist', true);
+  }
+
+  getUserStatusFromSP() async {
+    if (sharedPreferences == null) {
+      sharedPreferences = await SharedPreferences.getInstance();
+    }
+    bool _status = sharedPreferences.getBool('userExist');
+    return _status;
   }
 
   String getCategoriesStatus, getProdeuctsStatus;
