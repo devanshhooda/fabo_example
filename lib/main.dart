@@ -49,7 +49,7 @@ class PrizeyCustomerApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.indigo,
-          primaryColor: Colors.indigoAccent,
+          primaryColor: Colors.black,
         ),
         home: LoginCheck(),
       ),

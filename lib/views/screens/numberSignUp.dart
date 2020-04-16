@@ -17,15 +17,15 @@ class _PhoneNumberState extends State<PhoneNumber> {
       fontSize: SizeConfig.safeBlockHorizontal * 4, color: Colors.blue);
   Color nmbrClr = Colors.black12;
 
-  void changePhoneNumberColor(String input) {
-    setState(() {
-      if (input.isNotEmpty) {
-        nmbrClr = Colors.red[100];
-      } else {
-        nmbrClr = Colors.black12;
-      }
-    });
-  }
+  // void changePhoneNumberColor(String input) {
+  //   setState(() {
+  //     if (input.isNotEmpty) {
+  //       nmbrClr = Colors.red[100];
+  //     } else {
+  //       nmbrClr = Colors.black12;
+  //     }
+  //   });
+  // }
 
   // void detectError() {
   //   setState(() {
@@ -126,10 +126,10 @@ class _PhoneNumberState extends State<PhoneNumber> {
                               Icons.phone,
                               size: SizeConfig.safeBlockVertical * 3,
                             )),
-                        onChanged: (String nmbr) {
-                          nmbr = _number.text;
-                          changePhoneNumberColor(nmbr);
-                        },
+                        // onChanged: (String nmbr) {
+                        //   nmbr = _number.text;
+                        //   changePhoneNumberColor(nmbr);
+                        // },
                       ),
                     )),
                 SizedBox(
@@ -178,62 +178,6 @@ class _PhoneNumberState extends State<PhoneNumber> {
                 SizedBox(
                   height: SizeConfig.safeBlockVertical * 2,
                 ),
-                new Container(
-                  padding: EdgeInsets.only(
-                      left: SizeConfig.safeBlockHorizontal * 45),
-                  child: new Text(
-                    'OR',
-                    style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 4,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black),
-                  ),
-                ),
-                SizedBox(
-                  height: SizeConfig.safeBlockVertical * 2,
-                ),
-                new Container(
-                    height: SizeConfig.blockSizeVertical * 8,
-                    padding: EdgeInsets.only(
-                        left: SizeConfig.safeBlockHorizontal * 10,
-                        right: SizeConfig.safeBlockHorizontal * 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: new Card(
-                      margin:
-                          EdgeInsets.all(SizeConfig.safeBlockHorizontal * 0.2),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40)),
-                      child: new MaterialButton(
-                        padding:
-                            EdgeInsets.all(SizeConfig.safeBlockHorizontal * 3),
-                        onPressed: () => print('Google Sign In method'),
-                        child: new Row(
-                          children: <Widget>[
-                            new CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Colors.white,
-                              child: new Image.asset(
-                                'assets/gLogo.png',
-                                height: SizeConfig.blockSizeVertical * 5,
-                                width: SizeConfig.blockSizeHorizontal * 13.5,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: SizeConfig.safeBlockHorizontal * 2)),
-                            new Text(
-                              'Sign In with Google',
-                              style: TextStyle(
-                                  fontSize: SizeConfig.safeBlockHorizontal * 5),
-                            )
-                          ],
-                        ),
-                      ),
-                    )),
                 new Container(
                   padding: EdgeInsets.only(
                     top: SizeConfig.safeBlockVertical * 4,

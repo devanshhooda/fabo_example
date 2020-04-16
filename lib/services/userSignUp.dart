@@ -218,7 +218,6 @@ class UserAuth with ChangeNotifier {
   }
 
   String getCategoriesStatus, getProdeuctsStatus;
-  // String categoryId, productId;
   int noOfCategories;
 
   Future<List<CategoriesModel>> getCategories() async {
@@ -231,7 +230,6 @@ class UserAuth with ChangeNotifier {
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
         'Authorization': 'jwt ' + token
-        // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
       List _categories;
@@ -263,7 +261,6 @@ class UserAuth with ChangeNotifier {
       http.Response response =
           await http.get(categoryUrl, headers: <String, String>{
         'Authorization': 'jwt ' + token
-        // 'Authorization': 'jwt ' + _auth.token
       });
       var data = json.decode(response.body);
       print(data);

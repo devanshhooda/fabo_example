@@ -22,14 +22,8 @@ class _HomePageState extends State<HomePage> {
               future: content.getCategories(),
               builder: (BuildContext context,
                   AsyncSnapshot<List<CategoriesModel>> snapshot) {
-                // print(snapshot.hasData);
-                // if (snapshot.connectionState == ConnectionState.none &&
-                //     snapshot.error) {
-                //   return Center(child: CircularProgressIndicator());
-                // }
                 if (snapshot.hasData) {
                   return ListView.builder(
-                      // itemCount: int.parse(content.noOfCategories),
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i) {
                         String categoryName = snapshot.data[i].name;
@@ -82,7 +76,6 @@ Widget _categories(
                           fontWeight: FontWeight.bold,
                           fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                     ),
-                    // new SizedBox(),
                     new Icon(
                       Icons.chevron_right,
                       size: SizeConfig.safeBlockVertical * 2.5,
@@ -95,10 +88,6 @@ Widget _categories(
                   future: productsContent.getProducts(categoryId),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<ProductsModel>> snapshot) {
-                    // if (snapshot.connectionState == ConnectionState.none &&
-                    //     snapshot.error) {
-                    //   return Center(child: CircularProgressIndicator());
-                    // }
                     if (snapshot.hasData) {
                       return new SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -157,9 +146,6 @@ Widget _services(String productName, String imageUrl) {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              // new FlutterLogo(
-              //   size: SizeConfig.blockSizeVertical * 10,
-              // ),
               new Image.network(
                 imageUrl,
                 fit: BoxFit.fill,

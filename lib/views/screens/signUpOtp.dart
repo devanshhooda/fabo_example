@@ -16,15 +16,15 @@ class _PasswordState extends State<Password> {
   Color passClr = Colors.black12;
   Color confirmPassClr = Colors.black12;
 
-  void changPassColor(String input) {
-    setState(() {
-      if (input.isNotEmpty) {
-        passClr = Colors.red[100];
-      } else {
-        passClr = Colors.black12;
-      }
-    });
-  }
+  // void changPassColor(String input) {
+  //   setState(() {
+  //     if (input.isNotEmpty) {
+  //       passClr = Colors.red[100];
+  //     } else {
+  //       passClr = Colors.black12;
+  //     }
+  //   });
+  // }
 
   // void detectError() {
   //   setState(() {
@@ -103,10 +103,10 @@ class _PasswordState extends State<Password> {
                               Icons.vpn_key,
                               size: SizeConfig.safeBlockVertical * 3,
                             )),
-                        onChanged: (String pass) {
-                          pass = _pass.text;
-                          changPassColor(pass);
-                        },
+                        // onChanged: (String pass) {
+                        //   pass = _pass.text;
+                        //   changPassColor(pass);
+                        // },
                       ),
                     )),
                 SizedBox(
