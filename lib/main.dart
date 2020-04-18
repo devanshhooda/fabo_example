@@ -1,3 +1,5 @@
+import 'package:fabo_example_app/models/categoriesModel.dart';
+import 'package:fabo_example_app/models/productsModel.dart';
 import 'package:fabo_example_app/views/screens/enterDetails.dart';
 import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:fabo_example_app/views/screens/options.dart';
@@ -20,6 +22,7 @@ void main() {
 }
 
 class PrizeyCustomerApp extends StatelessWidget {
+  UserAuth auth = UserAuth();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -43,14 +46,14 @@ class PrizeyCustomerApp extends StatelessWidget {
         ChangeNotifierProvider<UserAuth>(
           create: (context) => UserAuth(),
           child: HomePage(),
-        )
+        ),
       ],
       child: new MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-          primaryColor: Colors.black,
-        ),
+        // theme: ThemeData(
+        //   primarySwatch: Colors.indigo,
+        //   primaryColor: Colors.black,
+        // ),
         home: LoginCheck(),
       ),
     );

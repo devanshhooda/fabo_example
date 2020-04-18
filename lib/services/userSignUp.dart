@@ -224,18 +224,15 @@ class UserAuth with ChangeNotifier {
     String categoryUrl = url + '/api/category/list';
     List<CategoriesModel> categoriesList = List<CategoriesModel>();
     try {
-      token = await getTokenFromSP();
+      // token = await getTokenFromSP();
       // token =
       //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
-      http.Response response =
-          await http.get(categoryUrl, headers: <String, String>{
-        'Authorization': 'jwt ' + token
-      });
+      http.Response response = await http.get(categoryUrl);
       var data = json.decode(response.body);
       List _categories;
       _categories = data['catgories'] as List;
-      print("Get All Categories");
-      print(_categories);
+      // print("Get All Categories");
+      // print(_categories);
       for (var i in _categories) {
         CategoriesModel category = CategoriesModel(
             id: i['_id'], name: i['name'], imageUrl: i['image_url']);
@@ -244,7 +241,6 @@ class UserAuth with ChangeNotifier {
       noOfCategories = data['count'];
       getCategoriesStatus = data['status'];
       notifyListeners();
-      // print('Categories list(auth): $categoriesList');
     } catch (e) {
       print(e);
     }
@@ -255,27 +251,24 @@ class UserAuth with ChangeNotifier {
     String categoryUrl = url + '/api/product/incategory?limit=5&id=$categoryId';
     List<ProductsModel> productsList = List<ProductsModel>();
     try {
-      token = await getTokenFromSP();
-      // token =
-      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
-      http.Response response =
-          await http.get(categoryUrl, headers: <String, String>{
-        'Authorization': 'jwt ' + token
-      });
+      // token = await getTokenFromSP();
+      token =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
+      http.Response response = await http.get(categoryUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
-      print(data);
       List _products;
       _products = data['products'] as List;
       for (var i in _products) {
         ProductsModel product = ProductsModel(
-            id: i['_id'], name: i['name'], imageUrl: i['image_url']);
+            id: i['_id'],
+            name: i['name'],
+            imageUrl: i['image_url'],
+            features: i['features']);
         productsList.add(product);
       }
       getProdeuctsStatus = data['status'];
-      print(getProdeuctsStatus);
-      print(productsList[0].name);
       notifyListeners();
-      // print('Products list(auth): $productsList');
     } catch (e) {
       print(e);
     }
