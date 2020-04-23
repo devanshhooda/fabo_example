@@ -263,7 +263,9 @@ class UserAuth with ChangeNotifier {
             id: i['_id'],
             name: i['name'],
             imageUrl: i['image_url'],
-            features: i['features']);
+            features: i['features'],
+            categoryId: i['category'][0],
+            productId: i['_id']);
         productsList.add(product);
       }
       getProdeuctsStatus = data['status'];

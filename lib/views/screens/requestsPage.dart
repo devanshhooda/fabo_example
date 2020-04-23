@@ -7,7 +7,7 @@ import 'bookings.dart';
 
 class Requests extends StatelessWidget {
   TextStyle _subtitle =
-      new TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 3.5);
+      new TextStyle(fontSize: (SizeConfig.safeBlockHorizontal ?? 0) * 3.5);
   // List<String> titles = [
   //   'Macbook Air (13 inch)',
   //   'Onida Washing machine',
