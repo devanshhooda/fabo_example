@@ -47,6 +47,10 @@ class PrizeyCustomerApp extends StatelessWidget {
           create: (context) => UserAuth(),
           child: HomePage(),
         ),
+        ChangeNotifierProvider<UserAuth>(
+          create: (context) => UserAuth(),
+          child: Requests(),
+        )
       ],
       child: new MaterialApp(
         debugShowCheckedModeBanner: false,

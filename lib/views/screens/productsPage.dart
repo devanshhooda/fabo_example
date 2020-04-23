@@ -1,17 +1,24 @@
+import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailsPage extends StatelessWidget {
-  String productName, imageUrl, features;
+  String productName, imageUrl, features, productId, categoryId;
 
-  ProductDetailsPage(String productName, String imageUrl, String features) {
+  ProductDetailsPage(String productName, String imageUrl, String features,
+      String productId, String categoryId) {
     this.productName = productName;
     this.imageUrl = imageUrl;
     this.features = features;
+    this.productId = productId;
+    this.categoryId = categoryId;
   }
 
   @override
   Widget build(BuildContext context) {
+    UserAuth query = Provider.of<UserAuth>(context);
     return new Scaffold(
         appBar: new AppBar(
           title: new Text(productName),
@@ -22,7 +29,7 @@ class ProductDetailsPage extends StatelessWidget {
             child: new ListView(children: <Widget>[
               _itemPicture(imageUrl),
               _itemDetails(productName, features),
-              _queryButton()
+              _queryButton(context, query)
             ])));
   }
 
@@ -71,7 +78,7 @@ class ProductDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _queryButton() {
+  Widget _queryButton(BuildContext context, UserAuth query) {
     return Container(
       height: SizeConfig.blockSizeVertical * 5.5,
       margin: EdgeInsets.symmetric(
@@ -79,6 +86,11 @@ class ProductDetailsPage extends StatelessWidget {
           horizontal: SizeConfig.safeBlockHorizontal * 20),
       child: new RaisedButton(
         onPressed: () async {
+          bool querySent =
+              await query.createQuery(productName, productId, categoryId);
+          if (querySent) {
+            _showQuerySentSnackBar(context);
+          }
           print('Query Will be sent');
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -94,5 +106,13 @@ class ProductDetailsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showQuerySentSnackBar(BuildContext context) {
+    Flushbar(
+      messageText: Text('Query Sent ...'),
+      duration: Duration(seconds: 3),
+      flushbarStyle: FlushbarStyle.GROUNDED,
+    )..show(context);
   }
 }

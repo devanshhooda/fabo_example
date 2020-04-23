@@ -115,31 +115,41 @@ class CategoriesWidget extends StatelessWidget {
                                   ? ProductsWidget(
                                       snapshot.data[0].name,
                                       snapshot.data[0].imageUrl,
-                                      snapshot.data[0].features)
+                                      snapshot.data[0].features,
+                                      snapshot.data[0].productId,
+                                      snapshot.data[0].categoryId)
                                   : Container(),
                               snapshot.data.length >= 2
                                   ? ProductsWidget(
                                       snapshot.data[1].name,
                                       snapshot.data[1].imageUrl,
-                                      snapshot.data[1].features)
+                                      snapshot.data[1].features,
+                                      snapshot.data[1].productId,
+                                      snapshot.data[1].categoryId)
                                   : Container(),
                               snapshot.data.length >= 3
                                   ? ProductsWidget(
                                       snapshot.data[2].name,
                                       snapshot.data[2].imageUrl,
-                                      snapshot.data[2].features)
+                                      snapshot.data[2].features,
+                                      snapshot.data[2].productId,
+                                      snapshot.data[2].categoryId)
                                   : Container(),
                               snapshot.data.length >= 4
                                   ? ProductsWidget(
                                       snapshot.data[3].name,
                                       snapshot.data[3].imageUrl,
-                                      snapshot.data[3].features)
+                                      snapshot.data[3].features,
+                                      snapshot.data[3].productId,
+                                      snapshot.data[3].categoryId)
                                   : Container(),
                               snapshot.data.length >= 5
                                   ? ProductsWidget(
                                       snapshot.data[4].name,
                                       snapshot.data[4].imageUrl,
-                                      snapshot.data[4].features)
+                                      snapshot.data[4].features,
+                                      snapshot.data[4].productId,
+                                      snapshot.data[4].categoryId)
                                   : Container(),
                             ],
                           ),
@@ -157,12 +167,15 @@ class CategoriesWidget extends StatelessWidget {
 }
 
 class ProductsWidget extends StatelessWidget {
-  String productName, imageUrl, features;
+  String productName, imageUrl, features, productId, categoryId;
 
-  ProductsWidget(String productName, String imageUrl, String features) {
+  ProductsWidget(String productName, String imageUrl, String features,
+      String productId, String categoryId) {
     this.productName = productName;
     this.imageUrl = imageUrl;
     this.features = features;
+    this.productId = productId;
+    this.categoryId = categoryId;
   }
   @override
   Widget build(BuildContext context) {
@@ -177,8 +190,11 @@ class ProductsWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                ProductDetailsPage(productName, imageUrl, features)));
+            builder: (context) => ChangeNotifierProvider<UserAuth>(
+                  create: (context) => UserAuth(),
+                  child: ProductDetailsPage(
+                      productName, imageUrl, features, productId, categoryId),
+                )));
         print('Details of Service');
       },
       child: Container(

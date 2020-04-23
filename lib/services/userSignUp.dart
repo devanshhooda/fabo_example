@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'package:fabo_example_app/models/categoriesModel.dart';
 import 'package:fabo_example_app/models/productsModel.dart';
+import 'package:fabo_example_app/models/query.dart';
+import 'package:fabo_example_app/models/replies.dart';
+import 'package:fabo_example_app/models/vendorModel.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -224,9 +228,6 @@ class UserAuth with ChangeNotifier {
     String categoryUrl = url + '/api/category/list';
     List<CategoriesModel> categoriesList = List<CategoriesModel>();
     try {
-      // token = await getTokenFromSP();
-      // token =
-      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
       http.Response response = await http.get(categoryUrl);
       var data = json.decode(response.body);
       List _categories;
@@ -251,9 +252,7 @@ class UserAuth with ChangeNotifier {
     String categoryUrl = url + '/api/product/incategory?limit=5&id=$categoryId';
     List<ProductsModel> productsList = List<ProductsModel>();
     try {
-      // token = await getTokenFromSP();
-      token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODlkMDJlNjRjM2NkMDYyMDE3OGQ0NyIsInR5cGUiOiJWZW5kb3IiLCJpYXQiOjE1ODYwOTAwMzB9.dXS0ykz14NgATxBxgcCtHA2lYHJF2ss60JO-PlqtZkQ';
+      token = await getTokenFromSP();
       http.Response response = await http.get(categoryUrl,
           headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
@@ -273,5 +272,128 @@ class UserAuth with ChangeNotifier {
       print(e);
     }
     return productsList;
+  }
+
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  // String fcmToken;
+
+  UserAuth() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('onMessage : $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('onLaunch : $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('onResume : $message');
+      },
+    );
+  }
+
+  String createQueryStatus, removeQueryStatus;
+
+  Future<bool> createQuery(
+      String productName, String productId, String categoryId) async {
+    try {
+      String createQueryUrl = url + '/api/query/create';
+      List<QueryModel> queriesList = List<QueryModel>();
+      token = await getTokenFromSP();
+      http.Response response = await http.post(createQueryUrl, body: {
+        'product_name': productName,
+        'category': categoryId,
+        'product': productId
+      }, headers: <String, String>{
+        'Authorization': 'jwt ' + token
+      });
+      var data = json.decode(response.body);
+      List _queries = data['query'] as List;
+      createQueryStatus = data['status'];
+      for (var i in _queries) {
+        QueryModel query = QueryModel(
+            id: i['_id'],
+            productName: i['product_name'],
+            queryStatus: i['status'],
+            replies: i['response']);
+        queriesList.add(query);
+      }
+      if (createQueryStatus == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<List<QueryModel>> getQueries() async {
+    String getQueriesUrl = url + '/api/query/queries';
+    try {
+      token = await getTokenFromSP();
+      List<QueryModel> queriesList = List<QueryModel>();
+      http.Response response = await http.get(getQueriesUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token});
+
+      var data = json.decode(response.body);
+      List _queries = data['queries'] as List;
+      for (var i in _queries) {
+        QueryModel query = QueryModel(
+            id: i['_id'],
+            productName: i['product_name'],
+            productId: i['product'],
+            queryStatus: i['status'],
+            replies: i['response']);
+        queriesList.add(query);
+      }
+      return queriesList;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<List<RepliesModel>> getReplies(String queryId) async {
+    String getReplies = url + '/api/query/replies?query=$queryId';
+    try {
+      token = await getTokenFromSP();
+      List<RepliesModel> repliesList = List<RepliesModel>();
+      http.Response response = await http.get(getReplies,
+          headers: <String, String>{'Authorization': 'jwt ' + token});
+
+      var data = json.decode(response.body);
+      List _replies = data['replies'] as List;
+      for (var i in _replies) {
+        RepliesModel reply = RepliesModel(
+            id: i['_id'],
+            vendorId: i['seller'],
+            message: i['message'],
+            price: i['price']);
+        repliesList.add(reply);
+      }
+      return repliesList;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<VendorModel> getVendorDetails(String queryId) async {
+    String vendorDetailsUrl = url + '/api/user/vendor?id=$queryId';
+    try {
+      token = await getTokenFromSP();
+      http.Response response = await http.get(vendorDetailsUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token});
+      var data = json.decode(response.body);
+
+      VendorModel vendorDetails = VendorModel(
+          fistName: data['profile']['firstName'],
+          lastName: data['profile']['lastName'],
+          mobileNumber: data['mobile'],
+          address: data['Address']);
+
+      return vendorDetails;
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -3,11 +3,14 @@ class ProductsModel {
   String name;
   String imageUrl;
   String features;
+  String productId;
+  String categoryId;
 
-  ProductsModel({this.id, this.name, this.imageUrl, this.features});
-
-  ProductsModel.fromJson(Map<String, dynamic> categoriesList)
-      : id = categoriesList['_id'],
-        name = categoriesList['name'],
-        imageUrl = categoriesList['image_url'];
+  ProductsModel(
+      {this.id,
+      this.name,
+      this.imageUrl,
+      this.features,
+      this.productId,
+      this.categoryId});
 }

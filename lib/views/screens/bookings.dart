@@ -1,25 +1,27 @@
+import 'package:fabo_example_app/models/replies.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 class Bookings extends StatelessWidget {
-  String appBarTitle;
-  Bookings(String title) {
-    appBarTitle = title;
+  String productName, productId;
+  Bookings(String productName, String productId) {
+    this.productName = productName;
+    this.productId = productId;
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('$appBarTitle'),
+        title: new Text('$productName'),
       ),
       body: new Container(
         height: SizeConfig.screenHeight,
         width: SizeConfig.screenWidth,
         child: new ListView(
           children: <Widget>[
-            _itemPicture(),
-            _itemDetails('MackBook Air (13 inch)', '2016', 'Laptops'),
+            _itemPicture('imageUrl'),
+            _itemDetails(productName, 'features'),
             new Container(
               padding: EdgeInsets.only(
                 left: SizeConfig.safeBlockHorizontal * 3,
@@ -39,9 +41,27 @@ class Bookings extends StatelessWidget {
                 ],
               ),
             ),
-            _booking('Apple Provider', '1.2', '80,000'),
-            _booking('Apple Provider', '1.2', '80,000'),
-            _booking('Apple Provider', '1.2', '80,000'),
+
+            // Here are the replies
+            FutureBuilder<List<RepliesModel>>(builder: (BuildContext context,
+                AsyncSnapshot<List<RepliesModel>> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(itemBuilder: (context, i) {
+                  return _booking(
+                      snapshot.data[i].message, snapshot.data[i].price);
+                });
+              } else {
+                return Center(
+                  child: Text(
+                    'No replies yet',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
+              }
+            }),
+
+            // _booking('Apple Provider', '1.2', '80,000'),
+            // _booking('Apple Provider', '1.2', '80,000'),
           ],
         ),
       ),
@@ -49,24 +69,23 @@ class Bookings extends StatelessWidget {
   }
 }
 
-Widget _itemPicture() {
+Widget _itemPicture(String imageUrl) {
   return new Container(
     height: SizeConfig.blockSizeVertical * 30,
-    // width: SizeConfig.blockSizeHorizontal * 15,
     padding: EdgeInsets.only(
         left: SizeConfig.safeBlockHorizontal * 2,
         right: SizeConfig.safeBlockHorizontal * 2,
         top: SizeConfig.safeBlockVertical * 1),
     child: new Container(
-      color: Colors.black45,
-      child: new FlutterLogo(
-        size: SizeConfig.blockSizeVertical * 25,
-      ),
+      // decoration: BoxDecoration(
+      //     image: DecorationImage(
+      //         image: NetworkImage(imageUrl), fit: BoxFit.contain)),
+              child: FlutterLogo(),
     ),
   );
 }
 
-Widget _itemDetails(String productName, String year, String category) {
+Widget _itemDetails(String productName, String features) {
   return new Container(
     padding: EdgeInsets.only(
         left: SizeConfig.safeBlockHorizontal * 3,
@@ -85,16 +104,7 @@ Widget _itemDetails(String productName, String year, String category) {
         new Container(
           padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 0.5),
           child: new Text(
-            'Model Year: $year',
-            style: TextStyle(
-                fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-                color: Colors.black54),
-          ),
-        ),
-        new Container(
-          padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 0.5),
-          child: new Text(
-            'Category: $category',
+            'Features: $features',
             style: TextStyle(
                 fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                 color: Colors.black54),
@@ -105,7 +115,7 @@ Widget _itemDetails(String productName, String year, String category) {
   );
 }
 
-Widget _booking(String providerName, String address, String price) {
+Widget _booking(String message, String price) {
   return new Container(
     padding: EdgeInsets.only(
         top: SizeConfig.safeBlockVertical * 1,
@@ -116,7 +126,10 @@ Widget _booking(String providerName, String address, String price) {
       decoration: BoxDecoration(
           color: Colors.grey[300], borderRadius: BorderRadius.circular(30)),
       child: new Row(
-        children: <Widget>[_picture(), _details(providerName, address, price)],
+        children: <Widget>[
+          _picture(),
+          _details('vendorName', 'address', price, message)
+        ],
       ),
     ),
   );
@@ -134,7 +147,8 @@ Widget _picture() {
       ));
 }
 
-Widget _details(String providerName, String distance, String price) {
+Widget _details(
+    String providerName, String distance, String price, String message) {
   return new Container(
     padding: EdgeInsets.only(
         top: SizeConfig.safeBlockVertical * 2,
@@ -167,6 +181,15 @@ Widget _details(String providerName, String distance, String price) {
         ),
         new Text(
           'Rs. $price',
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: SizeConfig.safeBlockHorizontal * 3.5),
+        ),
+        SizedBox(
+          height: SizeConfig.safeBlockVertical * 1,
+        ),
+        new Text(
+          'Rs. $message',
           style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: SizeConfig.safeBlockHorizontal * 3.5),
