@@ -16,13 +16,15 @@ import 'package:fabo_example_app/services/userSignUp.dart';
 import './services/userSignUp.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
   runApp(PrizeyCustomerApp());
 }
 
 class PrizeyCustomerApp extends StatelessWidget {
-  UserAuth auth = UserAuth();
+  // UserAuth auth = UserAuth();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

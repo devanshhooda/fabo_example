@@ -1,6 +1,6 @@
 import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
-import 'package:flushbar/flushbar.dart';
+// import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -89,7 +89,7 @@ class ProductDetailsPage extends StatelessWidget {
           bool querySent =
               await query.createQuery(productName, productId, categoryId);
           if (querySent) {
-            _showQuerySentSnackBar(context);
+            // _showQuerySentSnackBar(context);
           }
           print('Query Will be sent');
         },
@@ -108,11 +108,11 @@ class ProductDetailsPage extends StatelessWidget {
     );
   }
 
-  void _showQuerySentSnackBar(BuildContext context) {
-    Flushbar(
-      messageText: Text('Query Sent ...'),
-      duration: Duration(seconds: 3),
-      flushbarStyle: FlushbarStyle.GROUNDED,
-    )..show(context);
-  }
+  // void _showQuerySentSnackBar(BuildContext context) {
+  //   Flushbar(
+  //     messageText: Text('Query Sent ...'),
+  //     duration: Duration(seconds: 3),
+  //     flushbarStyle: FlushbarStyle.GROUNDED,
+  //   )..show(context);
+  // }
 }
