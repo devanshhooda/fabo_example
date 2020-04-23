@@ -30,29 +30,28 @@ class Requests extends StatelessWidget {
           future: queries.getQueries(),
           builder:
               (BuildContext context, AsyncSnapshot<List<QueryModel>> snapshot) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, int i) {
-                if (snapshot.hasData) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, int i) {
                   if (snapshot.data[i].productName != null &&
                       snapshot.data[i].productName.isNotEmpty) {
                     return _requests(context, snapshot.data[i].productName, '',
                         snapshot.data[i].replies.length.toString());
-                  } else if (snapshot.data[i].productId != null &&
-                      snapshot.data[i].productId.isNotEmpty) {
+                  } else {
                     return _requests(context, '', snapshot.data[i].productId,
                         snapshot.data[i].replies.length.toString());
                   }
-                } else {
-                  return Center(
-                    child: Text(
-                      'Your query list is empty',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  );
-                }
-              },
-            );
+                },
+              );
+            } else {
+              return Center(
+                child: Text(
+                  'Your query list is empty',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+            }
           }),
     ));
   }

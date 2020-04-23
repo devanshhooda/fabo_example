@@ -149,6 +149,7 @@ class UserAuth with ChangeNotifier {
     try {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
         token = await getTokenFromSP();
+        var fcmToken = await _firebaseMessaging.getToken();
         print("Asked to create new User:");
         print(token);
         print('token : $token');
@@ -157,7 +158,7 @@ class UserAuth with ChangeNotifier {
           'Authorization': 'jwt ' + token
         }, body: {
           'type': 'Customer',
-          'token': 'Firebase Token',
+          'token': fcmToken,
           'firstName': firstName,
           'lastName': lastName,
           'address': address
@@ -339,6 +340,7 @@ class UserAuth with ChangeNotifier {
           headers: <String, String>{'Authorization': 'jwt ' + token});
 
       var data = json.decode(response.body);
+      print(data);
       List _queries = data['queries'] as List;
       for (var i in _queries) {
         QueryModel query = QueryModel(
@@ -346,7 +348,7 @@ class UserAuth with ChangeNotifier {
             productName: i['product_name'],
             productId: i['product'],
             queryStatus: i['status'],
-            replies: i['response']);
+            replies: i['replies']);
         queriesList.add(query);
       }
       return queriesList;

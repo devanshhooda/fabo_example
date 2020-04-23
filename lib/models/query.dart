@@ -2,8 +2,8 @@ class QueryModel {
   String id;
   String productName;
   String productId;
-  String queryStatus;
-  List<String> replies;
+  bool queryStatus;
+  List<dynamic> replies;
 
   QueryModel(
       {this.id,
