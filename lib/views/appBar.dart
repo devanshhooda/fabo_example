@@ -30,9 +30,10 @@ Widget app_Bar(BuildContext context) {
                     right: SizeConfig.safeBlockHorizontal * 5,
                     bottom: SizeConfig.safeBlockVertical * 0.5),
                 child: new Container(
-                  margin: EdgeInsets.only(
-                      bottom: SizeConfig.safeBlockVertical * 0.5,
-                      top: SizeConfig.safeBlockVertical * 0.5),
+                  height: SizeConfig.blockSizeVertical * 7,
+                  // margin: EdgeInsets.only(
+                  //     bottom: SizeConfig.safeBlockVertical * 0.5,
+                  //     top: SizeConfig.safeBlockVertical * 0.5),
                   decoration: BoxDecoration(
                     color: Colors.white70,
                     borderRadius: BorderRadius.circular(40),

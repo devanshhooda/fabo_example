@@ -103,9 +103,9 @@ class UserAuth with ChangeNotifier {
         token = data['token'];
       }
       notifyListeners();
-      // print('Get registered method: ' + data);
       if (userStatus == 'Success') {
         await addTokenToSP(token);
+        await addUserStatusToSP();
         return true;
       } else {
         return false;
@@ -203,7 +203,7 @@ class UserAuth with ChangeNotifier {
       sharedPreferences = await SharedPreferences.getInstance();
     }
     String _token = sharedPreferences.getString('token');
-    print("Get Token: $_token");
+    // print("Get Token: $_token");
     return _token;
   }
 
@@ -222,7 +222,7 @@ class UserAuth with ChangeNotifier {
     return _status;
   }
 
-  String getCategoriesStatus, getProdeuctsStatus;
+  String getCategoriesStatus, getProdeuctsStatus, getQueyProdeuctsStatus;
   int noOfCategories;
 
   Future<List<CategoriesModel>> getCategories() async {
@@ -250,25 +250,28 @@ class UserAuth with ChangeNotifier {
   }
 
   Future<List<ProductsModel>> getProducts(String categoryId) async {
-    String categoryUrl = url + '/api/product/incategory?limit=5&id=$categoryId';
-    List<ProductsModel> productsList = List<ProductsModel>();
+    String productsUrl = url + '/api/product/incategory?limit=5&id=$categoryId';
+    List<ProductsModel> productsList = new List<ProductsModel>();
     try {
       token = await getTokenFromSP();
-      http.Response response = await http.get(categoryUrl,
+      http.Response response = await http.get(productsUrl,
           headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
+      // print('producst data : $data');
       List _products;
       _products = data['products'] as List;
       for (var i in _products) {
         ProductsModel product = ProductsModel(
-            id: i['_id'],
-            name: i['name'],
-            imageUrl: i['image_url'],
-            features: i['features'],
-            categoryId: i['category'][0],
-            productId: i['_id']);
+          id: i['_id'],
+          name: i['name'],
+          imageUrl: i['image_url'],
+          features: i['features'],
+          // categoryId: i['category'][0]
+        );
         productsList.add(product);
       }
+      // print('prducts list : $productsList');
+      // print(productsList[0].name);
       getProdeuctsStatus = data['status'];
       notifyListeners();
     } catch (e) {
@@ -340,7 +343,7 @@ class UserAuth with ChangeNotifier {
           headers: <String, String>{'Authorization': 'jwt ' + token});
 
       var data = json.decode(response.body);
-      print(data);
+      print('query data : $data');
       List _queries = data['queries'] as List;
       for (var i in _queries) {
         QueryModel query = QueryModel(
@@ -350,11 +353,38 @@ class UserAuth with ChangeNotifier {
             queryStatus: i['status'],
             replies: i['replies']);
         queriesList.add(query);
+        print(query.productName);
       }
       return queriesList;
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<ProductsModel> getQueryProduct(String productId) async {
+    String productsUrl = url + '/api/product/details?id=$productId';
+    ProductsModel product;
+    print('product id : $productId');
+    try {
+      token = await getTokenFromSP();
+      http.Response response = await http.get(productsUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token});
+      var data = json.decode(response.body);
+      print('product data : $data');
+      product = ProductsModel(
+        id: data['product']['_id'],
+        name: data['product']['name'],
+        imageUrl: data['product']['image_url'],
+        features: data['product']['features'],
+        // categoryId: data['products']['category'][0],
+      );
+      getQueyProdeuctsStatus = data['status'];
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+    // print('product : $product');
+    return product;
   }
 
   Future<List<RepliesModel>> getReplies(String queryId) async {

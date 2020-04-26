@@ -11,6 +11,5 @@ class ProductsModel {
       this.name,
       this.imageUrl,
       this.features,
-      this.productId,
       this.categoryId});
 }
