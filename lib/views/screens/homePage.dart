@@ -17,9 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   UserAuth content;
 
-  // final GlobalKey<AsyncLoaderState> categoryLoaderState =
-  //     new GlobalKey<AsyncLoaderState>();
-
   @override
   void initState() {
     content = new UserAuth();
@@ -29,75 +26,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // UserAuth content = Provider.of<UserAuth>(context);
-    // fetchCategories();
     return new Scaffold(
         body: new Container(
             height: SizeConfig.screenHeight,
             width: SizeConfig.screenWidth,
-
-            // child: FutureBuilder<List<CategoriesModel>>(
-            //     future: content.getCategories(),
-            //     builder: (BuildContext context,
-            //         AsyncSnapshot<List<CategoriesModel>> snapshot) {
-            //       if (snapshot.hasData) {
-            //         return ListView.builder(
-            //             itemCount: snapshot.data.length - 1,
-            //             itemBuilder: (context, i) {
-            //               String categoryName = snapshot.data[i].name;
-            //               String categoryId = snapshot.data[i].id;
-            //               return ChangeNotifierProvider(
-            //                 create: (context) => UserAuth(),
-            //                 child: CategoriesWidget(categoryName, categoryId),
-            //               );
-            //             });
-            //       }
-            //       return Center(child: CircularProgressIndicator());
-            //     })),
-
-            // child: AsyncLoader(
-            //   key: categoryLoaderState,
-            //   initState: () async => await content.getCategories(),
-            //   renderError: ([error]) => Center(
-            //     child: Text('$error'),
-            //   ),
-            //   renderLoad: () => Center(child: CircularProgressIndicator()),
-            //   renderSuccess: ({data}) => ListView.builder(
-            //       itemCount: data.length - 1,
-            //       itemBuilder: (content, i) {
-            //         return CategoriesWidget(data[i].name, data[i].id);
-            //       }),
-            // ),
-
-            child: (categoriesList != null && categoriesList.isNotEmpty)
-                ? ListView.builder(
-                    itemCount: categoriesList.length - 1,
-                    itemBuilder: (context, i) {
-                      return CategoriesWidget(categoriesList[i].name,
-                          categoriesList[i].id, content);
-                    })
+            child: (categoriesList.isNotEmpty)
+                ? (categoriesList != null)
+                    ? ListView.builder(
+                        itemCount: categoriesList.length - 1,
+                        itemBuilder: (context, i) {
+                          return CategoriesWidget(categoriesList[i].name,
+                              categoriesList[i].id, content);
+                        })
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      )
                 : Center(
-                    child: CircularProgressIndicator(),
+                    child: Text('Network Error !'),
                   )));
   }
-
-  // Widget showFetchCategoriesError() {
-  //   return Column(
-  //     children: <Widget>[
-  //       Text('There was an error'),
-  //       RaisedButton(
-  //         onPressed: () => categoryLoaderState.currentState.reloadState(),
-  //         child: Container(
-  //           color: Colors.black,
-  //           child: Text(
-  //             'Reload',
-  //             style: TextStyle(color: Colors.white),
-  //           ),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
 
   fetchCategories() async {
     var data = await content.getCategories();
@@ -110,8 +57,6 @@ class _HomePageState extends State<HomePage> {
 class CategoriesWidget extends StatefulWidget {
   UserAuth productsContent;
   String categoryName, categoryId;
-  // final GlobalKey<AsyncLoaderState> productLoaderState =
-  //     GlobalKey<AsyncLoaderState>();
 
   CategoriesWidget(String categoryName, String categoryId, UserAuth content) {
     this.productsContent = content;
@@ -132,7 +77,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // UserAuth productsContent = Provider.of<UserAuth>(context);
     return _categories();
   }
 
@@ -183,118 +127,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                     ],
                   ),
                 ),
-                // FutureBuilder<List<ProductsModel>>(
-                //     future: productsContent.getProducts(categoryId),
-                //     builder: (BuildContext context,
-                //         AsyncSnapshot<List<ProductsModel>> snapshot) {
-                //       if (snapshot.hasData) {
-                // return new SingleChildScrollView(
-                //   scrollDirection: Axis.horizontal,
-                //   child: new Row(
-                //     children: <Widget>[
-                //       snapshot.data.length >= 1
-                //           ? ProductsWidget(
-                //               snapshot.data[0].name,
-                //               snapshot.data[0].imageUrl,
-                //               snapshot.data[0].features,
-                //               snapshot.data[0].productId,
-                //               snapshot.data[0].categoryId)
-                //           : Container(),
-                //       snapshot.data.length >= 2
-                //           ? ProductsWidget(
-                //               snapshot.data[1].name,
-                //               snapshot.data[1].imageUrl,
-                //               snapshot.data[1].features,
-                //               snapshot.data[1].productId,
-                //               snapshot.data[1].categoryId)
-                //           : Container(),
-                //       snapshot.data.length >= 3
-                //           ? ProductsWidget(
-                //               snapshot.data[2].name,
-                //               snapshot.data[2].imageUrl,
-                //               snapshot.data[2].features,
-                //               snapshot.data[2].productId,
-                //               snapshot.data[2].categoryId)
-                //           : Container(),
-                //       snapshot.data.length >= 4
-                //           ? ProductsWidget(
-                //               snapshot.data[3].name,
-                //               snapshot.data[3].imageUrl,
-                //               snapshot.data[3].features,
-                //               snapshot.data[3].productId,
-                //               snapshot.data[3].categoryId)
-                //           : Container(),
-                //       snapshot.data.length >= 5
-                //           ? ProductsWidget(
-                //               snapshot.data[4].name,
-                //               snapshot.data[4].imageUrl,
-                //               snapshot.data[4].features,
-                //               snapshot.data[4].productId,
-                //               snapshot.data[4].categoryId)
-                //           : Container(),
-                //     ],
-                //   ),
-                // );
-                //       }
-                //       return Center(child: LinearProgressIndicator());
-                //     })
-
-                // AsyncLoader(
-                //     key: productLoaderState,
-                //     initState: () async =>
-                //         await productsContent.getProducts(categoryId),
-                //     renderError: ([error]) => Center(
-                //           child: showFetchProductsError(),
-                //         ),
-                //     renderLoad: () =>
-                //         Center(child: CircularProgressIndicator()),
-                // renderSuccess: ({data}) => new SingleChildScrollView(
-                //       scrollDirection: Axis.horizontal,
-                //       child: new Row(
-                //         children: <Widget>[
-                //           data.length >= 1
-                //               ? ProductsWidget(
-                //                   data[0].name,
-                //                   data[0].imageUrl,
-                //                   data[0].features,
-                //                   data[0].productId,
-                //                   data[0].categoryId)
-                //               : Container(),
-                //           data.length >= 2
-                //               ? ProductsWidget(
-                //                   data[1].name,
-                //                   data[1].imageUrl,
-                //                   data[1].features,
-                //                   data[1].productId,
-                //                   data[1].categoryId)
-                //               : Container(),
-                //           data.length >= 3
-                //               ? ProductsWidget(
-                //                   data[2].name,
-                //                   data[2].imageUrl,
-                //                   data[2].features,
-                //                   data[2].productId,
-                //                   data[2].categoryId)
-                //               : Container(),
-                //           data.length >= 4
-                //               ? ProductsWidget(
-                //                   data[3].name,
-                //                   data[3].imageUrl,
-                //                   data[3].features,
-                //                   data[3].productId,
-                //                   data[3].categoryId)
-                //               : Container(),
-                //           data.length >= 5
-                //               ? ProductsWidget(
-                //                   data[4].name,
-                //                   data[4].imageUrl,
-                //                   data[4].features,
-                //                   data[4].productId,
-                //                   data[4].categoryId)
-                //               : Container(),
-                //         ],
-                //       ),
-                //     )),
                 (productsList != null && productsList.isNotEmpty)
                     ? SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -302,43 +134,43 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                           children: <Widget>[
                             productsList.length >= 1
                                 ? ProductsWidget(
-                                    productsList[0].name,
-                                    productsList[0].imageUrl,
-                                    productsList[0].features,
-                                    productsList[0].productId,
-                                    productsList[0].categoryId)
+                                    productName: productsList[0].name,
+                                    imageUrl: productsList[0].imageUrl,
+                                    features: productsList[0].features,
+                                    productId: productsList[0].id,
+                                    categoryId: productsList[0].categoryId)
                                 : Container(),
                             productsList.length >= 2
                                 ? ProductsWidget(
-                                    productsList[1].name,
-                                    productsList[1].imageUrl,
-                                    productsList[1].features,
-                                    productsList[1].productId,
-                                    productsList[1].categoryId)
+                                    productName: productsList[1].name,
+                                    imageUrl: productsList[1].imageUrl,
+                                    features: productsList[1].features,
+                                    productId: productsList[1].id,
+                                    categoryId: productsList[1].categoryId)
                                 : Container(),
                             productsList.length >= 3
                                 ? ProductsWidget(
-                                    productsList[2].name,
-                                    productsList[2].imageUrl,
-                                    productsList[2].features,
-                                    productsList[2].productId,
-                                    productsList[2].categoryId)
+                                    productName: productsList[2].name,
+                                    imageUrl: productsList[2].imageUrl,
+                                    features: productsList[2].features,
+                                    productId: productsList[2].id,
+                                    categoryId: productsList[2].categoryId)
                                 : Container(),
                             productsList.length >= 4
                                 ? ProductsWidget(
-                                    productsList[3].name,
-                                    productsList[3].imageUrl,
-                                    productsList[3].features,
-                                    productsList[3].productId,
-                                    productsList[3].categoryId)
+                                    productName: productsList[3].name,
+                                    imageUrl: productsList[3].imageUrl,
+                                    features: productsList[3].features,
+                                    productId: productsList[3].id,
+                                    categoryId: productsList[3].categoryId)
                                 : Container(),
                             productsList.length >= 5
                                 ? ProductsWidget(
-                                    productsList[4].name,
-                                    productsList[4].imageUrl,
-                                    productsList[4].features,
-                                    productsList[4].productId,
-                                    productsList[4].categoryId)
+                                    productName: productsList[4].name,
+                                    imageUrl: productsList[4].imageUrl,
+                                    features: productsList[4].features,
+                                    productId: productsList[4].id,
+                                    categoryId: productsList[4].categoryId)
                                 : Container(),
                           ],
                         ),
@@ -352,24 +184,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         ],
       ),
     );
-
-    // Widget showFetchProductsError() {
-    //   return Column(
-    //     children: <Widget>[
-    //       Text('There was an error'),
-    //       RaisedButton(
-    //         onPressed: () => productLoaderState.currentState.reloadState(),
-    //         child: Container(
-    //           color: Colors.black,
-    //           child: Text(
-    //             'Reload',
-    //             style: TextStyle(color: Colors.white),
-    //           ),
-    //         ),
-    //       )
-    //     ],
-    //   );
-    // }
   }
 
   fetchProducts() async {
@@ -383,14 +197,12 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 class ProductsWidget extends StatelessWidget {
   String productName, imageUrl, features, productId, categoryId;
 
-  ProductsWidget(String productName, String imageUrl, String features,
-      String productId, String categoryId) {
-    this.productName = productName;
-    this.imageUrl = imageUrl;
-    this.features = features;
-    this.productId = productId;
-    this.categoryId = categoryId;
-  }
+  ProductsWidget(
+      {this.productName,
+      this.imageUrl,
+      this.features,
+      this.productId,
+      this.categoryId});
   @override
   Widget build(BuildContext context) {
     return _services(context, productName, imageUrl, features);
@@ -407,9 +219,12 @@ class ProductsWidget extends StatelessWidget {
             builder: (context) => ChangeNotifierProvider<UserAuth>(
                   create: (context) => UserAuth(),
                   child: ProductDetailsPage(
-                      productName, imageUrl, features, productId, categoryId),
+                      productName: productName,
+                      imageUrl: imageUrl,
+                      features: features,
+                      productId: productId,
+                      categoryId: categoryId),
                 )));
-        print('Details of Service');
       },
       child: Container(
           decoration: BoxDecoration(

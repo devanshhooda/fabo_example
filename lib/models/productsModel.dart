@@ -3,7 +3,6 @@ class ProductsModel {
   String name;
   String imageUrl;
   String features;
-  String productId;
   String categoryId;
 
   ProductsModel(

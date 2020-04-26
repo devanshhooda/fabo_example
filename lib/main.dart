@@ -1,9 +1,4 @@
-import 'package:fabo_example_app/models/categoriesModel.dart';
-import 'package:fabo_example_app/models/productsModel.dart';
-import 'package:fabo_example_app/views/screens/enterDetails.dart';
-import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:fabo_example_app/views/screens/options.dart';
-import 'package:fabo_example_app/views/screens/signUpOtp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -27,45 +22,10 @@ class PrizeyCustomerApp extends StatelessWidget {
   // UserAuth auth = UserAuth();
   @override
   Widget build(BuildContext context) {
-    // return MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider<UserAuth>(
-    //       create: (context) => UserAuth(),
-    //       child: LoginCheck(),
-    //     ),
-    //     ChangeNotifierProvider<UserAuth>(
-    //       create: (context) => UserAuth(),
-    //       child: PhoneNumber(),
-    //     ),
-    //     ChangeNotifierProvider<UserAuth>(
-    //       create: (context) => UserAuth(),
-    //       child: Password(),
-    //     ),
-    //     ChangeNotifierProvider<UserAuth>(
-    //       create: (context) => UserAuth(),
-    //       child: NameSignUp(),
-    //     ),
-    //     // ChangeNotifierProvider<UserAuth>(
-    //     //   create: (context) => UserAuth(),
-    //     //   child: HomePage(),
-    //     // ),
-    //     ChangeNotifierProvider<UserAuth>(
-    //       create: (context) => UserAuth(),
-    //       child: Requests(),
-    //     )
-    //   ],
-    //   child: new MaterialApp(
-    //     debugShowCheckedModeBanner: false,
-    //     // theme: ThemeData(
-    //     //   primarySwatch: Colors.indigo,
-    //     //   primaryColor: Colors.black,
-    //     // ),
-    //     home: LoginCheck(),
-    //   ),
-    // );
     return ChangeNotifierProvider<UserAuth>(
       create: (context) => UserAuth(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: LoginCheck(),
       ),
     );

@@ -29,10 +29,10 @@ class UserAuth with ChangeNotifier {
             body: {'mobile': phoneNumber, 'medium': 'SMS', 'type': 'Customer'});
         var data = json.decode(response.body);
         print("Get Send Otp Request:");
-        print(data);
+        // print(data);
         if (data != null) {
           sendOtpStatus = data['status'];
-          print('send-otp status : $sendOtpStatus');
+          // print('send-otp status : $sendOtpStatus');
           token = data['token'];
           await addTokenToSP(token);
         }
@@ -63,8 +63,8 @@ class UserAuth with ChangeNotifier {
           body: {'otp': otp, 'medium': 'SMS'},
         );
         var data = json.decode(response.body);
-        print("Get Verify OTP Request: ");
-        print(data);
+        // print("Get Verify OTP Request: ");
+        // print(data);
         if (data != null) {
           verifyOtpStatus = data['status'];
           print('verify-otp status : $verifyOtpStatus');
@@ -94,8 +94,8 @@ class UserAuth with ChangeNotifier {
       http.Response response = await http.get(checkPhoneUrl,
           headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
-      print("Get Registered User: ");
-      print(data);
+      // print("Get Registered User: ");
+      // print(data);
       if (data != null) {
         userStatus = data['status'];
         print('user status : $userStatus');
@@ -126,7 +126,7 @@ class UserAuth with ChangeNotifier {
       var data = json.decode(response.body);
       if (data != null) {
         userStatus = data['status'];
-        print('user status : $userStatus');
+        // print('user status : $userStatus');
         userDetails = data['user'];
         await addTokenToSP(token);
       }
@@ -150,9 +150,9 @@ class UserAuth with ChangeNotifier {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
         token = await getTokenFromSP();
         var fcmToken = await _firebaseMessaging.getToken();
-        print("Asked to create new User:");
-        print(token);
-        print('token : $token');
+        // print("Asked to create new User:");
+        // print(token);
+        // print('token : $token');
         http.Response response =
             await http.post(addUserUrl, headers: <String, String>{
           'Authorization': 'jwt ' + token
@@ -164,8 +164,8 @@ class UserAuth with ChangeNotifier {
           'address': address
         });
         var data = json.decode(response.body);
-        print("Create User Request: ");
-        print(data);
+        // print("Create User Request: ");
+        // print(data);
         if (data != null) {
           userStatus = data['status'];
           print('user status : $userStatus');
@@ -222,7 +222,7 @@ class UserAuth with ChangeNotifier {
     return _status;
   }
 
-  String getCategoriesStatus, getProdeuctsStatus, getQueyProdeuctsStatus;
+  String getCategoriesStatus, getProductsStatus, getQueyProductsStatus;
   int noOfCategories;
 
   Future<List<CategoriesModel>> getCategories() async {
@@ -262,17 +262,16 @@ class UserAuth with ChangeNotifier {
       _products = data['products'] as List;
       for (var i in _products) {
         ProductsModel product = ProductsModel(
-          id: i['_id'],
-          name: i['name'],
-          imageUrl: i['image_url'],
-          features: i['features'],
-          // categoryId: i['category'][0]
-        );
+            id: i['_id'],
+            name: i['name'],
+            imageUrl: i['image_url'],
+            features: i['features'],
+            categoryId: i['category'][0]);
         productsList.add(product);
       }
       // print('prducts list : $productsList');
       // print(productsList[0].name);
-      getProdeuctsStatus = data['status'];
+      getProductsStatus = data['status'];
       notifyListeners();
     } catch (e) {
       print(e);
@@ -305,6 +304,8 @@ class UserAuth with ChangeNotifier {
       String createQueryUrl = url + '/api/query/create';
       List<QueryModel> queriesList = List<QueryModel>();
       token = await getTokenFromSP();
+      // print(
+      //     'productId : $productId , productName: $productName , categoryId : $categoryId');
       http.Response response = await http.post(createQueryUrl, body: {
         'product_name': productName,
         'category': categoryId,
@@ -313,6 +314,7 @@ class UserAuth with ChangeNotifier {
         'Authorization': 'jwt ' + token
       });
       var data = json.decode(response.body);
+      // print(data);
       List _queries = data['query'] as List;
       createQueryStatus = data['status'];
       for (var i in _queries) {
@@ -323,6 +325,7 @@ class UserAuth with ChangeNotifier {
             replies: i['response']);
         queriesList.add(query);
       }
+      print(createQueryStatus);
       if (createQueryStatus == 'Success') {
         return true;
       } else {
@@ -343,7 +346,7 @@ class UserAuth with ChangeNotifier {
           headers: <String, String>{'Authorization': 'jwt ' + token});
 
       var data = json.decode(response.body);
-      print('query data : $data');
+      // print('query data : $data');
       List _queries = data['queries'] as List;
       for (var i in _queries) {
         QueryModel query = QueryModel(
@@ -353,9 +356,9 @@ class UserAuth with ChangeNotifier {
             queryStatus: i['status'],
             replies: i['replies']);
         queriesList.add(query);
-        print(query.id);
+        // print(query.id);
       }
-      print('Data Size: ${queriesList.length}');
+      // print('Data Size: ${queriesList.length}');
       return queriesList;
     } catch (e) {
       print(e);
@@ -365,13 +368,13 @@ class UserAuth with ChangeNotifier {
   Future<ProductsModel> getQueryProduct(String productId) async {
     String productsUrl = url + '/api/product/details?id=$productId';
     ProductsModel product;
-    print('product id : $productId');
+    // print('product id : $productId');
     try {
       token = await getTokenFromSP();
       http.Response response = await http.get(productsUrl,
           headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
-      print('product data : $data');
+      // print('product data : $data');
       product = ProductsModel(
         id: data['product']['_id'],
         name: data['product']['name'],
@@ -379,13 +382,33 @@ class UserAuth with ChangeNotifier {
         features: data['product']['features'],
         // categoryId: data['products']['category'][0],
       );
-      getQueyProdeuctsStatus = data['status'];
+      getQueyProductsStatus = data['status'];
       notifyListeners();
     } catch (e) {
       print(e);
     }
     // print('product : $product');
     return product;
+  }
+
+  Future<bool> removeQuery(String queryId) async {
+    String removeQueryUrl = url + '/api/query/remove';
+    try {
+      token = await getTokenFromSP();
+      http.Response response = await http.post(removeQueryUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token},
+          body: {'query': queryId});
+      var data = json.decode(response.body);
+      String removeQueryStatus = data['status'];
+      if (removeQueryStatus == 'Success') {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   Future<List<RepliesModel>> getReplies(String queryId) async {
@@ -397,6 +420,7 @@ class UserAuth with ChangeNotifier {
           headers: <String, String>{'Authorization': 'jwt ' + token});
 
       var data = json.decode(response.body);
+      // print(data);
       List _replies = data['replies'] as List;
       for (var i in _replies) {
         RepliesModel reply = RepliesModel(

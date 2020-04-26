@@ -58,14 +58,15 @@ Widget app_Bar(BuildContext context) {
                             child: Icon(
                               Icons.search,
                               color: Colors.black54,
-                              size: SizeConfig.safeBlockVertical * 2.5,
+                              size: SizeConfig.safeBlockVertical * 3,
                             )),
                       )),
                 )),
             preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical * 3)),
         actions: <Widget>[
           new Container(
-            padding: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 2),
+            padding: EdgeInsets.only(
+                right: SizeConfig.safeBlockHorizontal * 2,),
             child: IconButton(
               onPressed: () {
                 Route route =
@@ -74,7 +75,7 @@ Widget app_Bar(BuildContext context) {
               },
               icon: Icon(
                 Icons.notifications_none,
-                size: SizeConfig.safeBlockVertical * 3,
+                size: SizeConfig.safeBlockVertical * 4,
               ),
             ),
             // new Positioned(

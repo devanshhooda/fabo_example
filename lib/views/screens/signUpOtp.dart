@@ -144,7 +144,10 @@ class _PasswordState extends State<Password> {
                           print('User exist hence logged in');
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => NameSignUp()));
+                              builder: (context) => ChangeNotifierProvider(
+                                    create: (context) => UserAuth(),
+                                    child: NameSignUp(),
+                                  )));
                           print('Enter details screen');
                         }
                       }

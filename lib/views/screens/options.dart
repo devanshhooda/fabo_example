@@ -1,6 +1,8 @@
+import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:fabo_example_app/views/screens/numberSignUp.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'loginPage.dart';
 
 class OptionsPage extends StatelessWidget {
@@ -81,7 +83,10 @@ Widget _options(BuildContext context) {
                         onPressed: () {
                           print('Number Sign Up page');
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => PhoneNumber()));
+                              builder: (context) => ChangeNotifierProvider(
+                                    create: (context) => UserAuth(),
+                                    child: PhoneNumber(),
+                                  )));
                         },
                         child: new Text(
                           'Sign Up',
@@ -134,7 +139,10 @@ Widget _options(BuildContext context) {
                         onPressed: () {
                           print('Login Page');
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LoginPage()));
+                              builder: (context) => ChangeNotifierProvider(
+                                    create: (context) => UserAuth(),
+                                    child: LoginPage(),
+                                  )));
                         },
                         child: new Text(
                           'Login',

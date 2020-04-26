@@ -1,35 +1,43 @@
 import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
-// import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   String productName, imageUrl, features, productId, categoryId;
 
-  ProductDetailsPage(String productName, String imageUrl, String features,
-      String productId, String categoryId) {
-    this.productName = productName;
-    this.imageUrl = imageUrl;
-    this.features = features;
-    this.productId = productId;
-    this.categoryId = categoryId;
+  ProductDetailsPage(
+      {this.productName,
+      this.imageUrl,
+      this.features,
+      this.productId,
+      this.categoryId});
+
+  @override
+  _ProductDetailsPageState createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  UserAuth content;
+
+  @override
+  void initState() {
+    content = UserAuth();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    UserAuth query = Provider.of<UserAuth>(context);
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(productName),
+          title: new Text(widget.productName),
         ),
         body: new Container(
             height: SizeConfig.screenHeight,
             width: SizeConfig.screenWidth,
             child: new ListView(children: <Widget>[
-              _itemPicture(imageUrl),
-              _itemDetails(productName, features),
-              _queryButton(context, query)
+              _itemPicture(widget.imageUrl),
+              _itemDetails(widget.productName, widget.features),
+              _queryButton(context, content)
             ])));
   }
 
@@ -86,12 +94,16 @@ class ProductDetailsPage extends StatelessWidget {
           horizontal: SizeConfig.safeBlockHorizontal * 20),
       child: new RaisedButton(
         onPressed: () async {
-          bool querySent =
-              await query.createQuery(productName, productId, categoryId);
+          bool querySent = await query.createQuery(
+              widget.productName, widget.productId, widget.categoryId);
           if (querySent) {
-            // _showQuerySentSnackBar(context);
+            // This snackbar is not showing
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text('Query sent.. Thank you !'),
+              duration: Duration(seconds: 3),
+            ));
+            print('Query Will be sent');
           }
-          print('Query Will be sent');
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 0,
@@ -107,12 +119,4 @@ class ProductDetailsPage extends StatelessWidget {
       ),
     );
   }
-
-  // void _showQuerySentSnackBar(BuildContext context) {
-  //   Flushbar(
-  //     messageText: Text('Query Sent ...'),
-  //     duration: Duration(seconds: 3),
-  //     flushbarStyle: FlushbarStyle.GROUNDED,
-  //   )..show(context);
-  // }
 }
