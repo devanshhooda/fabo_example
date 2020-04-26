@@ -36,12 +36,13 @@ class _RequestsState extends State<Requests> {
               (BuildContext context, AsyncSnapshot<List<QueryModel>> snapshot) {
             print('get queries');
             if (snapshot.hasData) {
+              print(snapshot.data.length);
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, int i) {
-                  String productId = queriesList[i].id;
+                  String productId = snapshot.data[i].productId;
                   // String productName = queriesList[i].productName;
-                  String replies = queriesList[i].replies.length.toString();
+                  String replies = snapshot.data[i].replies.length.toString();
                   print(snapshot.data.length);
                   return QueryDetails(
                     // productName: productName,

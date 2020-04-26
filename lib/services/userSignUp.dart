@@ -353,8 +353,9 @@ class UserAuth with ChangeNotifier {
             queryStatus: i['status'],
             replies: i['replies']);
         queriesList.add(query);
-        print(query.productName);
+        print(query.id);
       }
+      print('Data Size: ${queriesList.length}');
       return queriesList;
     } catch (e) {
       print(e);
