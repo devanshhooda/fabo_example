@@ -38,35 +38,38 @@ Widget app_Bar(BuildContext context) {
                     color: Colors.white70,
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  child: new TextField(
-                      cursorColor: Colors.black,
-                      cursorWidth: 1.5,
-                      controller: _srch,
-                      style: TextStyle(
-                          fontSize: SizeConfig.safeBlockHorizontal * 4.5,
-                          color: Colors.black87),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintStyle: new TextStyle(
-                            color: Colors.black54,
-                            fontSize: SizeConfig.safeBlockHorizontal * 4,
-                            fontWeight: FontWeight.w500),
-                        hintText: 'Search',
-                        icon: Container(
-                            padding: EdgeInsets.only(
-                                left: SizeConfig.safeBlockHorizontal * 4),
-                            child: Icon(
-                              Icons.search,
+                  child: Center(
+                    child: new TextField(
+                        cursorColor: Colors.black,
+                        cursorWidth: 1.5,
+                        controller: _srch,
+                        style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                            color: Colors.black87),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintStyle: new TextStyle(
                               color: Colors.black54,
-                              size: SizeConfig.safeBlockVertical * 3,
-                            )),
-                      )),
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                              fontWeight: FontWeight.w500),
+                          hintText: 'Search',
+                          icon: Container(
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.safeBlockHorizontal * 4),
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.black54,
+                                size: SizeConfig.safeBlockVertical * 3,
+                              )),
+                        )),
+                  ),
                 )),
             preferredSize: Size.fromHeight(SizeConfig.blockSizeVertical * 3)),
         actions: <Widget>[
           new Container(
             padding: EdgeInsets.only(
-                right: SizeConfig.safeBlockHorizontal * 2,),
+              right: SizeConfig.safeBlockHorizontal * 2,
+            ),
             child: IconButton(
               onPressed: () {
                 Route route =

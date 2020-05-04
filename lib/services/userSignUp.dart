@@ -28,7 +28,7 @@ class UserAuth with ChangeNotifier {
         http.Response response = await http.post(sendOtpUrl,
             body: {'mobile': phoneNumber, 'medium': 'SMS', 'type': 'Customer'});
         var data = json.decode(response.body);
-        print("Get Send Otp Request:");
+        // print("Get Send Otp Request:");
         // print(data);
         if (data != null) {
           sendOtpStatus = data['status'];
@@ -67,7 +67,7 @@ class UserAuth with ChangeNotifier {
         // print(data);
         if (data != null) {
           verifyOtpStatus = data['status'];
-          print('verify-otp status : $verifyOtpStatus');
+          // print('verify-otp status : $verifyOtpStatus');
           token = data['token'];
           await addTokenToSP(token);
         }
@@ -98,14 +98,46 @@ class UserAuth with ChangeNotifier {
       // print(data);
       if (data != null) {
         userStatus = data['status'];
-        print('user status : $userStatus');
+        // print('user status : $userStatus');
         userDetails = data['user'];
         token = data['token'];
+        await addTokenToSP(token);
       }
       notifyListeners();
       if (userStatus == 'Success') {
-        await addTokenToSP(token);
-        await addUserStatusToSP();
+        bool userUpdated = await updateUserProfile();
+        print('userUpdated : $userUpdated');
+        if (userUpdated) {
+          await addUserStatusToSP();
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> updateUserProfile() async {
+    String profileupdateUrl = '$url' + '/api/user/update';
+    try {
+      token = await getTokenFromSP();
+
+      http.Response response = await http.post(profileupdateUrl,
+          headers: <String, String>{'Authorization': 'jwt ' + token},
+          body: {'token': firebaseToken});
+      var data = json.decode(response.body);
+      print('update user: $data');
+      if (data != null) {
+        userStatus = data['status'];
+        print('user status : $userStatus');
+        userDetails = data['user'];
+      }
+      notifyListeners();
+      // print('Get user profile method : ' + data);
+      if (userStatus == 'Success') {
         return true;
       } else {
         return false;
@@ -149,7 +181,7 @@ class UserAuth with ChangeNotifier {
     try {
       if (firstName.isNotEmpty && lastName.isNotEmpty && address.isNotEmpty) {
         token = await getTokenFromSP();
-        var fcmToken = await _firebaseMessaging.getToken();
+        // var fcmToken = await _firebaseMessaging.getToken();
         // print("Asked to create new User:");
         // print(token);
         // print('token : $token');
@@ -158,7 +190,7 @@ class UserAuth with ChangeNotifier {
           'Authorization': 'jwt ' + token
         }, body: {
           'type': 'Customer',
-          'token': fcmToken,
+          'token': firebaseToken,
           'firstName': firstName,
           'lastName': lastName,
           'address': address
@@ -168,7 +200,7 @@ class UserAuth with ChangeNotifier {
         // print(data);
         if (data != null) {
           userStatus = data['status'];
-          print('user status : $userStatus');
+          // print('user status : $userStatus');
           userDetails = data['user'];
           token = data['token'];
           await addTokenToSP(token);
@@ -191,7 +223,7 @@ class UserAuth with ChangeNotifier {
   }
 
   addTokenToSP(String token) async {
-    print("Add Token: $token");
+    // print("Add Token: $token");
     if (sharedPreferences == null) {
       sharedPreferences = await SharedPreferences.getInstance();
     }
@@ -280,7 +312,7 @@ class UserAuth with ChangeNotifier {
   }
 
   FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
-  // String fcmToken;
+  String firebaseToken;
 
   UserAuth() {
     _firebaseMessaging.configure(
@@ -294,6 +326,10 @@ class UserAuth with ChangeNotifier {
         print('onResume : $message');
       },
     );
+    _firebaseMessaging.getToken().then((String _tokn) {
+      firebaseToken = _tokn;
+      // print('fcm tokn : $firebaseToken');
+    });
   }
 
   String createQueryStatus, removeQueryStatus;
@@ -325,7 +361,7 @@ class UserAuth with ChangeNotifier {
             replies: i['response']);
         queriesList.add(query);
       }
-      print(createQueryStatus);
+      // print(createQueryStatus);
       if (createQueryStatus == 'Success') {
         return true;
       } else {
@@ -420,8 +456,9 @@ class UserAuth with ChangeNotifier {
           headers: <String, String>{'Authorization': 'jwt ' + token});
 
       var data = json.decode(response.body);
-      // print(data);
+      print('getRepliesData : $data');
       List _replies = data['replies'] as List;
+      print(_replies);
       for (var i in _replies) {
         RepliesModel reply = RepliesModel(
             id: i['_id'],
@@ -436,14 +473,14 @@ class UserAuth with ChangeNotifier {
     }
   }
 
-  Future<VendorModel> getVendorDetails(String queryId) async {
-    String vendorDetailsUrl = url + '/api/user/vendor?id=$queryId';
+  Future<VendorModel> getVendorDetails(String vendorId) async {
+    String vendorDetailsUrl = url + '/api/user/vendor?id=$vendorId';
     try {
       token = await getTokenFromSP();
       http.Response response = await http.get(vendorDetailsUrl,
           headers: <String, String>{'Authorization': 'jwt ' + token});
       var data = json.decode(response.body);
-
+      print('vendorDetails : $data');
       VendorModel vendorDetails = VendorModel(
           fistName: data['profile']['firstName'],
           lastName: data['profile']['lastName'],

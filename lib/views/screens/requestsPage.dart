@@ -46,20 +46,17 @@ class _RequestsState extends State<Requests> {
                     );
                   },
                 );
-              } else {
-                return Center(
-                  child: Text('Network Error !'),
-                );
               }
-            } else {
               return Center(
-                child: Text(
-                  'Your query list is empty',
-                  style:
-                      TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 5),
-                ),
+                child: Text('Network Error !'),
               );
             }
+            return Center(
+              child: Text(
+                'Your query list is empty',
+                style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 5),
+              ),
+            );
           }),
     ));
   }
@@ -76,9 +73,6 @@ class QueryDetails extends StatefulWidget {
 class _QueryDetailsState extends State<QueryDetails> {
   UserAuth queries;
   ProductsModel productsModel;
-
-  TextStyle _subtitle =
-      new TextStyle(fontSize: (SizeConfig.safeBlockHorizontal ?? 0) * 3.5);
 
   @override
   void initState() {
@@ -114,7 +108,8 @@ class _QueryDetailsState extends State<QueryDetails> {
                     subtitle: new Container(
                       child: new Text(
                         'Replies: ${widget.replies}',
-                        style: _subtitle,
+                        style: new TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                       ),
                     ),
                     onTap: () {

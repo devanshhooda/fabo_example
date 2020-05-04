@@ -1,4 +1,5 @@
 import 'package:fabo_example_app/models/replies.dart';
+import 'package:fabo_example_app/models/vendorModel.dart';
 import 'package:fabo_example_app/services/userSignUp.dart';
 import 'package:fabo_example_app/utils/sizeConfig.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class Bookings extends StatefulWidget {
 
 class _BookingsState extends State<Bookings> {
   UserAuth query;
+  String vendorName = '', vendorAddress = '', mobileNumber = '';
 
   @override
   void initState() {
@@ -73,26 +75,29 @@ class _BookingsState extends State<Bookings> {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<RepliesModel>> snapshot) {
                     if (snapshot.hasData) {
+                      // print(snapshot.data);
                       if (snapshot.data.length > 0) {
                         return ListView.builder(
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, i) {
+                              // print(snapshot.data[i].price);
+                              getVendor(snapshot.data[i].vendorId);
                               return _booking(snapshot.data[i].message,
                                   snapshot.data[i].price);
                             });
-                      }
+                      } else
+                        return Center(
+                          child: Text(
+                            'No replies yet',
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                color: Colors.black54),
+                          ),
+                        );
+                    } else
                       return Center(
-                        child: Text(
-                          'No replies yet',
-                          style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 5,
-                              color: Colors.black54),
-                        ),
+                        child: CircularProgressIndicator(),
                       );
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
                   }),
             )
           ],
@@ -179,7 +184,7 @@ class _BookingsState extends State<Bookings> {
     );
   }
 
-  Widget _booking(String message, String price) {
+  Widget _booking(String message, int price) {
     return new Container(
       padding: EdgeInsets.only(
           top: SizeConfig.safeBlockVertical * 1,
@@ -190,10 +195,7 @@ class _BookingsState extends State<Bookings> {
         decoration: BoxDecoration(
             color: Colors.grey[300], borderRadius: BorderRadius.circular(30)),
         child: new Row(
-          children: <Widget>[
-            _picture(),
-            _details('vendorName', 'address', price, message)
-          ],
+          children: <Widget>[_picture(), _details(price, message)],
         ),
       ),
     );
@@ -211,8 +213,7 @@ class _BookingsState extends State<Bookings> {
         ));
   }
 
-  Widget _details(
-      String providerName, String distance, String price, String message) {
+  Widget _details(int price, String message) {
     return new Container(
       padding: EdgeInsets.only(
           top: SizeConfig.safeBlockVertical * 2,
@@ -223,7 +224,7 @@ class _BookingsState extends State<Bookings> {
         children: <Widget>[
           new Container(
             child: new Text(
-              providerName,
+              vendorName,
               style: TextStyle(
                   fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                   fontWeight: FontWeight.w500),
@@ -234,7 +235,7 @@ class _BookingsState extends State<Bookings> {
           ),
           new Container(
             child: new Text(
-              'Distance: $distance KM',
+              'Distance: $vendorAddress KM',
               style: TextStyle(
                   fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                   color: Colors.black54),
@@ -253,9 +254,9 @@ class _BookingsState extends State<Bookings> {
             height: SizeConfig.safeBlockVertical * 1,
           ),
           new Text(
-            'Rs. $message',
+            'Message: $message',
             style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
                 fontSize: SizeConfig.safeBlockHorizontal * 3.5),
           ),
           SizedBox(
@@ -272,6 +273,7 @@ class _BookingsState extends State<Bookings> {
                   icon: Icon(
                     Icons.phone,
                     color: Colors.indigo,
+                    size: SizeConfig.safeBlockHorizontal * 6,
                   ),
                   iconSize: SizeConfig.safeBlockVertical * 4,
                 ),
@@ -288,6 +290,7 @@ class _BookingsState extends State<Bookings> {
                   icon: Icon(
                     Icons.location_on,
                     color: Colors.indigo,
+                    size: SizeConfig.safeBlockHorizontal * 6,
                   ),
                   iconSize: SizeConfig.safeBlockVertical * 3.5,
                 ),
@@ -313,5 +316,14 @@ class _BookingsState extends State<Bookings> {
             ],
           )),
     );
+  }
+
+  getVendor(String vendorId) async {
+    VendorModel vendorModel = await query.getVendorDetails(vendorId);
+    setState(() {
+      vendorName = vendorModel.fistName + ' ' + vendorModel.lastName;
+      vendorAddress = vendorModel.address;
+      mobileNumber = vendorModel.mobileNumber;
+    });
   }
 }
