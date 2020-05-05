@@ -101,7 +101,9 @@ class UserAuth with ChangeNotifier {
         // print('user status : $userStatus');
         userDetails = data['user'];
         token = data['token'];
-        await addTokenToSP(token);
+        if (token != null) {
+          await addTokenToSP(token);
+        }
       }
       notifyListeners();
       if (userStatus == 'Success') {
